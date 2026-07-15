@@ -16,9 +16,6 @@ namespace Library_Management_System_project
 {
     public partial class IssuedBooks : UserControl
     {
-        SqlConnection connect = new SqlConnection
-            (@"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30");
-
         private string _currentBookImagePath;
 
         public IssuedBooks()
@@ -155,56 +152,37 @@ namespace Library_Management_System_project
 
         private void bookIssue_bookTitle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (connect.State != ConnectionState.Open)
+            if (bookIssue_bookTitle.SelectedValue != null)
             {
-                if (bookIssue_bookTitle.SelectedValue != null)
+                DataRowView selectedRow = (DataRowView)bookIssue_bookTitle.SelectedItem;
+                int selectedID = Convert.ToInt32(selectedRow["BookID"]);
+                try
                 {
-                    DataRowView selectedRow = (DataRowView)bookIssue_bookTitle.SelectedItem;
-                    int selectedID = Convert.ToInt32(selectedRow["BookID"]);
-                    try
+                    using (var context = new LibraryDataContext())
                     {
-                        if (connect.State != ConnectionState.Open)
+                        var book = context.Bookks.SingleOrDefault(b => b.BookID == selectedID);
+                        if (book != null)
                         {
-                            connect.Open();
-                        }
-                        string selectData = "SELECT * FROM Books WHERE BookID = @BookID";
-                        using (SqlCommand cmd = new SqlCommand(selectData, connect))
-                        {
-                            cmd.Parameters.AddWithValue("@BookID", selectedID);
-                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                            DataTable table = new DataTable();
-                            adapter.Fill(table);
+                            bookIssue_author.Text = book.Author;
+                            string imagePath = book.Image;
 
-                            if (table.Rows.Count > 0)
+                            if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
                             {
-                                bookIssue_author.Text = table.Rows[0]["Author"].ToString();
-                                string imagePath = table.Rows[0]["Image"].ToString();
-
-                                if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
-                                {
-                                    bookIssue_picturbox.Image = Image.FromFile(imagePath);
-                                    _currentBookImagePath = imagePath;
-                                }
-                                else
-                                {
-                                    bookIssue_picturbox.Image = null;
-                                    _currentBookImagePath = null;
-                                }
+                                bookIssue_picturbox.Image = Image.FromFile(imagePath);
+                                _currentBookImagePath = imagePath;
+                            }
+                            else
+                            {
+                                bookIssue_picturbox.Image = null;
+                                _currentBookImagePath = null;
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error in bookIssue_bookTitle_SelectedIndexChanged: " + ex.Message,
-                            "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        if (connect.State == ConnectionState.Open)
-                        {
-                            connect.Close();
-                        }
-                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error in bookIssue_bookTitle_SelectedIndexChanged: " + ex.Message,
+                        "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

@@ -8,8 +8,6 @@ namespace Library_Management_System_project
 {
     public abstract class AbstractIssueBooks : IDataIssueBooks
     {
-        protected string connectionString = @"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30";
-
         public int ID { get; set; }
         public string IssueID { get; set; }
         public string Full_Name { get; set; }

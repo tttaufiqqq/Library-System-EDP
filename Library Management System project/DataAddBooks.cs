@@ -13,7 +13,7 @@ namespace Library_Management_System_project
 
             try
             {
-                using (var db = new LibraryDataContext(connectionString))
+                using (var db = new LibraryDataContext())
                 {
                     var books = from book in db.Bookks
                                 where book.Date_Delete == null

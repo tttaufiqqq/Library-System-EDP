@@ -12,9 +12,6 @@ namespace Library_Management_System_project
     {
         public event Action<Bookk> BookAdded;
 
-        private string connectionString = 
-            @"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30";
-
         public AddBooks()
         {
             InitializeComponent();
@@ -35,7 +32,7 @@ namespace Library_Management_System_project
         {
             try
             {
-                using (var db = new LibraryDataContext(connectionString))
+                using (var db = new LibraryDataContext())
                 {
                     var books = from book in db.Bookks
                                 orderby book.Book_Title 
@@ -94,7 +91,7 @@ namespace Library_Management_System_project
             {
                 try
                 {
-                    using (var db = new LibraryDataContext(connectionString))
+                    using (var db = new LibraryDataContext())
                     {
                         DateTime today = DateTime.Today;
 
@@ -202,7 +199,7 @@ namespace Library_Management_System_project
             }
             else
             {
-                using (var db = new LibraryDataContext(connectionString))
+                using (var db = new LibraryDataContext())
                 {
                     DialogResult check = MessageBox.Show("Are you sure you want to UPDATE Book ID: " + BookID + " ?",
                         "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -255,7 +252,7 @@ namespace Library_Management_System_project
             }
             else
             {
-                using (var db = new LibraryDataContext(connectionString))
+                using (var db = new LibraryDataContext())
                 {
                     DialogResult check = MessageBox.Show("Are you sure you want to DELETE Book ID: " + BookID + " ?",
                         "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

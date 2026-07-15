@@ -8,9 +8,6 @@ namespace Library_Management_System_project
 {
     public abstract class AbstractDataAddBooks : IDataAddBooks
     {
-        protected string connectionString = 
-            @"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30";
-
         public int Id { get; set; }
         public string Title { get; set; }
         public string AuthorName { get; set; }

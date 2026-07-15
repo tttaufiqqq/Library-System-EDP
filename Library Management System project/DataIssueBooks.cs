@@ -13,7 +13,7 @@ namespace Library_Management_System_project
 
             try
             {
-                using (var db = new LibraryDataContext(connectionString))
+                using (var db = new LibraryDataContext())
                 {
                     var issueBooks = from book in db.IssuesBooks
                                      select new DataIssueBooks
@@ -49,7 +49,7 @@ namespace Library_Management_System_project
 
             try
             {
-                using (var db = new LibraryDataContext(connectionString))
+                using (var db = new LibraryDataContext())
                 {
                     var issueBooks = from book in db.IssuesBooks
                                      where book.Return_Status == "Not Returned"

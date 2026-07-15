@@ -14,8 +14,6 @@ namespace Library_Management_System_project
 {
     public partial class RegisterForm : Form
     {
-        SqlConnection connect = new SqlConnection
-            (@"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30");
         public RegisterForm()
         {
             InitializeComponent();
@@ -64,7 +62,7 @@ namespace Library_Management_System_project
                     {
                         email = register_email.Text.Trim(),
                         username = register_username.Text.Trim(),
-                        password = register_password.Text.Trim(),
+                        password = PasswordHelper.Hash(register_password.Text.Trim()),
                         date_register = DateTime.Today
                     };
 

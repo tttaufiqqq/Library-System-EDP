@@ -7,8 +7,7 @@ namespace Library_Management_System_project
 {
     public partial class LoginForm : Form
     {
-        private LibraryDataContext db = new LibraryDataContext
-        (@"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30");
+        private LibraryDataContext db = new LibraryDataContext();
 
         public LoginForm()
         {
@@ -67,9 +66,9 @@ namespace Library_Management_System_project
                 try
                 {
                     var user = db.Users.SingleOrDefault(u =>
-                    u.username == login_username.Text.Trim() && u.password == login_password.Text.Trim());
+                    u.username == login_username.Text.Trim());
 
-                    if (user != null)
+                    if (user != null && PasswordHelper.Verify(login_password.Text, user.password))
                     {
                         MessageBox.Show("Login Successful!",
                             "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
