@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Library_Management_System_project;
 
 namespace Library_Management_System_project.Services
 {
@@ -64,6 +65,18 @@ namespace Library_Management_System_project.Services
             {
                 return db.IssuesBooks.ToList();
             }
+        }
+
+        private readonly IssueBooksRepository _repository = new IssueBooksRepository();
+
+        public List<DataIssueBooks> GetIssueDisplayData()
+        {
+            return _repository.FetchAllIssues();
+        }
+
+        public List<DataIssueBooks> GetNotReturnedDisplayData()
+        {
+            return _repository.FetchNotReturnedIssues();
         }
 
         public int GetIssuedCount()

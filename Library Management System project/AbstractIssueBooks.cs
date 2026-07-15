@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Library_Management_System_project
+﻿namespace Library_Management_System_project
 {
     public abstract class AbstractIssueBooks : IDataIssueBooks
     {
@@ -19,9 +13,5 @@ namespace Library_Management_System_project
         public string Return_Date { get; set; }
         public string Insert_Date { get; set; }
         public string Return_Status { get; set; }
-
-        public abstract List<DataIssueBooks> IssueBooksData();
-        public abstract List<DataIssueBooks> ReturnIssueBooksData();
     }
 }
-

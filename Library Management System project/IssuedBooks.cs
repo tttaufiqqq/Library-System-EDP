@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Net;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using Library_Management_System_project.Services;
 
 namespace Library_Management_System_project
 {
     public partial class IssuedBooks : UserControl
     {
+        private readonly IssueService _issueService = new IssueService();
         private string _currentBookImagePath;
 
         public IssuedBooks()
         {
-            InitializeComponent();           
+            InitializeComponent();
             DataBookTitle();
             displayBookIssueData();
             toolStripStatusLabel1.Text = "";
@@ -28,11 +23,7 @@ namespace Library_Management_System_project
 
         public void refreshData()
         {
-            if (InvokeRequired)
-            {
-                Invoke((MethodInvoker)refreshData);
-                return;
-            }
+            if (InvokeRequired) { Invoke((MethodInvoker)refreshData); return; }
             DataBookTitle();
             displayBookIssueData();
             clearFields();
@@ -42,20 +33,16 @@ namespace Library_Management_System_project
         {
             try
             {
-                DataIssueBooks dib = new DataIssueBooks();
-                List<DataIssueBooks> listData = dib.IssueBooksData();
-
-                dataGridView1.DataSource = null; // Clear existing data
-                dataGridView1.DataSource = listData;
-                dataGridView1.Refresh(); // Refresh the DataGridView
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = _issueService.GetIssueDisplayData();
+                dataGridView1.Refresh();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error in displayBookIssueData: " + ex.Message,
+                MessageBox.Show("Error displaying issues: " + ex.Message,
                     "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         public void clearFields()
         {

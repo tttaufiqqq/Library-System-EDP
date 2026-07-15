@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Library_Management_System_project
 {
@@ -19,9 +15,5 @@ namespace Library_Management_System_project
         string Return_Date { get; set; }
         string Insert_Date { get; set; }
         string Return_Status { get; set; }
-
-        List<DataIssueBooks> IssueBooksData();
-        List<DataIssueBooks> ReturnIssueBooksData();
     }
 }
-

@@ -83,6 +83,7 @@
       <DependentUpon>AddBooks.cs</DependentUpon>
     </Compile>
 
+    <Compile Include="AddBooksRepository.cs" />
     <Compile Include="Dashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -99,6 +100,7 @@
     </Compile>
     <Compile Include="IDataAddBooks.cs" />
     <Compile Include="IDataIssueBooks.cs" />
+    <Compile Include="IssueBooksRepository.cs" />
     <Compile Include="Library.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

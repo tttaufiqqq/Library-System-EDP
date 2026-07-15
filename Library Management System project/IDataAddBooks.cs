@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Library_Management_System_project
 {
@@ -14,7 +10,5 @@ namespace Library_Management_System_project
         string PublishedDate { get; set; }
         string ImagePath { get; set; }
         string Status { get; set; }
-
-        List<DataAddBooks> AddBooksData();
     }
 }
