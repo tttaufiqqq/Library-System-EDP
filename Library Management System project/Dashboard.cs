@@ -1,180 +1,78 @@
 ﻿using System;
-using System.Data.Linq;
-using System.Drawing; 
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Library_Management_System_project.Services;
 
 namespace Library_Management_System_project
 {
     public partial class Dashboard : UserControl
     {
-        LibraryDataContext context = new LibraryDataContext();
+        private readonly UserService _userService = new UserService();
+        private readonly BookService _bookService = new BookService();
+        private readonly IssueService _issueService = new IssueService();
 
         public Dashboard()
         {
             InitializeComponent();
-            displayAvailable();
-            displayIssued();
-            displayReturned();
-            displayUsers();
+            RefreshData();
             toolStripStatusLabel1.Text = "";
-
-            //Draw white border to the panels
-            panelAvailable.Paint += new PaintEventHandler(panel_Paint);
-            panelBorrowed.Paint += new PaintEventHandler(panel_Paint);
-            panelReturned.Paint += new PaintEventHandler(panel_Paint);
-            panelUsers.Paint += new PaintEventHandler(panel_Paint);
+            panelAvailable.Paint += PanelPaint;
+            panelBorrowed.Paint += PanelPaint;
+            panelReturned.Paint += PanelPaint;
+            panelUsers.Paint += PanelPaint;
         }
 
-        public void refreshData()
+        public void RefreshData()
         {
-            if (InvokeRequired)
-            {
-                Invoke((MethodInvoker)refreshData);
-                return;
-            }
-            displayAvailable();
-            displayIssued();
-            displayReturned();
-            displayUsers();
+            if (InvokeRequired) { Invoke((MethodInvoker)RefreshData); return; }
+            DisplayAvailable();
+            DisplayIssued();
+            DisplayReturned();
+            DisplayUsers();
         }
 
-        public void displayAvailable()
+        private void DisplayAvailable()
         {
-            try
-            {
-                int availableCount = context.Bookks.Count(book => book.Book_Status == "Available");
-                dashboard_Available.Text = availableCount.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+            dashboard_Available.Text = _bookService.GetAvailableBookCount().ToString();
         }
 
-        public void displayIssued()
+        private void DisplayIssued()
         {
-            try
-            {
-                int issuedCount = context.IssuesBooks.Count(issue => issue.Return_Status == "Not Returned");
-                dashboard_Issued.Text = issuedCount.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+            dashboard_Issued.Text = _issueService.GetIssuedCount().ToString();
         }
 
-        public void displayReturned()
+        private void DisplayReturned()
         {
-            try
-            {
-                int returnedCount = context.IssuesBooks.Count(issue => issue.Return_Status == "Returned");
-                dashboard_Returned.Text = returnedCount.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+            dashboard_Returned.Text = _issueService.GetReturnedCount().ToString();
         }
 
-        public void displayUsers()
+        private void DisplayUsers()
         {
-            try
-            {
-                int userCount = context.Users.Count();
-                dashboard_Users.Text = userCount.ToString();
-
-                var users = context.Users
-                    .OrderBy(user => user.username) // Sorting by registration date
-                    .Select(user => new
-                    {
-                        user.userId,
-                        user.username,
-                        user.date_register
-                    }).ToList();
-
-                dataGridView1.DataSource = users; // Binding the data to DataGridView
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+            dashboard_Users.Text = _userService.GetUserCount().ToString();
+            dataGridView1.DataSource = _userService.GetRegisteredUsers();
         }
 
-        private void panel_Paint(object sender, PaintEventArgs e)
+        private void PanelPaint(object sender, PaintEventArgs e)
         {
-            Panel panel = sender as Panel;
-            if (panel != null)
+            if (sender is Panel panel)
             {
-                // Define the pen for the border
                 using (Pen pen = new Pen(Color.White, 2))
-                {
-                    // Draw the border
-                    e.Graphics.DrawRectangle
-                        (pen, 0, 0, panel.Width -2, panel.Height -2);
-                }
+                    e.Graphics.DrawRectangle(pen, 0, 0, panel.Width - 2, panel.Height - 2);
             }
         }
 
-        private void dataGridView1_MouseEnter(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "Display registered users sorted by alphabets.";
-        }
-
-        private void dataGridView1_MouseLeave(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "";
-        }
-
-        private void monthCalendar1_MouseEnter(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "Display today's date.";
-        }
-
-        private void monthCalendar1_MouseLeave(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "";
-        }
-
-        private void panelReturned_MouseEnter(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "Display total of books that have been returned to the library";
-        }
-
-        private void panelReturned_MouseLeave(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "";
-        }
-
-        private void panelAvailable_MouseEnter(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "Display total of books that are available in the library";
-        }
-
-        private void panelAvailable_MouseLeave(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "";
-        }
-
-        private void panelBorrowed_MouseEnter(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "Display total of books that the library lend to people";
-        }
-
-        private void panelBorrowed_MouseLeave(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "";
-        }
-
-        private void panelUsers_MouseEnter(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "Display total of users registered in the system";
-        }
-
-        private void panelUsers_MouseLeave(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "";
-        }
+        private void dataGridView1_MouseEnter(object sender, EventArgs e) => toolStripStatusLabel1.Text = "Display registered users sorted by alphabets.";
+        private void dataGridView1_MouseLeave(object sender, EventArgs e) => toolStripStatusLabel1.Text = "";
+        private void monthCalendar1_MouseEnter(object sender, EventArgs e) => toolStripStatusLabel1.Text = "Display today's date.";
+        private void monthCalendar1_MouseLeave(object sender, EventArgs e) => toolStripStatusLabel1.Text = "";
+        private void panelReturned_MouseEnter(object sender, EventArgs e) => toolStripStatusLabel1.Text = "Display total of books that have been returned to the library";
+        private void panelReturned_MouseLeave(object sender, EventArgs e) => toolStripStatusLabel1.Text = "";
+        private void panelAvailable_MouseEnter(object sender, EventArgs e) => toolStripStatusLabel1.Text = "Display total of books that are available in the library";
+        private void panelAvailable_MouseLeave(object sender, EventArgs e) => toolStripStatusLabel1.Text = "";
+        private void panelBorrowed_MouseEnter(object sender, EventArgs e) => toolStripStatusLabel1.Text = "Display total of books that the library lend to people";
+        private void panelBorrowed_MouseLeave(object sender, EventArgs e) => toolStripStatusLabel1.Text = "";
+        private void panelUsers_MouseEnter(object sender, EventArgs e) => toolStripStatusLabel1.Text = "Display total of users registered in the system";
+        private void panelUsers_MouseLeave(object sender, EventArgs e) => toolStripStatusLabel1.Text = "";
     }
 }

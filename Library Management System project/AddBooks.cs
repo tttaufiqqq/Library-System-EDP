@@ -1,187 +1,129 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
+using Library_Management_System_project.Services;
 
 namespace Library_Management_System_project
 {
     public partial class AddBooks : UserControl
     {
-        public event Action<Bookk> BookAdded;
+        private readonly BookService _bookService = new BookService();
+        private int _selectedBookId;
 
         public AddBooks()
         {
             InitializeComponent();
-            DisplayBook();
+            DisplayBooks();
         }
 
         public void RefreshData()
         {
-            if (InvokeRequired)
-            {
-                Invoke((MethodInvoker)RefreshData);
-                return;
-            }
-            DisplayBook();
+            if (InvokeRequired) { Invoke((MethodInvoker)RefreshData); return; }
+            DisplayBooks();
         }
 
-        public void DisplayBook()
+        private void DisplayBooks()
         {
             try
             {
-                using (var db = new LibraryDataContext())
-                {
-                    var books = from book in db.Bookks
-                                orderby book.Book_Title 
-                                select book;
-
-                    dataGridView1.DataSource = books.ToList();
-                }
+                dataGridView1.DataSource = _bookService.GetAllBooks();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message,
+                MessageBox.Show("Error loading books: " + ex.Message,
                     "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-
-        public void ClearFields()
+        private void ClearFields()
         {
             BookTitle.Text = "";
             Author.Text = "";
             Add_PictureBox.Image = null;
             Status.SelectedIndex = -1;
+            _selectedBookId = 0;
         }
 
-        private int BookID = 0;
+        private bool ValidateForm()
+        {
+            return Add_PictureBox.Image != null &&
+                   !string.IsNullOrWhiteSpace(BookTitle.Text) &&
+                   !string.IsNullOrWhiteSpace(Author.Text) &&
+                   !string.IsNullOrWhiteSpace(Status.Text);
+        }
 
         private void buttonImport_Click_1(object sender, EventArgs e)
         {
-            string imagePath = "";
-
             try
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    imagePath = dialog.FileName;
-                    Add_PictureBox.ImageLocation = imagePath;
-                }
+                    Add_PictureBox.ImageLocation = dialog.FileName;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex, "Error Message",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error importing image: " + ex.Message,
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonAdd_Click_1(object sender, EventArgs e)
         {
-            if (Add_PictureBox.Image == null ||
-                BookTitle.Text == "" || Author.Text == "" ||
-                PublishedDate.Value == null || Status.Text == "" || Add_PictureBox.Image == null)
+            if (!ValidateForm())
             {
                 MessageBox.Show("Please fill all the required fields",
                     "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+
+            try
             {
-                try
+                string imagePath = _bookService.SaveBookImage(
+                    Add_PictureBox.ImageLocation,
+                    BookTitle.Text.Trim(),
+                    Author.Text.Trim());
+
+                var book = new Bookk
                 {
-                    using (var db = new LibraryDataContext())
-                    {
-                        DateTime today = DateTime.Today;
+                    Book_Title = BookTitle.Text.Trim(),
+                    Author = Author.Text.Trim(),
+                    Published_Date = PublishedDate.Value,
+                    Book_Status = Status.Text.Trim(),
+                    Image = imagePath,
+                    Date_Insert = DateTime.Today
+                };
 
-                        string path = Path.Combine(Application.StartupPath, "Books_Directory",
-                                                   BookTitle.Text.Trim() + "_" + Author.Text.Trim() + "_" + today.ToString("yyyyMMdd") + ".jpg");
-
-                        string directoryPath = Path.GetDirectoryName(path);
-
-                        if (!Directory.Exists(directoryPath))
-                        {
-                            Directory.CreateDirectory(directoryPath);
-                        }
-
-                        File.Copy(Add_PictureBox.ImageLocation, path, true);
-
-                        var newBook = new Bookk
-                        {
-                            Book_Title = BookTitle.Text.Trim(),
-                            Author = Author.Text.Trim(),
-                            Published_Date = PublishedDate.Value,
-                            Book_Status = Status.Text.Trim(),
-                            Image = path,
-                            Date_Insert = today
-                        };
-
-                        db.Bookks.InsertOnSubmit(newBook);
-                        db.SubmitChanges();
-
-                        BookAdded?.Invoke(new Bookk
-                        {
-                            Book_Title = BookTitle.Text.Trim(),
-                            Author = Author.Text.Trim(),
-                            Published_Date = PublishedDate.Value,
-                            Book_Status = Status.Text.Trim(),
-                            Image = path
-                        });
-
-                        DisplayBook();
-                        MessageBox.Show("Book Successfully Added",
-                            "Information Message", MessageBoxButtons.OK, 
-                            MessageBoxIcon.Information);
-                        ClearFields();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message, "Error Message", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                _bookService.AddBook(book);
+                DisplayBooks();
+                MessageBox.Show("Book Successfully Added",
+                    "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearFields();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding book: " + ex.Message,
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void dataGridView1_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex != -1)
+            if (e.RowIndex == -1) return;
+
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+            _selectedBookId = (int)row.Cells[0].Value;
+            BookTitle.Text = row.Cells[1].Value?.ToString();
+            Author.Text = row.Cells[2].Value?.ToString();
+            PublishedDate.Text = row.Cells[3].Value?.ToString();
+            Status.Text = row.Cells[4].Value?.ToString();
+
+            string imagePath = row.Cells[7].Value?.ToString();
+            if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
             {
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-                BookID = (int)row.Cells[0].Value;
-                BookTitle.Text = row.Cells[1].Value.ToString();
-                Author.Text = row.Cells[2].Value.ToString();
-                PublishedDate.Text = row.Cells[3].Value.ToString();
-
-                string imagePath = row.Cells[7].Value.ToString();
-
-                if (!string.IsNullOrEmpty(imagePath))
-                {
-                    try
-                    {
-                        if (File.Exists(imagePath))
-                        {
-                            Add_PictureBox.Image = Image.FromFile(imagePath);
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Image file not found at path: {imagePath}", "Error Message",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Add_PictureBox.Image = null; // Or set a default image
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error loading image: {ex.Message}", "Error Message",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-
-                Status.Text = row.Cells[4].Value.ToString();
+                try { Add_PictureBox.Image = Image.FromFile(imagePath); }
+                catch { Add_PictureBox.Image = null; }
             }
         }
-
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
@@ -190,119 +132,78 @@ namespace Library_Management_System_project
 
         private void buttonUpdate_Click_1(object sender, EventArgs e)
         {
-            if (Add_PictureBox.Image == null ||
-               BookTitle.Text == "" || Author.Text == "" ||
-               PublishedDate.Value == null || Status.Text == "" || Add_PictureBox.Image == null)
+            if (!ValidateForm())
             {
-                MessageBox.Show("Please select a book first", "Error Message",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a book first",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+
+            if (MessageBox.Show("Are you sure you want to UPDATE Book ID: " + _selectedBookId + " ?",
+                "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            try
             {
-                using (var db = new LibraryDataContext())
-                {
-                    DialogResult check = MessageBox.Show("Are you sure you want to UPDATE Book ID: " + BookID + " ?",
-                        "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (check == DialogResult.Yes)
-                    {
-                        try
-                        {
-                            var bookToUpdate = db.Bookks.SingleOrDefault(book => book.BookID == BookID);
+                _bookService.UpdateBook(
+                    _selectedBookId,
+                    BookTitle.Text.Trim(),
+                    Author.Text.Trim(),
+                    PublishedDate.Value,
+                    Status.Text.Trim(),
+                    null);
 
-                            if (bookToUpdate != null)
-                            {
-                                DateTime today = DateTime.Today;
-
-                                bookToUpdate.Book_Title = BookTitle.Text.Trim();
-                                bookToUpdate.Author = Author.Text.Trim();
-                                bookToUpdate.Published_Date = PublishedDate.Value;
-                                bookToUpdate.Book_Status = Status.Text.Trim();
-                                bookToUpdate.Date_Update = today;
-
-                                db.SubmitChanges();
-                                DisplayBook();
-                                MessageBox.Show("Book Successfully Updated", "Information Message",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                ClearFields();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Error: " + ex.Message, "Error Message", 
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cancelled.", "Information Message",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
+                DisplayBooks();
+                MessageBox.Show("Book Successfully Updated",
+                    "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearFields();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error updating book: " + ex.Message,
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonDelete_Click_1(object sender, EventArgs e)
         {
-            if (Add_PictureBox.Image == null ||
-                BookTitle.Text == "" || Author.Text == "" ||
-                PublishedDate.Value == null || Status.Text == "" || Add_PictureBox.Image == null)
+            if (!ValidateForm())
             {
-                MessageBox.Show("Please select a book first", "Error Message",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a book first",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
-            {
-                using (var db = new LibraryDataContext())
-                {
-                    DialogResult check = MessageBox.Show("Are you sure you want to DELETE Book ID: " + BookID + " ?",
-                        "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (check == DialogResult.Yes)
-                    {
-                        try
-                        {
-                            var bookToDelete = db.Bookks.SingleOrDefault(book => book.BookID == BookID);
 
-                            if (bookToDelete != null)
-                            {
-                                db.Bookks.DeleteOnSubmit(bookToDelete);
-                                db.SubmitChanges();
-                                DisplayBook();
-                                MessageBox.Show("Book Successfully Deleted", 
-                                    "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                ClearFields();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Error: " + ex.Message, 
-                                "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cancelled.", "Information Message", 
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
+            if (MessageBox.Show("Are you sure you want to DELETE Book ID: " + _selectedBookId + " ?",
+                "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            try
+            {
+                _bookService.SoftDeleteBook(_selectedBookId);
+                DisplayBooks();
+                MessageBox.Show("Book Successfully Deleted",
+                    "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearFields();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting book: " + ex.Message,
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void openFileForBookCoverToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string imagePath = "";
-
             try
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    imagePath = dialog.FileName;
-                    Add_PictureBox.ImageLocation = imagePath;
-                }
+                    Add_PictureBox.ImageLocation = dialog.FileName;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex, "Error Message",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + ex.Message,
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

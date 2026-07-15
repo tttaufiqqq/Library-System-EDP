@@ -1,40 +1,28 @@
-﻿using System.Drawing;
-using System.Linq;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
-using System;
+using Library_Management_System_project.Services;
 
 namespace Library_Management_System_project
 {
     public partial class LoginForm : Form
     {
-        private LibraryDataContext db = new LibraryDataContext();
+        private readonly UserService _userService = new UserService();
 
         public LoginForm()
         {
             InitializeComponent();
         }
 
-        // delegate to open register form
-        public delegate void OpenRegForm();
         private void signupBtn_Click(object sender, EventArgs e)
         {
-            OpenRegForm OpenForm = () =>
-            {
-                RegisterForm rForm = new RegisterForm();
-                rForm.Show();
-                this.Close();
-            };
-            OpenForm(); // lambda expression to open register form
+            new RegisterForm().Show();
+            this.Close();
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-            Application.Exit(); // X on the form used as exit button
-        }
-
-        private void label1_MouseLeave(object sender, EventArgs e)
-        {
-            label1.ForeColor = Color.White;
+            Application.Exit();
         }
 
         private void label1_MouseEnter(object sender, EventArgs e)
@@ -42,16 +30,14 @@ namespace Library_Management_System_project
             label1.ForeColor = Color.Black;
         }
 
-        // delegate to show password
-        public delegate void ShowPass();
-        public void showPass()
+        private void label1_MouseLeave(object sender, EventArgs e)
         {
-            login_password.PasswordChar = login_ShowPassword.Checked ? '\0' : '*';
+            label1.ForeColor = Color.White;
         }
+
         private void login_ShowPassword_CheckedChanged(object sender, EventArgs e)
         {
-            ShowPass show = showPass;
-            show(); // call the delegate to show password
+            login_password.PasswordChar = login_ShowPassword.Checked ? '\0' : '*';
         }
 
         private void loginBtn_Click(object sender, EventArgs e)
@@ -60,43 +46,41 @@ namespace Library_Management_System_project
             {
                 MessageBox.Show("Please fill all required information.",
                     "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
-            {
-                try
-                {
-                    var user = db.Users.SingleOrDefault(u =>
-                    u.username == login_username.Text.Trim());
 
-                    if (user != null && PasswordHelper.Verify(login_password.Text, user.password))
-                    {
-                        MessageBox.Show("Login Successful!",
-                            "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        MainForm mForm = new MainForm();
-                        mForm.SetUserLabel(user.username); // Pass the username to MainForm
-                        mForm.Show();
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Incorrect Password/Username",
-                            "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                catch (Exception ex)
+            try
+            {
+                var user = _userService.Authenticate(
+                    login_username.Text.Trim(),
+                    login_password.Text);
+
+                if (user != null)
                 {
-                    MessageBox.Show("Error connecting Database: " +
-                        ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Login Successful!",
+                        "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MainForm mForm = new MainForm();
+                    mForm.SetUserLabel(user.username);
+                    mForm.Show();
+                    this.Close();
                 }
+                else
+                {
+                    MessageBox.Show("Incorrect Password/Username",
+                        "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to database: " + ex.Message,
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void login_password_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-            {
-                loginBtn_Click(sender, e); // Trigger the login button click event
-            }
+                loginBtn_Click(sender, e);
         }
     }
 }

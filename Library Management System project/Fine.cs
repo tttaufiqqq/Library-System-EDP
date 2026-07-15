@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Library_Management_System_project
 {
     public partial class Fine : UserControl
     {
+        private const decimal FineRatePerDay = 5m;
+
         public Fine()
         {
             InitializeComponent();
@@ -23,45 +16,27 @@ namespace Library_Management_System_project
         {
             comboBox1.SelectedIndex = 0;
             buttonPay.Enabled = false;
-
-            maskedTextBox1.TextChanged += new EventHandler(CheckFormCompletion);
-            maskedTextBox2.TextChanged += new EventHandler(CheckFormCompletion);
-            maskedTextBox3.TextChanged += new EventHandler(CheckFormCompletion);
-            comboBox1.SelectedIndexChanged += new EventHandler(CheckFormCompletion);
-            checkBoxAgree.CheckedChanged += new EventHandler(CheckFormCompletion);
-
             numericUpDown1.Minimum = 0;
             numericUpDown1.Maximum = 1000;
+
+            maskedTextBox1.TextChanged += CheckFormCompletion;
+            maskedTextBox2.TextChanged += CheckFormCompletion;
+            maskedTextBox3.TextChanged += CheckFormCompletion;
+            comboBox1.SelectedIndexChanged += CheckFormCompletion;
+            checkBoxAgree.CheckedChanged += CheckFormCompletion;
         }
 
         private void CheckFormCompletion(object sender, EventArgs e)
         {
-            bool isFormComplete =
+            buttonPay.Enabled =
                 !string.IsNullOrWhiteSpace(maskedTextBox1.Text) &&
                 !string.IsNullOrWhiteSpace(maskedTextBox2.Text) &&
                 !string.IsNullOrWhiteSpace(maskedTextBox3.Text) &&
                 comboBox1.SelectedIndex != 0 &&
                 checkBoxAgree.Checked;
-
-            buttonPay.Enabled = isFormComplete;
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBoxCard_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        public void clearFields()
+        public void ClearFields()
         {
             richTextBox1.Text = "";
             numericUpDown1.Value = 0;
@@ -77,7 +52,7 @@ namespace Library_Management_System_project
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            clearFields();
+            ClearFields();
         }
 
         private void radioButtonCard_CheckedChanged(object sender, EventArgs e)
@@ -86,49 +61,41 @@ namespace Library_Management_System_project
             buttonPay.Enabled = true;
         }
 
-        private void buttonPay_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (radioButtonCash.Checked)
-                    MessageBox.Show("Please make the payment at the counter", "Cash", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                if (radioButtonCard.Checked)
-                {
-                    if (string.IsNullOrWhiteSpace(maskedTextBox1.Text))
-                    {
-                        throw new Exception("Card Details is required.");
-                    }
-                    MessageBox.Show("Your payment is successful.", "Payment Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-        }
-
         private void radioButtonCash_CheckedChanged(object sender, EventArgs e)
         {
             grpCardDetails.Enabled = false;
             buttonPay.Enabled = true;
         }
 
-        public delegate decimal FineCalculatorDelegate(decimal value);
+        private void buttonPay_Click(object sender, EventArgs e)
+        {
+            if (radioButtonCash.Checked)
+            {
+                MessageBox.Show("Please make the payment at the counter",
+                    "Cash", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (radioButtonCard.Checked)
+            {
+                if (string.IsNullOrWhiteSpace(maskedTextBox1.Text))
+                {
+                    MessageBox.Show("Card Details is required.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                MessageBox.Show("Your payment is successful.",
+                    "Payment Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
 
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
-            FineCalculatorDelegate calculateFine = CalculateFine;
-            decimal value = numericUpDown1.Value;
-            decimal fine = calculateFine(value);
+            decimal days = numericUpDown1.Value;
+            decimal fine = days * FineRatePerDay;
             labelDisplay.Text = $"Total Fine: RM {fine:F2}";
         }
 
-        private decimal CalculateFine(decimal value)
-        {
-            decimal rate = 5m;
-            return value * rate;
-        }
+        private void groupBoxCard_Enter(object sender, EventArgs e) { }
+        private void richTextBox1_TextChanged(object sender, EventArgs e) { }
+        private void label1_Click(object sender, EventArgs e) { }
     }
 }
-
