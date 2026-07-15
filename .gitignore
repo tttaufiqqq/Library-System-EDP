@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.cache
+packages/
+*.dbmdl
+*.jfm
+*.mdf
+*.ldf

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Library" Class="LibraryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30" SettingsObjectName="Library_Management_System_project.Properties.Settings" SettingsPropertyName="LibraryConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="username" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="date_register" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IssuesBooks" Member="IssuesBooks">
+    <Type Name="IssuesBook">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IssueID" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Full_Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Contact" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Book_Title" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Author" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Return_Status" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Issue_Date" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Return_Date" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Date_Update" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Insert_Date" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Books" Member="Bookks">
+    <Type Name="Bookk">
+      <Column Name="BookID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Book_Title" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Author" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Published_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Book_Status" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Date_Insert" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Date_Update" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Date_Delete" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

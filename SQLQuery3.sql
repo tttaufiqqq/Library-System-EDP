@@ -1,0 +1,4 @@
+﻿ALTER TABLE IssuesBooks
+ADD Insert_Date VARCHAR(MAX) NULL
+
+SELECT * FROM IssuesBooks
