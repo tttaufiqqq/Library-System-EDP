@@ -13,7 +13,7 @@ namespace Library_Management_System_project
         public event Action<Bookk> BookAdded;
 
         private string connectionString = 
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\taufi\Documents\Library.mdf;Integrated Security=True;Connect Timeout=30";
+            @"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30";
 
         public AddBooks()
         {
@@ -98,7 +98,7 @@ namespace Library_Management_System_project
                     {
                         DateTime today = DateTime.Today;
 
-                        string path = Path.Combine(@"C:\Users\taufi\Desktop\liyana baru ( final vs )\Library Management System project\Library Management System project\Books_Directory",
+                        string path = Path.Combine(Application.StartupPath, "Books_Directory",
                                                    BookTitle.Text.Trim() + "_" + Author.Text.Trim() + "_" + today.ToString("yyyyMMdd") + ".jpg");
 
                         string directoryPath = Path.GetDirectoryName(path);

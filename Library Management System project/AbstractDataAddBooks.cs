@@ -9,7 +9,7 @@ namespace Library_Management_System_project
     public abstract class AbstractDataAddBooks : IDataAddBooks
     {
         protected string connectionString = 
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\taufi\Documents\Library.mdf;Integrated Security=True;Connect Timeout=30";
+            @"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30";
 
         public int Id { get; set; }
         public string Title { get; set; }

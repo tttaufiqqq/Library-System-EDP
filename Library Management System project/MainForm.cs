@@ -45,7 +45,7 @@ namespace Library_Management_System_project
             {
                 LoginForm lForm = new LoginForm();
                 lForm.Show();
-                this.Hide();
+                this.Close();
             }
         }
 
@@ -108,18 +108,17 @@ namespace Library_Management_System_project
         private void BookdetailsBtn_Click(object sender, EventArgs e)
         {
             dashboard1.Visible = false;
-            addBooks1.Visible = false;
-            returnBooks1.Visible = true;
+            addBooks1.Visible = true;
+            returnBooks1.Visible = false;
             issuedBooks1.Visible = false;
             fine1.Visible = false;
-          
         }
 
         private void buttonFine_Click(object sender, EventArgs e)
         {
             dashboard1.Visible = false;
             addBooks1.Visible = false;
-            returnBooks1.Visible = true;
+            returnBooks1.Visible = false;
             issuedBooks1.Visible = false;
             fine1.Visible = true;
           

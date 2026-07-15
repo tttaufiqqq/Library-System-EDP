@@ -15,7 +15,7 @@ namespace Library_Management_System_project
     public partial class RegisterForm : Form
     {
         SqlConnection connect = new SqlConnection
-            (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\taufi\Documents\Library.mdf;Integrated Security=True;Connect Timeout=30");
+            (@"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30");
         public RegisterForm()
         {
             InitializeComponent();
@@ -28,7 +28,7 @@ namespace Library_Management_System_project
             {
                 LoginForm loginForm = new LoginForm();
                 loginForm.Show();
-                this.Hide();
+                this.Close();
             };
             OpenForm(); //lambda expression to open log in form
         }

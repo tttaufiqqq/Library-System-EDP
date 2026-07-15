@@ -8,7 +8,7 @@ namespace Library_Management_System_project
     public partial class LoginForm : Form
     {
         private LibraryDataContext db = new LibraryDataContext
-        (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\taufi\Documents\Library.mdf;Integrated Security=True;Connect Timeout=30");
+        (@"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30");
 
         public LoginForm()
         {
@@ -23,7 +23,7 @@ namespace Library_Management_System_project
             {
                 RegisterForm rForm = new RegisterForm();
                 rForm.Show();
-                this.Hide();
+                this.Close();
             };
             OpenForm(); // lambda expression to open register form
         }
@@ -76,7 +76,7 @@ namespace Library_Management_System_project
                         MainForm mForm = new MainForm();
                         mForm.SetUserLabel(user.username); // Pass the username to MainForm
                         mForm.Show();
-                        this.Hide();
+                        this.Close();
                     }
                     else
                     {

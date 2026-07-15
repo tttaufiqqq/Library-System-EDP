@@ -17,7 +17,9 @@ namespace Library_Management_System_project
     public partial class IssuedBooks : UserControl
     {
         SqlConnection connect = new SqlConnection
-            (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\taufi\Documents\Library.mdf;Integrated Security=True;Connect Timeout=30");
+            (@"Server=CHANGE_ME;Initial Catalog=Library;User Id=CHANGE_ME;Password=CHANGE_ME;Connect Timeout=30");
+
+        private string _currentBookImagePath;
 
         public IssuedBooks()
         {
@@ -70,6 +72,7 @@ namespace Library_Management_System_project
             bookIssue_returnDate.Value = DateTime.Today;
             bookIssue_status.Text = "";
             bookIssue_picturbox.Image = null;
+            _currentBookImagePath = null;
         }
 
         private void bookIssue_Add_Click(object sender, EventArgs e)
@@ -90,15 +93,6 @@ namespace Library_Management_System_project
                 {
                     using (LibraryDataContext context = new LibraryDataContext())
                     {
-                        // Convert the image to a byte array
-                        byte[] imageBytes;
-                        using (var ms = new System.IO.MemoryStream())
-                        {
-                            bookIssue_picturbox.Image.Save(ms, bookIssue_picturbox.Image.RawFormat);
-                            imageBytes = ms.ToArray();
-                        }
-
-                        // Create a new IssuesBooks object
                         IssuesBook newIssue = new IssuesBook
                         {
                             IssueID = bookIssue_id.Text.Trim(),
@@ -107,7 +101,7 @@ namespace Library_Management_System_project
                             Contact = bookIssue_contact.Text.Trim(),
                             Email = bookIssue_email.Text.Trim(),
                             Book_Title = bookIssue_bookTitle.Text.Trim(),
-                            Image = imageBytes.ToString(),
+                            Image = _currentBookImagePath ?? "",
                             Return_Status = bookIssue_status.Text.Trim(),
                             Issue_Date = bookIssue_issueDate.Value.ToString(),
                             Return_Date = bookIssue_returnDate.Value.ToString(),
@@ -189,10 +183,12 @@ namespace Library_Management_System_project
                                 if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
                                 {
                                     bookIssue_picturbox.Image = Image.FromFile(imagePath);
+                                    _currentBookImagePath = imagePath;
                                 }
                                 else
                                 {
                                     bookIssue_picturbox.Image = null;
+                                    _currentBookImagePath = null;
                                 }
                             }
                         }
