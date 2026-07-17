@@ -44,13 +44,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.labelUser = new System.Windows.Forms.Label();
             this.fine1 = new Library_Management_System_project.Fine();
             this.dashboard1 = new Library_Management_System_project.Dashboard();
             this.addBooks1 = new Library_Management_System_project.AddBooks();
             this.issuedBooks1 = new Library_Management_System_project.IssuedBooks();
             this.returnBooks1 = new Library_Management_System_project.ReturnBooks();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.labelUser = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -65,8 +65,9 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1100, 35);
+            this.panel1.Size = new System.Drawing.Size(825, 29);
             this.panel1.TabIndex = 0;
             // 
             // label2
@@ -74,9 +75,10 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(11, 4);
+            this.label2.Location = new System.Drawing.Point(8, 3);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(327, 24);
+            this.label2.Size = new System.Drawing.Size(265, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "Library Management System | Main Form";
             // 
@@ -85,9 +87,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(1069, 9);
+            this.label1.Location = new System.Drawing.Point(802, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(19, 22);
+            this.label1.Size = new System.Drawing.Size(16, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "X";
             this.toolTip1.SetToolTip(this.label1, "Click this to close the form");
@@ -109,9 +112,10 @@
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 35);
+            this.panel2.Location = new System.Drawing.Point(0, 29);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(220, 565);
+            this.panel2.Size = new System.Drawing.Size(166, 459);
             this.panel2.TabIndex = 1;
             // 
             // buttonFine
@@ -122,9 +126,10 @@
             this.buttonFine.ForeColor = System.Drawing.Color.White;
             this.buttonFine.Image = ((System.Drawing.Image)(resources.GetObject("buttonFine.Image")));
             this.buttonFine.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFine.Location = new System.Drawing.Point(24, 376);
+            this.buttonFine.Location = new System.Drawing.Point(18, 306);
+            this.buttonFine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonFine.Name = "buttonFine";
-            this.buttonFine.Size = new System.Drawing.Size(165, 32);
+            this.buttonFine.Size = new System.Drawing.Size(124, 26);
             this.buttonFine.TabIndex = 5;
             this.buttonFine.Text = "PAYMENT";
             this.buttonFine.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -137,9 +142,10 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial Narrow", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(59, 497);
+            this.label4.Location = new System.Drawing.Point(44, 404);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(75, 22);
+            this.label4.Size = new System.Drawing.Size(60, 17);
             this.label4.TabIndex = 3;
             this.label4.Text = "LOG OUT";
             // 
@@ -151,9 +157,10 @@
             this.buttonLogOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLogOut.ForeColor = System.Drawing.Color.White;
             this.buttonLogOut.Image = ((System.Drawing.Image)(resources.GetObject("buttonLogOut.Image")));
-            this.buttonLogOut.Location = new System.Drawing.Point(8, 485);
+            this.buttonLogOut.Location = new System.Drawing.Point(6, 394);
+            this.buttonLogOut.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonLogOut.Name = "buttonLogOut";
-            this.buttonLogOut.Size = new System.Drawing.Size(45, 45);
+            this.buttonLogOut.Size = new System.Drawing.Size(34, 37);
             this.buttonLogOut.TabIndex = 2;
             this.toolTip1.SetToolTip(this.buttonLogOut, "Log out of the system");
             this.buttonLogOut.UseVisualStyleBackColor = true;
@@ -168,9 +175,10 @@
             this.buttonReturnBooks.ForeColor = System.Drawing.Color.White;
             this.buttonReturnBooks.Image = ((System.Drawing.Image)(resources.GetObject("buttonReturnBooks.Image")));
             this.buttonReturnBooks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonReturnBooks.Location = new System.Drawing.Point(24, 334);
+            this.buttonReturnBooks.Location = new System.Drawing.Point(18, 271);
+            this.buttonReturnBooks.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonReturnBooks.Name = "buttonReturnBooks";
-            this.buttonReturnBooks.Size = new System.Drawing.Size(165, 36);
+            this.buttonReturnBooks.Size = new System.Drawing.Size(124, 29);
             this.buttonReturnBooks.TabIndex = 2;
             this.buttonReturnBooks.Text = "RETURN BOOKS";
             this.buttonReturnBooks.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -186,9 +194,10 @@
             this.buttonIssueBooks.ForeColor = System.Drawing.Color.White;
             this.buttonIssueBooks.Image = ((System.Drawing.Image)(resources.GetObject("buttonIssueBooks.Image")));
             this.buttonIssueBooks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonIssueBooks.Location = new System.Drawing.Point(24, 293);
+            this.buttonIssueBooks.Location = new System.Drawing.Point(18, 238);
+            this.buttonIssueBooks.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonIssueBooks.Name = "buttonIssueBooks";
-            this.buttonIssueBooks.Size = new System.Drawing.Size(165, 35);
+            this.buttonIssueBooks.Size = new System.Drawing.Size(124, 28);
             this.buttonIssueBooks.TabIndex = 2;
             this.buttonIssueBooks.Text = "ISSUE BOOKS";
             this.buttonIssueBooks.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -204,9 +213,10 @@
             this.buttonAddBooks.ForeColor = System.Drawing.Color.White;
             this.buttonAddBooks.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddBooks.Image")));
             this.buttonAddBooks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddBooks.Location = new System.Drawing.Point(24, 254);
+            this.buttonAddBooks.Location = new System.Drawing.Point(18, 206);
+            this.buttonAddBooks.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonAddBooks.Name = "buttonAddBooks";
-            this.buttonAddBooks.Size = new System.Drawing.Size(165, 33);
+            this.buttonAddBooks.Size = new System.Drawing.Size(124, 27);
             this.buttonAddBooks.TabIndex = 2;
             this.buttonAddBooks.Text = "ADD BOOKS";
             this.buttonAddBooks.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -222,9 +232,10 @@
             this.buttonDashboard.ForeColor = System.Drawing.Color.White;
             this.buttonDashboard.Image = ((System.Drawing.Image)(resources.GetObject("buttonDashboard.Image")));
             this.buttonDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDashboard.Location = new System.Drawing.Point(24, 214);
+            this.buttonDashboard.Location = new System.Drawing.Point(18, 174);
+            this.buttonDashboard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonDashboard.Name = "buttonDashboard";
-            this.buttonDashboard.Size = new System.Drawing.Size(165, 34);
+            this.buttonDashboard.Size = new System.Drawing.Size(124, 28);
             this.buttonDashboard.TabIndex = 2;
             this.buttonDashboard.Text = "DASHBOARD";
             this.buttonDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -237,9 +248,10 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial Narrow", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(20, 158);
+            this.label3.Location = new System.Drawing.Point(15, 128);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 22);
+            this.label3.Size = new System.Drawing.Size(67, 20);
             this.label3.TabIndex = 1;
             this.label3.Text = "Welcome,";
             // 
@@ -247,9 +259,10 @@
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(56, 37);
+            this.pictureBox1.Location = new System.Drawing.Point(42, 30);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
+            this.pictureBox1.Size = new System.Drawing.Size(75, 81);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -262,10 +275,57 @@
             this.panel3.Controls.Add(this.issuedBooks1);
             this.panel3.Controls.Add(this.returnBooks1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(220, 35);
+            this.panel3.Location = new System.Drawing.Point(166, 29);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(880, 565);
+            this.panel3.Size = new System.Drawing.Size(659, 459);
             this.panel3.TabIndex = 2;
+            // 
+            // fine1
+            // 
+            this.fine1.BackColor = System.Drawing.Color.SteelBlue;
+            this.fine1.Location = new System.Drawing.Point(0, 1);
+            this.fine1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.fine1.Name = "fine1";
+            this.fine1.Size = new System.Drawing.Size(660, 456);
+            this.fine1.TabIndex = 4;
+            this.fine1.Load += new System.EventHandler(this.fine1_Load);
+            // 
+            // dashboard1
+            // 
+            this.dashboard1.BackColor = System.Drawing.Color.SteelBlue;
+            this.dashboard1.Location = new System.Drawing.Point(0, -2);
+            this.dashboard1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dashboard1.Name = "dashboard1";
+            this.dashboard1.Size = new System.Drawing.Size(660, 461);
+            this.dashboard1.TabIndex = 3;
+            // 
+            // addBooks1
+            // 
+            this.addBooks1.BackColor = System.Drawing.Color.SteelBlue;
+            this.addBooks1.Location = new System.Drawing.Point(0, 0);
+            this.addBooks1.Margin = new System.Windows.Forms.Padding(2);
+            this.addBooks1.Name = "addBooks1";
+            this.addBooks1.Size = new System.Drawing.Size(660, 459);
+            this.addBooks1.TabIndex = 2;
+            // 
+            // issuedBooks1
+            // 
+            this.issuedBooks1.BackColor = System.Drawing.Color.SteelBlue;
+            this.issuedBooks1.Location = new System.Drawing.Point(0, -9);
+            this.issuedBooks1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.issuedBooks1.Name = "issuedBooks1";
+            this.issuedBooks1.Size = new System.Drawing.Size(660, 468);
+            this.issuedBooks1.TabIndex = 1;
+            // 
+            // returnBooks1
+            // 
+            this.returnBooks1.BackColor = System.Drawing.Color.SteelBlue;
+            this.returnBooks1.Location = new System.Drawing.Point(0, 0);
+            this.returnBooks1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.returnBooks1.Name = "returnBooks1";
+            this.returnBooks1.Size = new System.Drawing.Size(660, 459);
+            this.returnBooks1.TabIndex = 0;
             // 
             // toolTip1
             // 
@@ -277,63 +337,24 @@
             this.labelUser.BackColor = System.Drawing.Color.SteelBlue;
             this.labelUser.Font = new System.Drawing.Font("Arial Narrow", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelUser.ForeColor = System.Drawing.Color.White;
-            this.labelUser.Location = new System.Drawing.Point(106, 195);
+            this.labelUser.Location = new System.Drawing.Point(80, 158);
+            this.labelUser.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelUser.Name = "labelUser";
-            this.labelUser.Size = new System.Drawing.Size(78, 22);
+            this.labelUser.Size = new System.Drawing.Size(69, 20);
             this.labelUser.TabIndex = 6;
             this.labelUser.Text = "username";
             // 
-            // fine1
-            // 
-            this.fine1.BackColor = System.Drawing.Color.SteelBlue;
-            this.fine1.Location = new System.Drawing.Point(0, 1);
-            this.fine1.Name = "fine1";
-            this.fine1.Size = new System.Drawing.Size(880, 561);
-            this.fine1.TabIndex = 4;
-            this.fine1.Load += new System.EventHandler(this.fine1_Load);
-            // 
-            // dashboard1
-            // 
-            this.dashboard1.BackColor = System.Drawing.Color.SteelBlue;
-            this.dashboard1.Location = new System.Drawing.Point(0, -2);
-            this.dashboard1.Name = "dashboard1";
-            this.dashboard1.Size = new System.Drawing.Size(880, 567);
-            this.dashboard1.TabIndex = 3;
-            // 
-            // addBooks1
-            // 
-            this.addBooks1.BackColor = System.Drawing.Color.SteelBlue;
-            this.addBooks1.Location = new System.Drawing.Point(0, 0);
-            this.addBooks1.Name = "addBooks1";
-            this.addBooks1.Size = new System.Drawing.Size(880, 565);
-            this.addBooks1.TabIndex = 2;
-            // 
-            // issuedBooks1
-            // 
-            this.issuedBooks1.BackColor = System.Drawing.Color.SteelBlue;
-            this.issuedBooks1.Location = new System.Drawing.Point(0, -11);
-            this.issuedBooks1.Name = "issuedBooks1";
-            this.issuedBooks1.Size = new System.Drawing.Size(880, 576);
-            this.issuedBooks1.TabIndex = 1;
-            // 
-            // returnBooks1
-            // 
-            this.returnBooks1.BackColor = System.Drawing.Color.SteelBlue;
-            this.returnBooks1.Location = new System.Drawing.Point(0, 0);
-            this.returnBooks1.Name = "returnBooks1";
-            this.returnBooks1.Size = new System.Drawing.Size(880, 565);
-            this.returnBooks1.TabIndex = 0;
-            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1100, 600);
+            this.ClientSize = new System.Drawing.Size(825, 488);
             this.Controls.Add(this.labelUser);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
@@ -345,7 +366,6 @@
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

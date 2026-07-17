@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,6 +14,14 @@ namespace Library_Management_System_project
         public Dashboard()
         {
             InitializeComponent();
+
+            // LicenseManager.UsageMode (not Control.DesignMode) is what reliably
+            // reports design time here - Dashboard is loaded as a nested control
+            // inside MainForm's designer, where DesignMode is unset in the ctor.
+            // Skip live DB calls so opening a parent form's designer never
+            // requires a reachable SQL Server.
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
+
             RefreshData();
             toolStripStatusLabel1.Text = "";
             panelAvailable.Paint += PanelPaint;

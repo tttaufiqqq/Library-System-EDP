@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -15,6 +16,7 @@ namespace Library_Management_System_project
             InitializeComponent();
             PublishedDate.MaxDate = DateTime.Today;
             SetButtonIcons();
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             DisplayBooks();
         }
 
@@ -79,6 +81,11 @@ namespace Library_Management_System_project
                    !string.IsNullOrWhiteSpace(BookTitle.Text) &&
                    !string.IsNullOrWhiteSpace(Author.Text) &&
                    !string.IsNullOrWhiteSpace(Status.Text);
+        }
+
+        private void labelSearch_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

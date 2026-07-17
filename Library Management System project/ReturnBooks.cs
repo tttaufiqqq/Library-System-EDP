@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -14,6 +15,7 @@ namespace Library_Management_System_project
         {
             InitializeComponent();
             SetButtonIcons();
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             DisplayIssuedBooks();
             toolStripStatusLabel1.Text = "";
         }

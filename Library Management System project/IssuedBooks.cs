@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -15,6 +16,7 @@ namespace Library_Management_System_project
         {
             InitializeComponent();
             SetButtonIcons();
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             DataBookTitle();
             displayBookIssueData();
             toolStripStatusLabel1.Text = "";
@@ -81,6 +83,11 @@ namespace Library_Management_System_project
             bookIssue_bookTitle.DataSource = table;
             bookIssue_bookTitle.DisplayMember = "Book_Title";
             bookIssue_bookTitle.ValueMember = "BookID";
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

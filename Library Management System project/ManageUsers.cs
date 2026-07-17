@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
 
@@ -13,6 +14,7 @@ namespace Library_Management_System_project
         {
             InitializeComponent();
             comboBoxRole.Items.AddRange(new object[] { "Admin", "Staff", "Borrower" });
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             DisplayUsers();
         }
 

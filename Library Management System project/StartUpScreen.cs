@@ -13,6 +13,9 @@ namespace Library_Management_System_project
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, int lParam);
 
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        private static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
+
         public StartUpScreen()
         {
             InitializeComponent();
@@ -28,8 +31,9 @@ namespace Library_Management_System_project
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100; // Adjust this value as needed
             progressBar1.Step = 1;
-            // Standard ProgressBar ignores ForeColor under visual styles; PBM_SETBARCOLOR
-            // is the documented way to override the themed (green) fill color.
+            // PBM_SETBARCOLOR is ignored while the control uses the themed (green)
+            // visual style, so drop it to classic rendering first via SetWindowTheme.
+            SetWindowTheme(progressBar1.Handle, "", "");
             SendMessage(progressBar1.Handle, PBM_SETBARCOLOR, IntPtr.Zero, ColorTranslator.ToWin32(Color.Yellow));
         }
 
