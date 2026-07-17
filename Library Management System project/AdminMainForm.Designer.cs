@@ -66,6 +66,7 @@ namespace Library_Management_System_project
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(825, 488);
             this.Name = "AdminMainForm";
+            this.Text = "Library Management System - Admin";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
