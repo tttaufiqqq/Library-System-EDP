@@ -61,9 +61,28 @@ namespace Library_Management_System_project
                 {
                     MessageBox.Show("Login Successful!",
                         "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    MainForm mForm = new MainForm();
-                    mForm.SetUserLabel(user.username);
-                    mForm.Show();
+
+                    switch (user.role)
+                    {
+                        case "Admin":
+                            MainForm adminForm = new AdminMainForm();
+                            adminForm.SetUserLabel(user.username);
+                            adminForm.Show();
+                            break;
+                        case "Staff":
+                            MainForm staffForm = new MainForm();
+                            staffForm.SetUserLabel(user.username);
+                            staffForm.Show();
+                            break;
+                        case "Borrower":
+                            new BorrowerForm(user).Show();
+                            break;
+                        default:
+                            MessageBox.Show($"Unrecognized role '{user.role}' for this account. Contact an administrator.",
+                                "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                    }
+
                     this.Close();
                 }
                 else

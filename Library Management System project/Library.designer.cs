@@ -111,7 +111,9 @@ namespace Library_Management_System_project
 		private string _password;
 		
 		private System.Nullable<System.DateTime> _date_register;
-		
+
+		private string _role;
+
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -126,6 +128,8 @@ namespace Library_Management_System_project
     partial void OnpasswordChanged();
     partial void Ondate_registerChanging(System.Nullable<System.DateTime> value);
     partial void Ondate_registerChanged();
+    partial void OnroleChanging(string value);
+    partial void OnroleChanged();
     #endregion
 		
 		public User()
@@ -232,7 +236,27 @@ namespace Library_Management_System_project
 				}
 			}
 		}
-		
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_role", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string role
+		{
+			get
+			{
+				return this._role;
+			}
+			set
+			{
+				if ((this._role != value))
+				{
+					this.OnroleChanging(value);
+					this.SendPropertyChanging();
+					this._role = value;
+					this.SendPropertyChanged("role");
+					this.OnroleChanged();
+				}
+			}
+		}
+
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;

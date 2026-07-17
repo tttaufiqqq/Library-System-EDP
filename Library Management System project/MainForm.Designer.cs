@@ -353,7 +353,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel panel2;
+        protected System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonAddBooks;
         private System.Windows.Forms.Button buttonDashboard;
@@ -362,7 +362,7 @@
         private System.Windows.Forms.Button buttonIssueBooks;
         private System.Windows.Forms.Button buttonLogOut;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel panel3;
+        protected System.Windows.Forms.Panel panel3;
         private ReturnBooks returnBooks1;
         private Dashboard dashboard1;
         private AddBooks addBooks1;

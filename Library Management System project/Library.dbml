@@ -7,6 +7,7 @@
       <Column Name="username" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="password" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="date_register" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="role" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.IssuesBooks" Member="IssuesBooks">

@@ -43,13 +43,10 @@ namespace Library_Management_System_project
             }
         }
 
-        private void ShowPanel(UserControl panel)
+        protected virtual void ShowPanel(UserControl panel)
         {
-            dashboard1.Visible = false;
-            addBooks1.Visible = false;
-            returnBooks1.Visible = false;
-            issuedBooks1.Visible = false;
-            fine1.Visible = false;
+            foreach (Control c in panel3.Controls)
+                c.Visible = false;
             panel.Visible = true;
         }
 

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
+using Library_Management_System_project.Services;
 
 namespace Library_Management_System_project
 {
     public partial class Fine : UserControl
     {
-        private const decimal FineRatePerDay = 5m;
-
         public Fine()
         {
             InitializeComponent();
@@ -89,8 +88,7 @@ namespace Library_Management_System_project
 
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
-            decimal days = numericUpDown1.Value;
-            decimal fine = days * FineRatePerDay;
+            decimal fine = FineCalculator.Calculate((int)numericUpDown1.Value);
             labelDisplay.Text = $"Total Fine: RM {fine:F2}";
         }
 

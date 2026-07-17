@@ -18,7 +18,8 @@ namespace Library_Management_System_project.Services
                     email = email,
                     username = username,
                     password = PasswordHelper.Hash(password),
-                    date_register = DateTime.Today
+                    date_register = DateTime.Today,
+                    role = "Borrower"
                 };
 
                 db.Users.InsertOnSubmit(user);
@@ -39,7 +40,27 @@ namespace Library_Management_System_project.Services
 
         public List<object> GetRegisteredUsers() =>
             WithContext(db => db.Users.OrderBy(u => u.username)
-                .Select(u => new { u.userId, u.username, u.date_register })
+                .Select(u => new { u.userId, u.username, u.email, u.role, u.date_register })
                 .ToList<object>());
+
+        public void UpdateUserRole(int userId, string role) =>
+            WithContext(db =>
+            {
+                var user = db.Users.SingleOrDefault(u => u.userId == userId);
+                if (user == null) return;
+
+                user.role = role;
+                db.SubmitChanges();
+            });
+
+        public void DeleteUser(int userId) =>
+            WithContext(db =>
+            {
+                var user = db.Users.SingleOrDefault(u => u.userId == userId);
+                if (user == null) return;
+
+                db.Users.DeleteOnSubmit(user);
+                db.SubmitChanges();
+            });
     }
 }

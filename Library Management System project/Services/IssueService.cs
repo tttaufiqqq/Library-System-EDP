@@ -63,6 +63,9 @@ namespace Library_Management_System_project.Services
         public List<IssuesBook> GetAllIssues() =>
             WithContext(db => db.IssuesBooks.ToList());
 
+        public List<IssuesBook> GetIssuesByEmail(string email) =>
+            WithContext(db => db.IssuesBooks.Where(i => i.Email == email).ToList());
+
         private readonly IssueBooksRepository _repository = new IssueBooksRepository();
 
         public List<IssueGridRow> GetIssueDisplayData()

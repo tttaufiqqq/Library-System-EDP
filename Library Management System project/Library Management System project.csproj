@@ -185,6 +185,7 @@
     </Compile>
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\FineCalculator.cs" />
     <Compile Include="Services\ImageStorageService.cs" />
     <Compile Include="Services\IImageStorageService.cs" />
     <Compile Include="Services\DashboardService.cs" />
@@ -222,6 +223,24 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminMainForm.Designer.cs">
+      <DependentUpon>AdminMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageUsers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ManageUsers.Designer.cs">
+      <DependentUpon>ManageUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BorrowerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BorrowerForm.Designer.cs">
+      <DependentUpon>BorrowerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\AppLogger.cs" />
@@ -263,6 +282,12 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdminMainForm.resx">
+      <DependentUpon>AdminMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageUsers.resx">
+      <DependentUpon>ManageUsers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -270,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BorrowerForm.resx">
+      <DependentUpon>BorrowerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReturnBooks.resx">
       <DependentUpon>ReturnBooks.cs</DependentUpon>
@@ -283,6 +311,7 @@
       <DependentUpon>Library.dbml</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Migrations\001_add_user_role.sql" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
