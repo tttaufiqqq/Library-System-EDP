@@ -26,10 +26,18 @@ namespace Library_Management_System_project
         public void RefreshData()
         {
             if (InvokeRequired) { Invoke((MethodInvoker)RefreshData); return; }
-            DisplayAvailable();
-            DisplayIssued();
-            DisplayReturned();
-            DisplayUsers();
+
+            try
+            {
+                DisplayAvailable();
+                DisplayIssued();
+                DisplayReturned();
+                DisplayUsers();
+            }
+            catch (Exception ex)
+            {
+                ErrorPresenter.Show("Error loading dashboard", ex);
+            }
         }
 
         private void DisplayAvailable()

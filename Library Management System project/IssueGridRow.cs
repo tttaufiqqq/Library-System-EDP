@@ -1,6 +1,7 @@
-﻿namespace Library_Management_System_project
+namespace Library_Management_System_project
 {
-    public abstract class AbstractIssueBooks : IDataIssueBooks
+    // Row shape for the Issued Books DataGridView (IssuedBooks.cs), populated by IssueBooksRepository.
+    public class IssueGridRow
     {
         public int ID { get; set; }
         public string IssueID { get; set; }

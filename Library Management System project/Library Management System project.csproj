@@ -130,8 +130,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractDataAddBooks.cs" />
-    <Compile Include="AbstractIssueBooks.cs" />
     <Compile Include="AddBooks.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -139,23 +137,19 @@
       <DependentUpon>AddBooks.cs</DependentUpon>
     </Compile>
 
-    <Compile Include="AddBooksRepository.cs" />
     <Compile Include="Dashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataAddBooks.cs" />
-    <Compile Include="DataIssueBooks.cs" />
     <Compile Include="Fine.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Fine.Designer.cs">
       <DependentUpon>Fine.cs</DependentUpon>
     </Compile>
-    <Compile Include="IDataAddBooks.cs" />
-    <Compile Include="IDataIssueBooks.cs" />
+    <Compile Include="IssueGridRow.cs" />
     <Compile Include="IssueBooksRepository.cs" />
     <Compile Include="Library.designer.cs">
       <AutoGen>True</AutoGen>
@@ -181,6 +175,15 @@
     <Compile Include="IssuedBooks.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="IssuedBooks.Crud.cs">
+      <DependentUpon>IssuedBooks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IssuedBooks.Grid.cs">
+      <DependentUpon>IssuedBooks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IssuedBooks.Hover.cs">
+      <DependentUpon>IssuedBooks.cs</DependentUpon>
+    </Compile>
     <Compile Include="IssuedBooks.Designer.cs">
       <DependentUpon>IssuedBooks.cs</DependentUpon>
     </Compile>
@@ -197,6 +200,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="Helpers\AppLogger.cs" />
+    <Compile Include="Helpers\ErrorPresenter.cs" />
+    <Compile Include="Helpers\InputValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterForm.cs">

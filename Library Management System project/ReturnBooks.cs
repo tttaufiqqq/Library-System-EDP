@@ -19,20 +19,27 @@ namespace Library_Management_System_project
 
         public void DisplayIssuedBooks()
         {
-            var listData = _issueService.GetActiveIssues()
-                .Select(ib => new
-                {
-                    ib.IssueID,
-                    ib.Full_Name,
-                    ib.Contact,
-                    ib.Email,
-                    ib.Book_Title,
-                    ib.Author,
-                    ib.Issue_Date,
-                    ib.Image
-                }).ToList();
+            try
+            {
+                var listData = _issueService.GetActiveIssues()
+                    .Select(ib => new
+                    {
+                        ib.IssueID,
+                        ib.Full_Name,
+                        ib.Contact,
+                        ib.Email,
+                        ib.Book_Title,
+                        ib.Author,
+                        ib.Issue_Date,
+                        ib.Image
+                    }).ToList();
 
-            dataGridView1.DataSource = listData;
+                dataGridView1.DataSource = listData;
+            }
+            catch (Exception ex)
+            {
+                ErrorPresenter.Show("Error loading issued books", ex);
+            }
         }
 
         public void refreshData()
@@ -77,8 +84,7 @@ namespace Library_Management_System_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error returning book: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error returning book", ex);
             }
         }
 
@@ -106,14 +112,13 @@ namespace Library_Management_System_project
                 string bookTitle = row.Cells["Book_Title"]?.Value?.ToString();
                 if (!string.IsNullOrEmpty(bookTitle))
                 {
-                    string imageKey = _bookService.GetBookImagePath(bookTitle);
+                    string imageKey = _bookService.GetBookImageKey(bookTitle);
                     return_pictureBox.Image = _bookService.LoadBookImage(imageKey);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error selecting issue: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error selecting issue", ex);
             }
         }
 

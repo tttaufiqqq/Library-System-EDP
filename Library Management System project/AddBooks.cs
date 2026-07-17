@@ -12,6 +12,7 @@ namespace Library_Management_System_project
         public AddBooks()
         {
             InitializeComponent();
+            PublishedDate.MaxDate = DateTime.Today;
             DisplayBooks();
         }
 
@@ -29,8 +30,7 @@ namespace Library_Management_System_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading books: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error loading books", ex);
             }
         }
 
@@ -60,8 +60,7 @@ namespace Library_Management_System_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error importing image: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error importing image", ex);
             }
         }
 
@@ -76,7 +75,7 @@ namespace Library_Management_System_project
 
             try
             {
-                string imagePath = _bookService.SaveBookImage(
+                string imageKey = _bookService.SaveBookImage(
                     Add_PictureBox.ImageLocation,
                     BookTitle.Text.Trim(),
                     Author.Text.Trim());
@@ -87,7 +86,7 @@ namespace Library_Management_System_project
                     Author = Author.Text.Trim(),
                     Published_Date = PublishedDate.Value,
                     Book_Status = Status.Text.Trim(),
-                    Image = imagePath,
+                    Image = imageKey,
                     Date_Insert = DateTime.Today
                 };
 
@@ -99,8 +98,7 @@ namespace Library_Management_System_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error adding book: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error adding book", ex);
             }
         }
 
@@ -108,15 +106,22 @@ namespace Library_Management_System_project
         {
             if (e.RowIndex == -1) return;
 
-            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-            _selectedBookId = (int)row.Cells[0].Value;
-            BookTitle.Text = row.Cells[1].Value?.ToString();
-            Author.Text = row.Cells[2].Value?.ToString();
-            PublishedDate.Text = row.Cells[3].Value?.ToString();
-            Status.Text = row.Cells[4].Value?.ToString();
+            try
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                _selectedBookId = (int)row.Cells[0].Value;
+                BookTitle.Text = row.Cells[1].Value?.ToString();
+                Author.Text = row.Cells[2].Value?.ToString();
+                PublishedDate.Text = row.Cells[3].Value?.ToString();
+                Status.Text = row.Cells[4].Value?.ToString();
 
-            string imageKey = row.Cells[7].Value?.ToString();
-            Add_PictureBox.Image = _bookService.LoadBookImage(imageKey);
+                string imageKey = row.Cells[7].Value?.ToString();
+                Add_PictureBox.Image = _bookService.LoadBookImage(imageKey);
+            }
+            catch (Exception ex)
+            {
+                ErrorPresenter.Show("Error selecting book", ex);
+            }
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
@@ -154,8 +159,7 @@ namespace Library_Management_System_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error updating book: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error updating book", ex);
             }
         }
 
@@ -182,8 +186,7 @@ namespace Library_Management_System_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error deleting book: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error deleting book", ex);
             }
         }
 
@@ -196,8 +199,7 @@ namespace Library_Management_System_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error importing image", ex);
             }
         }
     }

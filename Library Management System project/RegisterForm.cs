@@ -36,6 +36,13 @@ namespace Library_Management_System_project
                 return;
             }
 
+            if (!InputValidator.IsValidEmail(register_email.Text))
+            {
+                MessageBox.Show("Please enter a valid email address.",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
                 var user = _userService.Register(
@@ -58,8 +65,7 @@ namespace Library_Management_System_project
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error connecting to database: " + ex.Message,
-                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorPresenter.Show("Error connecting to database", ex);
             }
         }
 

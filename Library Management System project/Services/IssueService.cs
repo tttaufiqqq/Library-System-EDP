@@ -16,13 +16,13 @@ namespace Library_Management_System_project.Services
             }
         }
 
-        public void UpdateIssue(string issueId, string fullName, string contact, string email,
+        public bool UpdateIssue(string issueId, string fullName, string contact, string email,
             string bookTitle, string author, string status, DateTime issueDate, DateTime returnDate)
         {
             using (var db = new LibraryDataContext())
             {
                 var issue = db.IssuesBooks.SingleOrDefault(i => i.IssueID == issueId);
-                if (issue == null) return;
+                if (issue == null) return false;
 
                 issue.Full_Name = fullName;
                 issue.Contact = contact;
@@ -35,6 +35,20 @@ namespace Library_Management_System_project.Services
                 issue.Date_Update = DateTime.Today.ToString("yyyy-MM-dd");
 
                 db.SubmitChanges();
+                return true;
+            }
+        }
+
+        public bool DeleteIssue(string issueId)
+        {
+            using (var db = new LibraryDataContext())
+            {
+                var issue = db.IssuesBooks.SingleOrDefault(i => i.IssueID == issueId);
+                if (issue == null) return false;
+
+                db.IssuesBooks.DeleteOnSubmit(issue);
+                db.SubmitChanges();
+                return true;
             }
         }
 
@@ -69,14 +83,9 @@ namespace Library_Management_System_project.Services
 
         private readonly IssueBooksRepository _repository = new IssueBooksRepository();
 
-        public List<DataIssueBooks> GetIssueDisplayData()
+        public List<IssueGridRow> GetIssueDisplayData()
         {
             return _repository.FetchAllIssues();
-        }
-
-        public List<DataIssueBooks> GetNotReturnedDisplayData()
-        {
-            return _repository.FetchNotReturnedIssues();
         }
 
         public int GetIssuedCount()

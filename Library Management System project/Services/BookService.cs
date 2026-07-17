@@ -48,8 +48,9 @@ namespace Library_Management_System_project.Services
                 using (var decoded = Image.FromStream(stream))
                     return new Bitmap(decoded);
             }
-            catch
+            catch (Exception ex)
             {
+                AppLogger.LogError("Failed to load book image '" + objectKey + "'", ex);
                 return null;
             }
         }
@@ -64,7 +65,7 @@ namespace Library_Management_System_project.Services
         }
 
         public void UpdateBook(int bookId, string title, string author, DateTime? publishedDate,
-            string status, string imagePath)
+            string status, string imageKey)
         {
             using (var db = new LibraryDataContext())
             {
@@ -76,8 +77,8 @@ namespace Library_Management_System_project.Services
                 book.Published_Date = publishedDate;
                 book.Book_Status = status;
                 book.Date_Update = DateTime.Today;
-                if (!string.IsNullOrEmpty(imagePath))
-                    book.Image = imagePath;
+                if (!string.IsNullOrEmpty(imageKey))
+                    book.Image = imageKey;
 
                 db.SubmitChanges();
             }
@@ -95,7 +96,7 @@ namespace Library_Management_System_project.Services
             }
         }
 
-        public string GetBookImagePath(string bookTitle)
+        public string GetBookImageKey(string bookTitle)
         {
             using (var db = new LibraryDataContext())
             {
