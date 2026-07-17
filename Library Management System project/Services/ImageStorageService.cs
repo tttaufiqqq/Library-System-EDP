@@ -9,20 +9,33 @@ namespace Library_Management_System_project.Services
     public class ImageStorageService : IImageStorageService
     {
         private readonly string _bucket;
-        private readonly IMinioClient _client;
+        private IMinioClient _client;
 
         public ImageStorageService()
         {
             _bucket = ConfigurationManager.AppSettings["MinioBucket"];
-            bool useSsl = bool.Parse(ConfigurationManager.AppSettings["MinioUseSSL"] ?? "false");
+        }
 
-            _client = new MinioClient()
-                .WithEndpoint(ConfigurationManager.AppSettings["MinioEndpoint"])
-                .WithCredentials(
-                    ConfigurationManager.AppSettings["MinioAccessKey"],
-                    ConfigurationManager.AppSettings["MinioSecretKey"])
-                .WithSSL(useSsl)
-                .Build();
+        // Built on first actual use, not at construction time - constructing a
+        // BookService (e.g. from the WinForms designer instantiating a parent
+        // form) must not require a reachable Minio endpoint.
+        private IMinioClient Client
+        {
+            get
+            {
+                if (_client == null)
+                {
+                    bool useSsl = bool.Parse(ConfigurationManager.AppSettings["MinioUseSSL"] ?? "false");
+                    _client = new MinioClient()
+                        .WithEndpoint(ConfigurationManager.AppSettings["MinioEndpoint"])
+                        .WithCredentials(
+                            ConfigurationManager.AppSettings["MinioAccessKey"],
+                            ConfigurationManager.AppSettings["MinioSecretKey"])
+                        .WithSSL(useSsl)
+                        .Build();
+                }
+                return _client;
+            }
         }
 
         public void UploadImage(string localFilePath, string objectKey)
@@ -33,7 +46,7 @@ namespace Library_Management_System_project.Services
                 .WithFileName(localFilePath)
                 .WithContentType("image/jpeg");
 
-            Task.Run(() => _client.PutObjectAsync(args)).GetAwaiter().GetResult();
+            Task.Run(() => Client.PutObjectAsync(args)).GetAwaiter().GetResult();
         }
 
         public Stream DownloadImage(string objectKey)
@@ -44,7 +57,7 @@ namespace Library_Management_System_project.Services
                 .WithObject(objectKey)
                 .WithCallbackStream(s => s.CopyTo(stream));
 
-            Task.Run(() => _client.GetObjectAsync(args)).GetAwaiter().GetResult();
+            Task.Run(() => Client.GetObjectAsync(args)).GetAwaiter().GetResult();
             stream.Position = 0;
             return stream;
         }

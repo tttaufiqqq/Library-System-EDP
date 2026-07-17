@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using AutoUpdaterDotNET;
 
@@ -6,6 +8,11 @@ namespace Library_Management_System_project
 {
     public partial class StartUpScreen : Form
     {
+        private const int PBM_SETBARCOLOR = 0x0409;
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, int lParam);
+
         public StartUpScreen()
         {
             InitializeComponent();
@@ -21,6 +28,9 @@ namespace Library_Management_System_project
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100; // Adjust this value as needed
             progressBar1.Step = 1;
+            // Standard ProgressBar ignores ForeColor under visual styles; PBM_SETBARCOLOR
+            // is the documented way to override the themed (green) fill color.
+            SendMessage(progressBar1.Handle, PBM_SETBARCOLOR, IntPtr.Zero, ColorTranslator.ToWin32(Color.Yellow));
         }
 
         private void timer1_Tick(object sender, EventArgs e)
