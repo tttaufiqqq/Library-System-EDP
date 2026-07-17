@@ -11,3 +11,4 @@ packages/
 *.ldf
 CLAUDE.md
 App.config.local
+installer/Output/

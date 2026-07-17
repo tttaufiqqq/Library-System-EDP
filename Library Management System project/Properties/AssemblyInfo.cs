@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Library Management System project")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("EDP - Library Management System")]
+[assembly: AssemblyDescription("Library management desktop app for books, users, and issue/return tracking.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Library Management System project")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyCompany("tttaufiqqq")]
+[assembly: AssemblyProduct("EDP - Library Management System")]
+[assembly: AssemblyCopyright("Copyright © tttaufiqqq 2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
