@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using AutoUpdaterDotNET;
 
 namespace Library_Management_System_project
 {
@@ -12,6 +13,7 @@ namespace Library_Management_System_project
             InitializeProgressBar();
             FormDragHelper.EnableDrag(this, this);
             FormDragHelper.EnableDrag(pictureBox1, this);
+            AutoUpdater.Start("https://raw.githubusercontent.com/tttaufiqqq/Library-System-EDP/main/update.xml");
         }
 
         private void InitializeProgressBar()
