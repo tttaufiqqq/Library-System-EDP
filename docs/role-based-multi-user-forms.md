@@ -92,9 +92,16 @@ own loan/fine status without staff involvement.
 
 ## Migration
 
-`Migrations/001_add_user_role.sql` adds the `role` column. It is **not**
-run automatically — it must be applied to the database manually, and one
-existing user promoted to `'Admin'` by hand afterward.
+`Migrations/001_add_user_role.sql` adds the `role` column. **Already applied**
+to the live homelab DB (2026-07-17), run directly via SSH + sqlcmd using `sa`
+credentials since the app's own `library_app` account only has
+SELECT/INSERT/UPDATE/DELETE on `dbo.Users`, not `ALTER`. Existing accounts
+(`tttaufiqqq`, `taufiq`) defaulted to Staff automatically.
+
+Two ready-to-use seed accounts were created at the same time instead of
+manually promoting an existing user:
+- `adminTaufiq` — role Admin
+- `staffTaufiq` — role Staff
 
 Full implementation plan and phase checklist:
 `C:\Users\taufi\.claude\plans\abundant-wishing-chipmunk.md`
