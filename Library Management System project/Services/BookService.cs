@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Drawing;
 using System.Linq;
 
 namespace Library_Management_System_project.Services
@@ -33,14 +33,25 @@ namespace Library_Management_System_project.Services
 
         public string SaveBookImage(string imageLocation, string bookTitle, string author)
         {
-            string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Books_Directory");
-            if (!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
+            string objectKey = $"{bookTitle}_{author}_{DateTime.Today:yyyyMMdd}.jpg";
+            new ImageStorageService().UploadImage(imageLocation, objectKey);
+            return objectKey;
+        }
 
-            string fileName = $"{bookTitle}_{author}_{DateTime.Today:yyyyMMdd}.jpg";
-            string path = Path.Combine(directoryPath, fileName);
-            File.Copy(imageLocation, path, true);
-            return path;
+        public Image LoadBookImage(string objectKey)
+        {
+            if (string.IsNullOrEmpty(objectKey)) return null;
+
+            try
+            {
+                using (var stream = new ImageStorageService().DownloadImage(objectKey))
+                using (var decoded = Image.FromStream(stream))
+                    return new Bitmap(decoded);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public void AddBook(Bookk book)

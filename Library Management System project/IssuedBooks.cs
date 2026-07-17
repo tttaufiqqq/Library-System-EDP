@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -151,18 +149,10 @@ namespace Library_Management_System_project
                         if (book != null)
                         {
                             bookIssue_author.Text = book.Author;
-                            string imagePath = book.Image;
+                            string imageKey = book.Image;
 
-                            if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
-                            {
-                                bookIssue_picturbox.Image = Image.FromFile(imagePath);
-                                _currentBookImagePath = imagePath;
-                            }
-                            else
-                            {
-                                bookIssue_picturbox.Image = null;
-                                _currentBookImagePath = null;
-                            }
+                            bookIssue_picturbox.Image = new BookService().LoadBookImage(imageKey);
+                            _currentBookImagePath = !string.IsNullOrEmpty(imageKey) ? imageKey : null;
                         }
                     }
                 }

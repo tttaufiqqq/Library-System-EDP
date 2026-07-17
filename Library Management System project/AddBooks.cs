@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
 
@@ -117,12 +115,8 @@ namespace Library_Management_System_project
             PublishedDate.Text = row.Cells[3].Value?.ToString();
             Status.Text = row.Cells[4].Value?.ToString();
 
-            string imagePath = row.Cells[7].Value?.ToString();
-            if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
-            {
-                try { Add_PictureBox.Image = Image.FromFile(imagePath); }
-                catch { Add_PictureBox.Image = null; }
-            }
+            string imageKey = row.Cells[7].Value?.ToString();
+            Add_PictureBox.Image = _bookService.LoadBookImage(imageKey);
         }
 
         private void buttonClear_Click(object sender, EventArgs e)

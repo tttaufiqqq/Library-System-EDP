@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -107,11 +106,8 @@ namespace Library_Management_System_project
                 string bookTitle = row.Cells["Book_Title"]?.Value?.ToString();
                 if (!string.IsNullOrEmpty(bookTitle))
                 {
-                    string imagePath = _bookService.GetBookImagePath(bookTitle);
-                    if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
-                        return_pictureBox.Image = Image.FromFile(imagePath);
-                    else
-                        return_pictureBox.Image = null;
+                    string imageKey = _bookService.GetBookImagePath(bookTitle);
+                    return_pictureBox.Image = _bookService.LoadBookImage(imageKey);
                 }
             }
             catch (Exception ex)
