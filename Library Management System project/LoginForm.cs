@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
 
@@ -42,7 +43,7 @@ namespace Library_Management_System_project
             login_password.PasswordChar = login_ShowPassword.Checked ? '\0' : '*';
         }
 
-        private void loginBtn_Click(object sender, EventArgs e)
+        private async void loginBtn_Click(object sender, EventArgs e)
         {
             if (login_username.Text == "" || login_password.Text == "")
             {
@@ -51,11 +52,15 @@ namespace Library_Management_System_project
                 return;
             }
 
+            string username = login_username.Text.Trim();
+            string password = login_password.Text;
+
+            loginBtn.Enabled = false;
+            Cursor = Cursors.WaitCursor;
+
             try
             {
-                var user = _userService.Authenticate(
-                    login_username.Text.Trim(),
-                    login_password.Text);
+                var user = await Task.Run(() => _userService.Authenticate(username, password));
 
                 if (user != null)
                 {
@@ -94,6 +99,11 @@ namespace Library_Management_System_project
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error connecting to database", ex);
+            }
+            finally
+            {
+                loginBtn.Enabled = true;
+                Cursor = Cursors.Default;
             }
         }
 
