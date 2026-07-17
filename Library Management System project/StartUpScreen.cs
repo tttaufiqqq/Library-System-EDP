@@ -10,6 +10,8 @@ namespace Library_Management_System_project
             InitializeComponent();
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             InitializeProgressBar();
+            FormDragHelper.EnableDrag(this, this);
+            FormDragHelper.EnableDrag(pictureBox1, this);
         }
 
         private void InitializeProgressBar()

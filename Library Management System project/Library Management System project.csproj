@@ -210,6 +210,7 @@
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\AppLogger.cs" />
     <Compile Include="Helpers\ErrorPresenter.cs" />
+    <Compile Include="Helpers\FormDragHelper.cs" />
     <Compile Include="Helpers\InputValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

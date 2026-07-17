@@ -13,6 +13,7 @@ namespace Library_Management_System_project
         {
             InitializeComponent();
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            FormDragHelper.EnableDrag(panel1, this);
         }
 
         private void backBtn_Click(object sender, EventArgs e)
