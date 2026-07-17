@@ -9,3 +9,5 @@ packages/
 *.jfm
 *.mdf
 *.ldf
+CLAUDE.md
+App.config.local
