@@ -1,7 +1,6 @@
 ; Inno Setup script for EDP - Library Management System.
-; Build the Release configuration first (see ../scripts/apply-local-config.ps1
-; to inject the real connection string before building what you package here),
-; then compile this script with ISCC.exe to produce the distributable installer.
+; Build the Release configuration first, then compile this script with
+; ISCC.exe to produce the distributable installer.
 
 #define MyAppName "EDP - Library Management System"
 #define MyAppVersion "1.0.0"

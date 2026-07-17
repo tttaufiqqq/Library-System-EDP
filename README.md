@@ -80,11 +80,8 @@ database that already has data.
 
 ## Configuration
 
-`App.config` only holds `CHANGE_ME` placeholders so real credentials never
-get committed. Real values live in `App.config.local` (gitignored) — copy
-`App.config` to `App.config.local`, fill in the values below, then run
-`scripts/apply-local-config.ps1` to inject them into `App.config` before
-building. Two things need real values:
+`App.config` holds the real connection string and MinIO settings directly.
+Two things need real values:
 
 **Connection string:**
 
