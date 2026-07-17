@@ -12,6 +12,7 @@ namespace Library_Management_System_project
         public LoginForm()
         {
             InitializeComponent();
+            Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         private void signupBtn_Click(object sender, EventArgs e)

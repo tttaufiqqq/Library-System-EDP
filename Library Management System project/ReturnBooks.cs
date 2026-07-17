@@ -13,8 +13,17 @@ namespace Library_Management_System_project
         public ReturnBooks()
         {
             InitializeComponent();
+            SetButtonIcons();
             DisplayIssuedBooks();
             toolStripStatusLabel1.Text = "";
+        }
+
+        private void SetButtonIcons()
+        {
+            buttonReturn.Image = Properties.Resources.IconReturn;
+            buttonClear.Image = Properties.Resources.IconClear;
+            buttonReturn.TextImageRelation = TextImageRelation.ImageBeforeText;
+            buttonClear.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public void DisplayIssuedBooks()

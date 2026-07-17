@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace Library_Management_System_project.Services
 {
-    public class UserService
+    public class UserService : DataService
     {
-        public User Register(string email, string username, string password)
-        {
-            using (var db = new LibraryDataContext())
+        public User Register(string email, string username, string password) =>
+            WithContext(db =>
             {
                 var existing = db.Users.FirstOrDefault(u => u.username == username);
                 if (existing != null)
@@ -25,35 +24,22 @@ namespace Library_Management_System_project.Services
                 db.Users.InsertOnSubmit(user);
                 db.SubmitChanges();
                 return user;
-            }
-        }
+            });
 
-        public User Authenticate(string username, string password)
-        {
-            using (var db = new LibraryDataContext())
+        public User Authenticate(string username, string password) =>
+            WithContext(db =>
             {
                 var user = db.Users.SingleOrDefault(u => u.username == username);
                 if (user == null) return null;
                 return PasswordHelper.Verify(password, user.password) ? user : null;
-            }
-        }
+            });
 
-        public int GetUserCount()
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.Users.Count();
-            }
-        }
+        public int GetUserCount() =>
+            WithContext(db => db.Users.Count());
 
-        public List<object> GetRegisteredUsers()
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.Users.OrderBy(u => u.username)
-                    .Select(u => new { u.userId, u.username, u.date_register })
-                    .ToList<object>();
-            }
-        }
+        public List<object> GetRegisteredUsers() =>
+            WithContext(db => db.Users.OrderBy(u => u.username)
+                .Select(u => new { u.userId, u.username, u.date_register })
+                .ToList<object>());
     }
 }

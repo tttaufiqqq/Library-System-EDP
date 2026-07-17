@@ -14,9 +14,22 @@ namespace Library_Management_System_project
         public IssuedBooks()
         {
             InitializeComponent();
+            SetButtonIcons();
             DataBookTitle();
             displayBookIssueData();
             toolStripStatusLabel1.Text = "";
+        }
+
+        private void SetButtonIcons()
+        {
+            bookIssue_Add.Image = Properties.Resources.IconAdd;
+            bookIssue_Update.Image = Properties.Resources.IconUpdate;
+            bookIssue_Delete.Image = Properties.Resources.IconDelete;
+            bookIssue_Clear.Image = Properties.Resources.IconClear;
+            bookIssue_Add.TextImageRelation = TextImageRelation.ImageBeforeText;
+            bookIssue_Update.TextImageRelation = TextImageRelation.ImageBeforeText;
+            bookIssue_Delete.TextImageRelation = TextImageRelation.ImageBeforeText;
+            bookIssue_Clear.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public void refreshData()

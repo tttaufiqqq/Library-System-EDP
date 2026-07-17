@@ -133,6 +133,12 @@
     <Compile Include="AddBooks.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="AddBooks.Crud.cs">
+      <DependentUpon>AddBooks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddBooks.Grid.cs">
+      <DependentUpon>AddBooks.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddBooks.Designer.cs">
       <DependentUpon>AddBooks.cs</DependentUpon>
     </Compile>
@@ -161,8 +167,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\ImageStorageService.cs" />
+    <Compile Include="Services\IImageStorageService.cs" />
     <Compile Include="Services\DashboardService.cs" />
     <Compile Include="Services\IssueService.cs" />
     <Compile Include="Services\UserService.cs" />

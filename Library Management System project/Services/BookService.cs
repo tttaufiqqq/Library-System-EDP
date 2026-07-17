@@ -5,36 +5,30 @@ using System.Linq;
 
 namespace Library_Management_System_project.Services
 {
-    public class BookService
+    public class BookService : DataService
     {
-        public List<Bookk> GetAllBooks()
+        private readonly IImageStorageService _imageStorage;
+
+        public BookService() : this(new ImageStorageService()) { }
+
+        public BookService(IImageStorageService imageStorage)
         {
-            using (var db = new LibraryDataContext())
-            {
-                return db.Bookks.OrderBy(b => b.Book_Title).ToList();
-            }
+            _imageStorage = imageStorage;
         }
 
-        public List<Bookk> GetAvailableBooks()
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.Bookks.Where(b => b.Book_Status == "Available").ToList();
-            }
-        }
+        public List<Bookk> GetAllBooks() =>
+            WithContext(db => db.Bookks.OrderBy(b => b.Book_Title).ToList());
 
-        public Bookk GetBookById(int bookId)
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.Bookks.SingleOrDefault(b => b.BookID == bookId);
-            }
-        }
+        public List<Bookk> GetAvailableBooks() =>
+            WithContext(db => db.Bookks.Where(b => b.Book_Status == "Available").ToList());
+
+        public Bookk GetBookById(int bookId) =>
+            WithContext(db => db.Bookks.SingleOrDefault(b => b.BookID == bookId));
 
         public string SaveBookImage(string imageLocation, string bookTitle, string author)
         {
             string objectKey = $"{bookTitle}_{author}_{DateTime.Today:yyyyMMdd}.jpg";
-            new ImageStorageService().UploadImage(imageLocation, objectKey);
+            _imageStorage.UploadImage(imageLocation, objectKey);
             return objectKey;
         }
 
@@ -44,7 +38,7 @@ namespace Library_Management_System_project.Services
 
             try
             {
-                using (var stream = new ImageStorageService().DownloadImage(objectKey))
+                using (var stream = _imageStorage.DownloadImage(objectKey))
                 using (var decoded = Image.FromStream(stream))
                     return new Bitmap(decoded);
             }
@@ -55,19 +49,16 @@ namespace Library_Management_System_project.Services
             }
         }
 
-        public void AddBook(Bookk book)
-        {
-            using (var db = new LibraryDataContext())
+        public void AddBook(Bookk book) =>
+            WithContext(db =>
             {
                 db.Bookks.InsertOnSubmit(book);
                 db.SubmitChanges();
-            }
-        }
+            });
 
         public void UpdateBook(int bookId, string title, string author, DateTime? publishedDate,
-            string status, string imageKey)
-        {
-            using (var db = new LibraryDataContext())
+            string status, string imageKey) =>
+            WithContext(db =>
             {
                 var book = db.Bookks.SingleOrDefault(b => b.BookID == bookId);
                 if (book == null) return;
@@ -81,36 +72,23 @@ namespace Library_Management_System_project.Services
                     book.Image = imageKey;
 
                 db.SubmitChanges();
-            }
-        }
+            });
 
-        public void SoftDeleteBook(int bookId)
-        {
-            using (var db = new LibraryDataContext())
+        public void SoftDeleteBook(int bookId) =>
+            WithContext(db =>
             {
                 var book = db.Bookks.SingleOrDefault(b => b.BookID == bookId);
                 if (book == null) return;
 
                 book.Date_Delete = DateTime.Today;
                 db.SubmitChanges();
-            }
-        }
+            });
 
-        public string GetBookImageKey(string bookTitle)
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.Bookks.Where(b => b.Book_Title == bookTitle)
-                    .Select(b => b.Image).SingleOrDefault();
-            }
-        }
+        public string GetBookImageKey(string bookTitle) =>
+            WithContext(db => db.Bookks.Where(b => b.Book_Title == bookTitle)
+                .Select(b => b.Image).SingleOrDefault());
 
-        public int GetAvailableBookCount()
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.Bookks.Count(b => b.Book_Status == "Available");
-            }
-        }
+        public int GetAvailableBookCount() =>
+            WithContext(db => db.Bookks.Count(b => b.Book_Status == "Available"));
     }
 }

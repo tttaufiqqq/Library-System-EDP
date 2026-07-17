@@ -8,6 +8,7 @@ namespace Library_Management_System_project
         public StartUpScreen()
         {
             InitializeComponent();
+            Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             InitializeProgressBar();
         }
 

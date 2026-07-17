@@ -9,6 +9,7 @@ namespace Library_Management_System_project
         public MainForm()
         {
             InitializeComponent();
+            Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         public void SetUserLabel(string username)

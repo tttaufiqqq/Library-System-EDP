@@ -31,6 +31,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.labelSearch = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
@@ -62,6 +64,8 @@
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.dataGridView1);
             this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.textBoxSearch);
+            this.panel2.Controls.Add(this.labelSearch);
             this.panel2.Location = new System.Drawing.Point(364, 20);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(496, 525);
@@ -92,7 +96,26 @@
             this.label1.Size = new System.Drawing.Size(164, 27);
             this.label1.TabIndex = 0;
             this.label1.Text = "All Added Books";
-            // 
+            //
+            // labelSearch
+            //
+            this.labelSearch.AutoSize = true;
+            this.labelSearch.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSearch.Location = new System.Drawing.Point(280, 18);
+            this.labelSearch.Name = "labelSearch";
+            this.labelSearch.Size = new System.Drawing.Size(59, 19);
+            this.labelSearch.TabIndex = 25;
+            this.labelSearch.Text = "Search:";
+            //
+            // textBoxSearch
+            //
+            this.textBoxSearch.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxSearch.Location = new System.Drawing.Point(340, 13);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(125, 27);
+            this.textBoxSearch.TabIndex = 26;
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
+            //
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
@@ -327,6 +350,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.Label labelSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.Button buttonAdd;

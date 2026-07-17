@@ -5,7 +5,7 @@ using Minio.DataModel.Args;
 
 namespace Library_Management_System_project.Services
 {
-    public class ImageStorageService
+    public class ImageStorageService : IImageStorageService
     {
         private readonly string _bucket;
         private readonly IMinioClient _client;

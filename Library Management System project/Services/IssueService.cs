@@ -5,21 +5,18 @@ using Library_Management_System_project;
 
 namespace Library_Management_System_project.Services
 {
-    public class IssueService
+    public class IssueService : DataService
     {
-        public void IssueBook(IssuesBook issue)
-        {
-            using (var db = new LibraryDataContext())
+        public void IssueBook(IssuesBook issue) =>
+            WithContext(db =>
             {
                 db.IssuesBooks.InsertOnSubmit(issue);
                 db.SubmitChanges();
-            }
-        }
+            });
 
         public bool UpdateIssue(string issueId, string fullName, string contact, string email,
-            string bookTitle, string author, string status, DateTime issueDate, DateTime returnDate)
-        {
-            using (var db = new LibraryDataContext())
+            string bookTitle, string author, string status, DateTime issueDate, DateTime returnDate) =>
+            WithContext(db =>
             {
                 var issue = db.IssuesBooks.SingleOrDefault(i => i.IssueID == issueId);
                 if (issue == null) return false;
@@ -36,12 +33,10 @@ namespace Library_Management_System_project.Services
 
                 db.SubmitChanges();
                 return true;
-            }
-        }
+            });
 
-        public bool DeleteIssue(string issueId)
-        {
-            using (var db = new LibraryDataContext())
+        public bool DeleteIssue(string issueId) =>
+            WithContext(db =>
             {
                 var issue = db.IssuesBooks.SingleOrDefault(i => i.IssueID == issueId);
                 if (issue == null) return false;
@@ -49,12 +44,10 @@ namespace Library_Management_System_project.Services
                 db.IssuesBooks.DeleteOnSubmit(issue);
                 db.SubmitChanges();
                 return true;
-            }
-        }
+            });
 
-        public void ReturnBook(string issueId)
-        {
-            using (var db = new LibraryDataContext())
+        public void ReturnBook(string issueId) =>
+            WithContext(db =>
             {
                 var issue = db.IssuesBooks.SingleOrDefault(i => i.IssueID == issueId);
                 if (issue == null) return;
@@ -62,24 +55,13 @@ namespace Library_Management_System_project.Services
                 issue.Return_Status = "Returned";
                 issue.Date_Update = DateTime.Now.ToString();
                 db.SubmitChanges();
-            }
-        }
+            });
 
-        public List<IssuesBook> GetActiveIssues()
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.IssuesBooks.Where(i => i.Return_Status != "Returned").ToList();
-            }
-        }
+        public List<IssuesBook> GetActiveIssues() =>
+            WithContext(db => db.IssuesBooks.Where(i => i.Return_Status != "Returned").ToList());
 
-        public List<IssuesBook> GetAllIssues()
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.IssuesBooks.ToList();
-            }
-        }
+        public List<IssuesBook> GetAllIssues() =>
+            WithContext(db => db.IssuesBooks.ToList());
 
         private readonly IssueBooksRepository _repository = new IssueBooksRepository();
 
@@ -88,20 +70,10 @@ namespace Library_Management_System_project.Services
             return _repository.FetchAllIssues();
         }
 
-        public int GetIssuedCount()
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.IssuesBooks.Count(i => i.Return_Status == "Not Returned");
-            }
-        }
+        public int GetIssuedCount() =>
+            WithContext(db => db.IssuesBooks.Count(i => i.Return_Status == "Not Returned"));
 
-        public int GetReturnedCount()
-        {
-            using (var db = new LibraryDataContext())
-            {
-                return db.IssuesBooks.Count(i => i.Return_Status == "Returned");
-            }
-        }
+        public int GetReturnedCount() =>
+            WithContext(db => db.IssuesBooks.Count(i => i.Return_Status == "Returned"));
     }
 }
