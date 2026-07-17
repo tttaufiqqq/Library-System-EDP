@@ -1,5 +1,6 @@
 using System.Configuration;
 using System.IO;
+using System.Threading.Tasks;
 using Minio;
 using Minio.DataModel.Args;
 
@@ -32,7 +33,7 @@ namespace Library_Management_System_project.Services
                 .WithFileName(localFilePath)
                 .WithContentType("image/jpeg");
 
-            _client.PutObjectAsync(args).GetAwaiter().GetResult();
+            Task.Run(() => _client.PutObjectAsync(args)).GetAwaiter().GetResult();
         }
 
         public Stream DownloadImage(string objectKey)
@@ -43,7 +44,7 @@ namespace Library_Management_System_project.Services
                 .WithObject(objectKey)
                 .WithCallbackStream(s => s.CopyTo(stream));
 
-            _client.GetObjectAsync(args).GetAwaiter().GetResult();
+            Task.Run(() => _client.GetObjectAsync(args)).GetAwaiter().GetResult();
             stream.Position = 0;
             return stream;
         }
