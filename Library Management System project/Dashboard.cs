@@ -8,9 +8,7 @@ namespace Library_Management_System_project
 {
     public partial class Dashboard : UserControl
     {
-        private readonly UserService _userService = new UserService();
-        private readonly BookService _bookService = new BookService();
-        private readonly IssueService _issueService = new IssueService();
+        private readonly DashboardService _dashboardService = new DashboardService();
 
         public Dashboard()
         {
@@ -42,23 +40,23 @@ namespace Library_Management_System_project
 
         private void DisplayAvailable()
         {
-            dashboard_Available.Text = _bookService.GetAvailableBookCount().ToString();
+            dashboard_Available.Text = _dashboardService.AvailableBooks.ToString();
         }
 
         private void DisplayIssued()
         {
-            dashboard_Issued.Text = _issueService.GetIssuedCount().ToString();
+            dashboard_Issued.Text = _dashboardService.IssuedBooks.ToString();
         }
 
         private void DisplayReturned()
         {
-            dashboard_Returned.Text = _issueService.GetReturnedCount().ToString();
+            dashboard_Returned.Text = _dashboardService.ReturnedBooks.ToString();
         }
 
         private void DisplayUsers()
         {
-            dashboard_Users.Text = _userService.GetUserCount().ToString();
-            dataGridView1.DataSource = _userService.GetRegisteredUsers();
+            dashboard_Users.Text = _dashboardService.RegisteredUsers.ToString();
+            dataGridView1.DataSource = _dashboardService.GetRegisteredUsers();
         }
 
         private void PanelPaint(object sender, PaintEventArgs e)
