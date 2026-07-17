@@ -10,5 +10,6 @@ packages/
 *.mdf
 *.ldf
 CLAUDE.md
+handoff.md
 App.config.local
 installer/Output/
