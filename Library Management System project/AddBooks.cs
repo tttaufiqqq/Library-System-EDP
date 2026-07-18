@@ -16,6 +16,7 @@ namespace Library_Management_System_project
             InitializeComponent();
             PublishedDate.MaxDate = DateTime.Today;
             SetButtonIcons();
+            ArrowKeyNavigationHelper.Enable(this);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             DisplayBooks();
         }

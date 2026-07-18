@@ -9,6 +9,7 @@ namespace Library_Management_System_project
         public Fine()
         {
             InitializeComponent();
+            ArrowKeyNavigationHelper.Enable(this);
         }
 
         private void fine_Load(object sender, EventArgs e)

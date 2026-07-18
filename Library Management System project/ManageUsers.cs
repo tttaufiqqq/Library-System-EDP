@@ -14,6 +14,7 @@ namespace Library_Management_System_project
         {
             InitializeComponent();
             comboBoxRole.Items.AddRange(new object[] { "Admin", "Staff", "Borrower" });
+            ArrowKeyNavigationHelper.Enable(this);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             DisplayUsers();
         }

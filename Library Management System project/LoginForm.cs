@@ -15,6 +15,7 @@ namespace Library_Management_System_project
             InitializeComponent();
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             FormDragHelper.EnableDrag(panel1, this);
+            ArrowKeyNavigationHelper.Enable(this);
         }
 
         private void signupBtn_Click(object sender, EventArgs e)

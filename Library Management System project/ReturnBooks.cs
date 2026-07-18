@@ -15,6 +15,7 @@ namespace Library_Management_System_project
         {
             InitializeComponent();
             SetButtonIcons();
+            ArrowKeyNavigationHelper.Enable(this);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             DisplayIssuedBooks();
             toolStripStatusLabel1.Text = "";
