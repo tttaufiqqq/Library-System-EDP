@@ -206,9 +206,6 @@
     <Compile Include="IssuedBooks.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IssuedBooks.Crud.cs">
-      <DependentUpon>IssuedBooks.cs</DependentUpon>
-    </Compile>
     <Compile Include="IssuedBooks.Grid.cs">
       <DependentUpon>IssuedBooks.cs</DependentUpon>
     </Compile>

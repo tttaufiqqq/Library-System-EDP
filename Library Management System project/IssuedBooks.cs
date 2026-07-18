@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -10,36 +9,19 @@ namespace Library_Management_System_project
     public partial class IssuedBooks : UserControl
     {
         private readonly IssueService _issueService = new IssueService();
-        private readonly BookService _bookService = new BookService();
-        private string _currentBookImageKey;
 
         public IssuedBooks()
         {
             InitializeComponent();
-            SetButtonIcons();
             ArrowKeyNavigationHelper.Enable(this);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
-            DataBookTitle();
             displayBookIssueData();
             toolStripStatusLabel1.Text = "";
-        }
-
-        private void SetButtonIcons()
-        {
-            bookIssue_Add.Image = Properties.Resources.IconAdd;
-            bookIssue_Update.Image = Properties.Resources.IconUpdate;
-            bookIssue_Delete.Image = Properties.Resources.IconDelete;
-            bookIssue_Clear.Image = Properties.Resources.IconClear;
-            bookIssue_Add.TextImageRelation = TextImageRelation.ImageBeforeText;
-            bookIssue_Update.TextImageRelation = TextImageRelation.ImageBeforeText;
-            bookIssue_Delete.TextImageRelation = TextImageRelation.ImageBeforeText;
-            bookIssue_Clear.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public void refreshData()
         {
             if (InvokeRequired) { Invoke((MethodInvoker)refreshData); return; }
-            DataBookTitle();
             displayBookIssueData();
             clearFields();
         }
@@ -72,21 +54,6 @@ namespace Library_Management_System_project
             bookIssue_returnDate.Value = DateTime.Today;
             bookIssue_status.Text = "";
             bookIssue_picturbox.Image = null;
-            _currentBookImageKey = null;
-        }
-
-        public void DataBookTitle()
-        {
-            var table = new DataTable();
-            table.Columns.Add("BookID", typeof(int));
-            table.Columns.Add("Book_Title", typeof(string));
-
-            foreach (var book in _bookService.GetAvailableBooks())
-                table.Rows.Add(book.BookID, book.Book_Title);
-
-            bookIssue_bookTitle.DataSource = table;
-            bookIssue_bookTitle.DisplayMember = "Book_Title";
-            bookIssue_bookTitle.ValueMember = "BookID";
         }
 
         private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)

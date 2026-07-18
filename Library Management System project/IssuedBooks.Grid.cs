@@ -30,10 +30,5 @@ namespace Library_Management_System_project
                 ErrorPresenter.Show("Error selecting issue", ex);
             }
         }
-
-        private void bookIssue_Clear_Click(object sender, EventArgs e)
-        {
-            clearFields();
-        }
     }
 }

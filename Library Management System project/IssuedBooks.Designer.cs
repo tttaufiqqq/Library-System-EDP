@@ -36,10 +36,6 @@
             this.bookIssue_status = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.bookIssue_picturbox = new System.Windows.Forms.PictureBox();
-            this.bookIssue_Clear = new System.Windows.Forms.Button();
-            this.bookIssue_Delete = new System.Windows.Forms.Button();
-            this.bookIssue_Update = new System.Windows.Forms.Button();
-            this.bookIssue_Add = new System.Windows.Forms.Button();
             this.bookIssue_returnDate = new System.Windows.Forms.DateTimePicker();
             this.bookIssue_issueDate = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
@@ -74,10 +70,6 @@
             this.panel1.Controls.Add(this.bookIssue_status);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.bookIssue_picturbox);
-            this.panel1.Controls.Add(this.bookIssue_Clear);
-            this.panel1.Controls.Add(this.bookIssue_Delete);
-            this.panel1.Controls.Add(this.bookIssue_Update);
-            this.panel1.Controls.Add(this.bookIssue_Add);
             this.panel1.Controls.Add(this.bookIssue_returnDate);
             this.panel1.Controls.Add(this.bookIssue_issueDate);
             this.panel1.Controls.Add(this.label6);
@@ -116,8 +108,7 @@
             this.bookIssue_bookTitle.Name = "bookIssue_bookTitle";
             this.bookIssue_bookTitle.Size = new System.Drawing.Size(153, 21);
             this.bookIssue_bookTitle.TabIndex = 24;
-            this.bookIssue_bookTitle.SelectedIndexChanged += new System.EventHandler(this.bookIssue_bookTitle_SelectedIndexChanged);
-            // 
+            //
             // bookIssue_status
             // 
             this.bookIssue_status.FormattingEnabled = true;
@@ -148,79 +139,7 @@
             this.bookIssue_picturbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.bookIssue_picturbox.TabIndex = 21;
             this.bookIssue_picturbox.TabStop = false;
-            // 
-            // bookIssue_Clear
-            // 
-            this.bookIssue_Clear.BackColor = System.Drawing.Color.SteelBlue;
-            this.bookIssue_Clear.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Clear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Clear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bookIssue_Clear.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bookIssue_Clear.ForeColor = System.Drawing.Color.White;
-            this.bookIssue_Clear.Location = new System.Drawing.Point(405, 134);
-            this.bookIssue_Clear.Margin = new System.Windows.Forms.Padding(2);
-            this.bookIssue_Clear.Name = "bookIssue_Clear";
-            this.bookIssue_Clear.Size = new System.Drawing.Size(66, 33);
-            this.bookIssue_Clear.TabIndex = 20;
-            this.bookIssue_Clear.Text = "Clear";
-            this.bookIssue_Clear.UseVisualStyleBackColor = false;
-            this.bookIssue_Clear.Click += new System.EventHandler(this.bookIssue_Clear_Click);
-            // 
-            // bookIssue_Delete
-            // 
-            this.bookIssue_Delete.BackColor = System.Drawing.Color.SteelBlue;
-            this.bookIssue_Delete.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Delete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Delete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bookIssue_Delete.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bookIssue_Delete.ForeColor = System.Drawing.Color.White;
-            this.bookIssue_Delete.Location = new System.Drawing.Point(322, 134);
-            this.bookIssue_Delete.Margin = new System.Windows.Forms.Padding(2);
-            this.bookIssue_Delete.Name = "bookIssue_Delete";
-            this.bookIssue_Delete.Size = new System.Drawing.Size(66, 33);
-            this.bookIssue_Delete.TabIndex = 19;
-            this.bookIssue_Delete.Text = "Delete";
-            this.bookIssue_Delete.UseVisualStyleBackColor = false;
-            this.bookIssue_Delete.Click += new System.EventHandler(this.bookIssue_Delete_Click);
-            // 
-            // bookIssue_Update
-            // 
-            this.bookIssue_Update.BackColor = System.Drawing.Color.SteelBlue;
-            this.bookIssue_Update.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Update.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Update.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Update.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bookIssue_Update.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bookIssue_Update.ForeColor = System.Drawing.Color.White;
-            this.bookIssue_Update.Location = new System.Drawing.Point(240, 135);
-            this.bookIssue_Update.Margin = new System.Windows.Forms.Padding(2);
-            this.bookIssue_Update.Name = "bookIssue_Update";
-            this.bookIssue_Update.Size = new System.Drawing.Size(66, 33);
-            this.bookIssue_Update.TabIndex = 18;
-            this.bookIssue_Update.Text = "Update";
-            this.bookIssue_Update.UseVisualStyleBackColor = false;
-            this.bookIssue_Update.Click += new System.EventHandler(this.bookIssue_Update_Click);
-            // 
-            // bookIssue_Add
-            // 
-            this.bookIssue_Add.BackColor = System.Drawing.Color.SteelBlue;
-            this.bookIssue_Add.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Add.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Add.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
-            this.bookIssue_Add.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bookIssue_Add.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bookIssue_Add.ForeColor = System.Drawing.Color.White;
-            this.bookIssue_Add.Location = new System.Drawing.Point(156, 135);
-            this.bookIssue_Add.Margin = new System.Windows.Forms.Padding(2);
-            this.bookIssue_Add.Name = "bookIssue_Add";
-            this.bookIssue_Add.Size = new System.Drawing.Size(66, 33);
-            this.bookIssue_Add.TabIndex = 17;
-            this.bookIssue_Add.Text = "Add";
-            this.bookIssue_Add.UseVisualStyleBackColor = false;
-            this.bookIssue_Add.Click += new System.EventHandler(this.bookIssue_Add_Click);
-            // 
+            //
             // bookIssue_returnDate
             // 
             this.bookIssue_returnDate.Location = new System.Drawing.Point(268, 108);
@@ -488,10 +407,6 @@
         private System.Windows.Forms.TextBox bookIssue_id;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox bookIssue_picturbox;
-        private System.Windows.Forms.Button bookIssue_Clear;
-        private System.Windows.Forms.Button bookIssue_Delete;
-        private System.Windows.Forms.Button bookIssue_Update;
-        private System.Windows.Forms.Button bookIssue_Add;
         private System.Windows.Forms.ComboBox bookIssue_status;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox bookIssue_author;
