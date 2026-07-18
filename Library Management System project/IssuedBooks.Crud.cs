@@ -110,6 +110,13 @@ namespace Library_Management_System_project
         {
             if (!ValidateIssueForm("Please select a book first.")) return;
 
+            if (bookIssue_returnDate.Value.Date < DateTime.Today)
+            {
+                MessageBox.Show("Return date cannot be in the past.",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (MessageBox.Show("Are you sure you want to UPDATE Issue ID: " + bookIssue_id.Text + " ?",
                 "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {

@@ -17,7 +17,7 @@ namespace Library_Management_System_project.Services
         }
 
         public List<Bookk> GetAllBooks() =>
-            WithContext(db => db.Bookks.OrderBy(b => b.Book_Title).ToList());
+            WithContext(db => db.Bookks.OrderByDescending(b => b.BookID).ToList());
 
         public List<Bookk> GetAvailableBooks() =>
             WithContext(db => db.Bookks.Where(b => b.Book_Status == "Available").ToList());
