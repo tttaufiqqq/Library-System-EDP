@@ -14,6 +14,9 @@ namespace Library_Management_System_project
         {
             InitializeComponent();
             GridStyleHelper.Apply(dataGridView1);
+            ComboBoxStyleHelper.Apply(bookIssue_status);
+            ComboBoxStyleHelper.Apply(bookIssue_author);
+            ComboBoxStyleHelper.Apply(bookIssue_bookTitle);
             ArrowKeyNavigationHelper.Enable(this);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             displayBookIssueData();

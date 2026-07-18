@@ -16,6 +16,7 @@ namespace Library_Management_System_project
         {
             InitializeComponent();
             GridStyleHelper.Apply(dataGridView1);
+            ComboBoxStyleHelper.Apply(Status);
             PublishedDate.MaxDate = DateTime.Today;
             SetButtonIcons();
             ArrowKeyNavigationHelper.Enable(this);

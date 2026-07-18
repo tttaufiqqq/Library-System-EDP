@@ -107,8 +107,8 @@ namespace Library_Management_System_project
             this.Controls.Add(this.labelAuthor);
             this.Controls.Add(this.labelTitle);
             this.Controls.Add(this.pictureBoxCover);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            this.MaximizeBox = true;
             this.MinimizeBox = false;
             this.Name = "BookDetailsDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

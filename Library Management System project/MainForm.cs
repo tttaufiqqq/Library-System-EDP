@@ -11,6 +11,7 @@ namespace Library_Management_System_project
             InitializeComponent();
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             FormDragHelper.EnableDrag(panel1, this);
+            FormResizeHelper.EnableResize(this);
             addBooks1.SetCanDelete(false);
         }
 
@@ -84,6 +85,7 @@ namespace Library_Management_System_project
         private void buttonFine_Click(object sender, EventArgs e)
         {
             ShowPanel(fine1);
+            fine1.RefreshData();
         }
 
         private void buttonBookRequests_Click(object sender, EventArgs e)

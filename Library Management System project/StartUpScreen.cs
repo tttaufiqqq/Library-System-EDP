@@ -23,6 +23,7 @@ namespace Library_Management_System_project
             InitializeProgressBar();
             FormDragHelper.EnableDrag(this, this);
             FormDragHelper.EnableDrag(pictureBox1, this);
+            FormResizeHelper.EnableResize(this);
             AutoUpdater.Start("https://raw.githubusercontent.com/tttaufiqqq/Library-System-EDP/main/update.xml");
         }
 

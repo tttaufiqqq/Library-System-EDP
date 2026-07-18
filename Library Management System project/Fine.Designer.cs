@@ -46,17 +46,16 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonCalculate = new System.Windows.Forms.Button();
             this.labelDisplay = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.comboBoxIssueId = new System.Windows.Forms.ComboBox();
+            this.labelDays = new System.Windows.Forms.Label();
             this.labelCount = new System.Windows.Forms.Label();
             this.labelBook = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.radioButtonCash = new System.Windows.Forms.RadioButton();
             this.groupBoxPayment.SuspendLayout();
             this.grpCardDetails.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxPayment
@@ -432,10 +431,10 @@
             this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBox1.Controls.Add(this.buttonCalculate);
             this.groupBox1.Controls.Add(this.labelDisplay);
-            this.groupBox1.Controls.Add(this.richTextBox1);
+            this.groupBox1.Controls.Add(this.comboBoxIssueId);
             this.groupBox1.Controls.Add(this.labelCount);
             this.groupBox1.Controls.Add(this.labelBook);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.labelDays);
             this.groupBox1.Location = new System.Drawing.Point(51, 61);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(679, 122);
@@ -450,58 +449,61 @@
             this.buttonCalculate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
             this.buttonCalculate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
             this.buttonCalculate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCalculate.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCalculate.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCalculate.ForeColor = System.Drawing.Color.White;
-            this.buttonCalculate.Location = new System.Drawing.Point(299, 42);
+            this.buttonCalculate.Location = new System.Drawing.Point(525, 22);
             this.buttonCalculate.Name = "buttonCalculate";
-            this.buttonCalculate.Size = new System.Drawing.Size(125, 41);
+            this.buttonCalculate.Size = new System.Drawing.Size(100, 30);
             this.buttonCalculate.TabIndex = 22;
-            this.buttonCalculate.Text = "Calculate";
+            this.buttonCalculate.Text = "Refresh";
             this.buttonCalculate.UseVisualStyleBackColor = false;
             this.buttonCalculate.Click += new System.EventHandler(this.buttonCalculate_Click);
-            // 
+            //
             // labelDisplay
-            // 
+            //
             this.labelDisplay.AutoSize = true;
-            this.labelDisplay.Location = new System.Drawing.Point(434, 55);
+            this.labelDisplay.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDisplay.Location = new System.Drawing.Point(300, 68);
             this.labelDisplay.Name = "labelDisplay";
-            this.labelDisplay.Size = new System.Drawing.Size(0, 16);
+            this.labelDisplay.Size = new System.Drawing.Size(0, 17);
             this.labelDisplay.TabIndex = 7;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(115, 25);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(113, 26);
-            this.richTextBox1.TabIndex = 6;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
-            // 
+            //
+            // comboBoxIssueId
+            //
+            this.comboBoxIssueId.FormattingEnabled = true;
+            this.comboBoxIssueId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxIssueId.Location = new System.Drawing.Point(115, 25);
+            this.comboBoxIssueId.Name = "comboBoxIssueId";
+            this.comboBoxIssueId.Size = new System.Drawing.Size(390, 24);
+            this.comboBoxIssueId.TabIndex = 6;
+            this.comboBoxIssueId.SelectedIndexChanged += new System.EventHandler(this.comboBoxIssueId_SelectedIndexChanged);
+            //
             // labelCount
-            // 
+            //
             this.labelCount.AutoSize = true;
-            this.labelCount.Location = new System.Drawing.Point(67, 67);
+            this.labelCount.Location = new System.Drawing.Point(51, 70);
             this.labelCount.Name = "labelCount";
-            this.labelCount.Size = new System.Drawing.Size(42, 16);
+            this.labelCount.Size = new System.Drawing.Size(56, 16);
             this.labelCount.TabIndex = 5;
-            this.labelCount.Text = "Days:";
-            // 
+            this.labelCount.Text = "Overdue:";
+            //
             // labelBook
-            // 
+            //
             this.labelBook.AutoSize = true;
             this.labelBook.Location = new System.Drawing.Point(51, 28);
             this.labelBook.Name = "labelBook";
             this.labelBook.Size = new System.Drawing.Size(58, 16);
             this.labelBook.TabIndex = 4;
             this.labelBook.Text = "Issue ID:";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(115, 65);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 22);
-            this.numericUpDown1.TabIndex = 2;
-            // 
+            //
+            // labelDays
+            //
+            this.labelDays.AutoSize = true;
+            this.labelDays.Location = new System.Drawing.Point(115, 70);
+            this.labelDays.Name = "labelDays";
+            this.labelDays.Size = new System.Drawing.Size(0, 16);
+            this.labelDays.TabIndex = 2;
+            //
             // label1
             // 
             this.label1.AutoSize = true;
@@ -542,7 +544,6 @@
             this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -565,10 +566,10 @@
         private System.Windows.Forms.MaskedTextBox maskedTextBox3;
         private System.Windows.Forms.MaskedTextBox maskedTextBox2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label labelCount;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.ComboBox comboBoxIssueId;
+        private System.Windows.Forms.Label labelDays;
         private System.Windows.Forms.Label labelBook;
         private System.Windows.Forms.Button buttonCalculate;
         private System.Windows.Forms.Label labelDisplay;

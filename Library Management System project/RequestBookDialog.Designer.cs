@@ -133,8 +133,8 @@ namespace Library_Management_System_project
             this.Controls.Add(this.labelAuthorCaption);
             this.Controls.Add(this.labelBookTitleValue);
             this.Controls.Add(this.labelBookCaption);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            this.MaximizeBox = true;
             this.MinimizeBox = false;
             this.Name = "RequestBookDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
