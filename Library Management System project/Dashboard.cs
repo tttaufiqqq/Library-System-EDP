@@ -14,6 +14,7 @@ namespace Library_Management_System_project
         public Dashboard()
         {
             InitializeComponent();
+            GridStyleHelper.Apply(dataGridView1);
 
             // LicenseManager.UsageMode (not Control.DesignMode) is what reliably
             // reports design time here - Dashboard is loaded as a nested control

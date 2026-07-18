@@ -13,6 +13,7 @@ namespace Library_Management_System_project
         public BorrowerFines()
         {
             InitializeComponent();
+            GridStyleHelper.Apply(dataGridView1);
         }
 
         public void LoadFines(string email)

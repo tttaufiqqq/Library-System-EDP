@@ -18,6 +18,7 @@ namespace Library_Management_System_project
             InitializeComponent();
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             FormDragHelper.EnableDrag(panel1, this);
+            GridStyleHelper.Apply(dataGridView1);
 
             _email = user.email;
             labelWelcome.Text = $"Welcome, {user.username}!";

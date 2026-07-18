@@ -13,6 +13,7 @@ namespace Library_Management_System_project
         public IssuedBooks()
         {
             InitializeComponent();
+            GridStyleHelper.Apply(dataGridView1);
             ArrowKeyNavigationHelper.Enable(this);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             displayBookIssueData();

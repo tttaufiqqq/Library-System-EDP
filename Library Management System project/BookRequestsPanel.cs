@@ -14,6 +14,7 @@ namespace Library_Management_System_project
         public BookRequestsPanel()
         {
             InitializeComponent();
+            GridStyleHelper.Apply(dataGridView1);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             toolStripStatusLabel1.Text = "";
             DisplayRequests();

@@ -15,6 +15,7 @@ namespace Library_Management_System_project
         public AddBooks()
         {
             InitializeComponent();
+            GridStyleHelper.Apply(dataGridView1);
             PublishedDate.MaxDate = DateTime.Today;
             SetButtonIcons();
             ArrowKeyNavigationHelper.Enable(this);

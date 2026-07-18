@@ -14,6 +14,7 @@ namespace Library_Management_System_project
         public ManageUsers()
         {
             InitializeComponent();
+            GridStyleHelper.Apply(dataGridView1);
             comboBoxRole.Items.AddRange(new object[] { "Admin", "Staff", "Borrower" });
             ArrowKeyNavigationHelper.Enable(this);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;

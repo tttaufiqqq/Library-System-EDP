@@ -13,6 +13,7 @@ namespace Library_Management_System_project
         public ReturnBooks()
         {
             InitializeComponent();
+            GridStyleHelper.Apply(dataGridView1);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             DisplayPendingReturns();
             toolStripStatusLabel1.Text = "";
