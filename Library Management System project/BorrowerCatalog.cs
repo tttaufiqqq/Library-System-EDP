@@ -49,7 +49,6 @@ namespace Library_Management_System_project
 
                 dataGridView1.DataSource = books;
                 EmptyStateHelper.Toggle(dataGridView1, books.Count == 0, "No books found.", Color.White);
-                UpdateRequestButtonState();
             }
             catch (Exception ex)
             {
@@ -57,66 +56,20 @@ namespace Library_Management_System_project
             }
         }
 
-        private Bookk GetSelectedBook()
-        {
-            if (dataGridView1.SelectedRows.Count == 0) return null;
-            return dataGridView1.SelectedRows[0].DataBoundItem as Bookk;
-        }
-
-        private void UpdateRequestButtonState()
-        {
-            var book = GetSelectedBook();
-            buttonRequestBook.Enabled = book != null && book.Book_Status == "Available";
-        }
-
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
             DisplayBooks();
         }
 
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            UpdateRequestButtonState();
-        }
-
-        private void buttonRequestBook_Click(object sender, EventArgs e)
-        {
-            var book = GetSelectedBook();
+            if (e.RowIndex == -1) return;
+            var book = dataGridView1.Rows[e.RowIndex].DataBoundItem as Bookk;
             if (book == null) return;
 
-            using (var dialog = new RequestBookDialog(book.Book_Title, book.Author))
+            using (var dialog = new BookDetailsDialog(book, _email, _fullName))
             {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-
-                var check = BorrowingPolicy.Check(_email, book.BookID, book.Book_Title, book.Book_Status);
-                if (!check.Ok)
-                {
-                    MessageBox.Show(check.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                try
-                {
-                    new RequestService().CreateRequest(new BookRequest
-                    {
-                        Email = _email,
-                        Full_Name = _fullName,
-                        Contact = dialog.Contact,
-                        BookID = book.BookID,
-                        Book_Title = book.Book_Title,
-                        Author = book.Author,
-                        Requested_Date = DateTime.Today,
-                        Return_Date = dialog.ReturnDate,
-                        Status = "Pending"
-                    });
-
-                    MessageBox.Show("Request submitted, pending staff approval.",
-                        "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    ErrorPresenter.Show("Error submitting request", ex);
-                }
+                dialog.ShowDialog();
             }
         }
     }

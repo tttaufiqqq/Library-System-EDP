@@ -260,6 +260,12 @@
     <Compile Include="RequestBookDialog.Designer.cs">
       <DependentUpon>RequestBookDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="BookDetailsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookDetailsDialog.Designer.cs">
+      <DependentUpon>BookDetailsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="BookRequestsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -336,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RequestBookDialog.resx">
       <DependentUpon>RequestBookDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookDetailsDialog.resx">
+      <DependentUpon>BookDetailsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BookRequestsPanel.resx">
       <DependentUpon>BookRequestsPanel.cs</DependentUpon>
