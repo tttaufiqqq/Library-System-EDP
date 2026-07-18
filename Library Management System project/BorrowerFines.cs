@@ -22,6 +22,7 @@ namespace Library_Management_System_project
 
             try
             {
+                LoadingOverlay.Show(this);
                 var fines = _issueService.GetIssuesByEmail(email)
                     .Select(i => new
                     {
@@ -39,6 +40,10 @@ namespace Library_Management_System_project
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error loading your fines", ex);
+            }
+            finally
+            {
+                LoadingOverlay.Hide(this);
             }
         }
 

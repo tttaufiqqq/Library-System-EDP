@@ -37,6 +37,7 @@ namespace Library_Management_System_project
 
             try
             {
+                LoadingOverlay.Show(this);
                 DisplayAvailable();
                 DisplayIssued();
                 DisplayReturned();
@@ -46,6 +47,10 @@ namespace Library_Management_System_project
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error loading dashboard", ex);
+            }
+            finally
+            {
+                LoadingOverlay.Hide(this);
             }
         }
 
@@ -68,6 +73,7 @@ namespace Library_Management_System_project
         {
             dashboard_Users.Text = _dashboardService.RegisteredUsers.ToString();
             dataGridView1.DataSource = _dashboardService.GetRegisteredUsers();
+            GridStyleHelper.FormatDateColumns(dataGridView1);
         }
 
         private void PanelPaint(object sender, PaintEventArgs e)

@@ -29,9 +29,9 @@ namespace Library_Management_System_project.Services
                 issue.Book_Title = bookTitle;
                 issue.Author = author;
                 issue.Return_Status = status;
-                issue.Issue_Date = issueDate.ToString("yyyy-MM-dd");
-                issue.Return_Date = returnDate.ToString("yyyy-MM-dd");
-                issue.Date_Update = DateTime.Today.ToString("yyyy-MM-dd");
+                issue.Issue_Date = DateHelper.Format(issueDate);
+                issue.Return_Date = DateHelper.Format(returnDate);
+                issue.Date_Update = DateHelper.Format(DateTime.Today);
 
                 db.SubmitChanges();
                 return true;
@@ -55,7 +55,7 @@ namespace Library_Management_System_project.Services
                 if (issue == null) return;
 
                 issue.Return_Status = "Returned";
-                issue.Date_Update = DateTime.Now.ToString();
+                issue.Date_Update = DateHelper.Format(DateTime.Now);
 
                 var book = db.Bookks.SingleOrDefault(b => b.Book_Title == issue.Book_Title);
                 if (book != null)

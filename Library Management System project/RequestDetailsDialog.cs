@@ -24,8 +24,8 @@ namespace Library_Management_System_project
             labelAuthor.Text = "Author: " + (request.Author ?? "Unknown");
             labelBorrower.Text = $"Borrower: {request.Full_Name} ({request.Email})";
             labelContact.Text = "Contact: " + request.Contact;
-            labelRequestedDate.Text = "Requested: " + (request.Requested_Date?.ToString("yyyy-MM-dd") ?? "Unknown");
-            labelReturnDate.Text = "Return by: " + (request.Return_Date?.ToString("yyyy-MM-dd") ?? "Unknown");
+            labelRequestedDate.Text = "Requested: " + (request.Requested_Date.HasValue ? DateHelper.Format(request.Requested_Date.Value) : "Unknown");
+            labelReturnDate.Text = "Return by: " + (request.Return_Date.HasValue ? DateHelper.Format(request.Return_Date.Value) : "Unknown");
             labelStatus.Text = "Status: " + request.Status;
 
             var book = new BookService().GetBookById(request.BookID);

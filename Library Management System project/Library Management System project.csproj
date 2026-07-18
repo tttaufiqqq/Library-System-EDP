@@ -310,6 +310,10 @@
     <Compile Include="Helpers\ComboBoxStyleHelper.cs" />
     <Compile Include="Helpers\FormResizeHelper.cs" />
     <Compile Include="Helpers\DateTimePickerStyleHelper.cs" />
+    <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Helpers\LoadingSpinner.cs" />
+    <Compile Include="Helpers\LoadingOverlay.cs" />
+    <Compile Include="Helpers\FormActiveHighlightHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterForm.cs">

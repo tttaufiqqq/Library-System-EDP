@@ -11,6 +11,8 @@ namespace Library_Management_System_project
     {
         public static void Apply(DateTimePicker picker)
         {
+            picker.Format = DateTimePickerFormat.Custom;
+            picker.CustomFormat = "dd/MM/yyyy";
             picker.Font = new Font("Arial", 9.5F);
             picker.CalendarForeColor = Color.Black;
             picker.CalendarMonthBackground = Color.White;

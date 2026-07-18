@@ -89,7 +89,7 @@ namespace Library_Management_System_project
             }
             else
             {
-                DateTime.TryParse(issue.Return_Date, out DateTime dueDate);
+                DateHelper.TryParse(issue.Return_Date, out DateTime dueDate);
                 int overdueDays = (DateTime.Today - dueDate).Days;
                 decimal fine = FineCalculator.ComputeFine(issue);
 

@@ -22,6 +22,7 @@ namespace Library_Management_System_project
 
             try
             {
+                LoadingOverlay.Show(this);
                 var requests = _requestService.GetRequestsByEmail(email)
                     .Select(r => new
                     {
@@ -34,11 +35,16 @@ namespace Library_Management_System_project
                     }).ToList();
 
                 dataGridView1.DataSource = requests;
+                GridStyleHelper.FormatDateColumns(dataGridView1);
                 EmptyStateHelper.Toggle(dataGridView1, requests.Count == 0, "You have no book requests.", Color.White);
             }
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error loading your requests", ex);
+            }
+            finally
+            {
+                LoadingOverlay.Hide(this);
             }
         }
     }

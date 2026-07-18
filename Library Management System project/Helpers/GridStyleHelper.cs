@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -43,6 +44,18 @@ namespace Library_Management_System_project
             // ways that don't play well with manual NativeWindow subclassing.
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
                 new ShiftWheelHorizontalScroll(grid);
+        }
+
+        // Auto-generated columns show DateTime values with the culture's default
+        // pattern (e.g. "7/18/2026 12:00:00 AM"). Call right after setting
+        // DataSource so date/date? columns render as dd/MM/yyyy instead.
+        public static void FormatDateColumns(DataGridView grid)
+        {
+            foreach (DataGridViewColumn column in grid.Columns)
+            {
+                if (column.ValueType == typeof(DateTime) || column.ValueType == typeof(DateTime?))
+                    column.DefaultCellStyle.Format = DateHelper.Pattern;
+            }
         }
 
         // DataGridView has no public "scroll horizontally on Shift+wheel"

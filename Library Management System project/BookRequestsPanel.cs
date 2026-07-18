@@ -35,13 +35,19 @@ namespace Library_Management_System_project
         {
             try
             {
+                LoadingOverlay.Show(this);
                 var requests = _requestService.GetPendingRequests();
                 dataGridView1.DataSource = requests;
+                GridStyleHelper.FormatDateColumns(dataGridView1);
                 EmptyStateHelper.Toggle(dataGridView1, requests.Count == 0, "No pending requests.", Color.Black);
             }
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error loading requests", ex);
+            }
+            finally
+            {
+                LoadingOverlay.Hide(this);
             }
         }
 

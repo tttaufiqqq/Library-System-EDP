@@ -60,9 +60,9 @@ namespace Library_Management_System_project.Services
                 Book_Title = request.Book_Title,
                 Author = request.Author,
                 Return_Status = "Not Returned",
-                Issue_Date = DateTime.Today.ToString(),
-                Return_Date = request.Return_Date?.ToString() ?? DateTime.Today.ToString(),
-                Insert_Date = DateTime.Today.ToString()
+                Issue_Date = DateHelper.Format(DateTime.Today),
+                Return_Date = request.Return_Date.HasValue ? DateHelper.Format(request.Return_Date.Value) : DateHelper.Format(DateTime.Today),
+                Insert_Date = DateHelper.Format(DateTime.Today)
             });
             _bookService.SetBookStatus(request.BookID, "Issued");
 

@@ -24,7 +24,7 @@ namespace Library_Management_System_project
             labelContact.Text = "Contact: " + issue.Contact;
             labelIssueDate.Text = "Issued: " + issue.Issue_Date;
             labelReturnDate.Text = "Due: " + issue.Return_Date;
-            labelRequestedDate.Text = "Return requested: " + issue.Return_Requested_Date?.ToString("yyyy-MM-dd HH:mm");
+            labelRequestedDate.Text = "Return requested: " + issue.Return_Requested_Date?.ToString("dd/MM/yyyy HH:mm");
 
             string imageKey = new BookService().GetBookImageKey(issue.Book_Title);
             pictureBoxCover.Image = new BookService().LoadBookImage(imageKey);

@@ -22,7 +22,7 @@ namespace Library_Management_System_project
 
             labelTitle.Text = book.Book_Title;
             labelAuthor.Text = "Author: " + (book.Author ?? "Unknown");
-            labelPublished.Text = "Published: " + (book.Published_Date?.ToString("yyyy-MM-dd") ?? "Unknown");
+            labelPublished.Text = "Published: " + (book.Published_Date.HasValue ? DateHelper.Format(book.Published_Date.Value) : "Unknown");
             labelStatus.Text = "Status: " + book.Book_Status;
             pictureBoxCover.Image = new BookService().LoadBookImage(book.Image);
             buttonBorrow.Enabled = book.Book_Status == "Available";

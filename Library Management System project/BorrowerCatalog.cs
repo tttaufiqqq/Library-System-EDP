@@ -37,6 +37,7 @@ namespace Library_Management_System_project
         {
             try
             {
+                LoadingOverlay.Show(this);
                 var books = _bookService.GetAllBooks();
                 string term = textBoxSearch.Text.Trim();
 
@@ -49,11 +50,16 @@ namespace Library_Management_System_project
                 }
 
                 dataGridView1.DataSource = books;
+                GridStyleHelper.FormatDateColumns(dataGridView1);
                 EmptyStateHelper.Toggle(dataGridView1, books.Count == 0, "No books found.", Color.White);
             }
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error loading books", ex);
+            }
+            finally
+            {
+                LoadingOverlay.Hide(this);
             }
         }
 

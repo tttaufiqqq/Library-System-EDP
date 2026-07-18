@@ -32,13 +32,19 @@ namespace Library_Management_System_project
         {
             try
             {
+                LoadingOverlay.Show(this);
                 var users = _userService.GetRegisteredUsers();
                 dataGridView1.DataSource = users;
+                GridStyleHelper.FormatDateColumns(dataGridView1);
                 EmptyStateHelper.Toggle(dataGridView1, users.Count == 0, "No registered users found.", Color.Black);
             }
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error loading users", ex);
+            }
+            finally
+            {
+                LoadingOverlay.Hide(this);
             }
         }
 

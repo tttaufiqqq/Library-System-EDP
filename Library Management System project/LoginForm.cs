@@ -16,6 +16,7 @@ namespace Library_Management_System_project
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             FormDragHelper.EnableDrag(panel1, this);
             FormResizeHelper.EnableResize(this);
+            FormActiveHighlightHelper.Enable(this);
             ArrowKeyNavigationHelper.Enable(this);
         }
 
@@ -59,6 +60,7 @@ namespace Library_Management_System_project
 
             loginBtn.Enabled = false;
             Cursor = Cursors.WaitCursor;
+            LoadingOverlay.Show(this);
 
             try
             {
@@ -106,6 +108,7 @@ namespace Library_Management_System_project
             {
                 loginBtn.Enabled = true;
                 Cursor = Cursors.Default;
+                LoadingOverlay.Hide(this);
             }
         }
 

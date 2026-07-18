@@ -20,10 +20,10 @@ namespace Library_Management_System_project
                 bookIssue_bookTitle.Text = row.Cells[5]?.Value?.ToString() ?? string.Empty;
                 bookIssue_author.Text = row.Cells[6]?.Value?.ToString() ?? string.Empty;
                 bookIssue_status.Text = row.Cells[10]?.Value?.ToString() ?? string.Empty;
-                bookIssue_issueDate.Value = row.Cells[9]?.Value != null ?
-                    Convert.ToDateTime(row.Cells[9].Value) : DateTime.Today;
-                bookIssue_returnDate.Value = row.Cells[8]?.Value != null ?
-                    Convert.ToDateTime(row.Cells[8].Value) : DateTime.Today;
+                bookIssue_issueDate.Value = DateHelper.TryParse(row.Cells[9]?.Value?.ToString(), out DateTime issueDate)
+                    ? issueDate : DateTime.Today;
+                bookIssue_returnDate.Value = DateHelper.TryParse(row.Cells[8]?.Value?.ToString(), out DateTime returnDate)
+                    ? returnDate : DateTime.Today;
             }
             catch (Exception ex)
             {

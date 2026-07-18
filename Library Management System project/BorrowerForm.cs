@@ -19,6 +19,7 @@ namespace Library_Management_System_project
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             FormDragHelper.EnableDrag(panel1, this);
             FormResizeHelper.EnableResize(this);
+            FormActiveHighlightHelper.Enable(this);
             GridStyleHelper.Apply(dataGridView1);
 
             _email = user.email;
@@ -31,6 +32,7 @@ namespace Library_Management_System_project
         {
             try
             {
+                LoadingOverlay.Show(this);
                 _loans = _issueService.GetIssuesByEmail(_email);
                 var display = _loans
                     .Select(i => new
@@ -51,6 +53,10 @@ namespace Library_Management_System_project
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error loading your loans", ex);
+            }
+            finally
+            {
+                LoadingOverlay.Hide(this);
             }
         }
 

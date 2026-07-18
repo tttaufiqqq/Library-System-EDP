@@ -28,12 +28,11 @@ namespace Library_Management_System_project.Services
 
         public List<KeyValuePair<string, int>> GetIssuesByMonth() =>
             WithContext(db => db.IssuesBooks.Select(i => i.Issue_Date).ToList())
-                .Select(d => DateTime.TryParseExact(d, "yyyy-MM-dd", CultureInfo.InvariantCulture,
-                    DateTimeStyles.None, out var parsed) ? (DateTime?)parsed : null)
+                .Select(d => DateHelper.TryParse(d, out var parsed) ? (DateTime?)parsed : null)
                 .Where(d => d.HasValue)
-                .GroupBy(d => d.Value.ToString("yyyy-MM", CultureInfo.InvariantCulture))
+                .GroupBy(d => new DateTime(d.Value.Year, d.Value.Month, 1))
                 .OrderBy(g => g.Key)
-                .Select(g => new KeyValuePair<string, int>(g.Key, g.Count()))
+                .Select(g => new KeyValuePair<string, int>(g.Key.ToString("MM/yyyy", CultureInfo.InvariantCulture), g.Count()))
                 .ToList();
 
         public List<KeyValuePair<string, int>> GetTopBorrowedBooks(int take = 5) =>

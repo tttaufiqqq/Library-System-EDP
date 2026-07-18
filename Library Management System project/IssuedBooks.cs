@@ -36,6 +36,7 @@ namespace Library_Management_System_project
         {
             try
             {
+                LoadingOverlay.Show(this);
                 var issues = _issueService.GetIssueDisplayData();
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = issues;
@@ -45,6 +46,10 @@ namespace Library_Management_System_project
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error displaying issues", ex);
+            }
+            finally
+            {
+                LoadingOverlay.Hide(this);
             }
         }
 
