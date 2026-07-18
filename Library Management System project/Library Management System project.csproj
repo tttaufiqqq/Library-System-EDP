@@ -195,6 +195,8 @@
     <Compile Include="Services\DashboardService.cs" />
     <Compile Include="Services\IssueService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\BorrowingPolicy.cs" />
+    <Compile Include="Services\RequestService.cs" />
     <Compile Include="StartUpScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -251,6 +253,12 @@
     </Compile>
     <Compile Include="BorrowerCatalog.Designer.cs">
       <DependentUpon>BorrowerCatalog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RequestBookDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RequestBookDialog.Designer.cs">
+      <DependentUpon>RequestBookDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="BorrowerFines.cs">
       <SubType>UserControl</SubType>
@@ -319,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BorrowerCatalog.resx">
       <DependentUpon>BorrowerCatalog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RequestBookDialog.resx">
+      <DependentUpon>RequestBookDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BorrowerFines.resx">
       <DependentUpon>BorrowerFines.cs</DependentUpon>

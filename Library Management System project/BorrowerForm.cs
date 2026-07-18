@@ -19,6 +19,7 @@ namespace Library_Management_System_project
 
             _email = user.email;
             labelWelcome.Text = $"Welcome, {user.username}!";
+            borrowerCatalog1.SetUser(user);
             DisplayLoans();
         }
 

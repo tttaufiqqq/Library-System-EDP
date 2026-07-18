@@ -20,6 +20,7 @@ namespace Library_Management_System_project
             this.panelSearch = new System.Windows.Forms.Panel();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.labelSearch = new System.Windows.Forms.Label();
+            this.buttonRequestBook = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panelSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -29,6 +30,7 @@ namespace Library_Management_System_project
             //
             this.panelSearch.Controls.Add(this.textBoxSearch);
             this.panelSearch.Controls.Add(this.labelSearch);
+            this.panelSearch.Controls.Add(this.buttonRequestBook);
             this.panelSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSearch.Location = new System.Drawing.Point(0, 0);
             this.panelSearch.Name = "panelSearch";
@@ -55,6 +57,18 @@ namespace Library_Management_System_project
             this.labelSearch.TabIndex = 0;
             this.labelSearch.Text = "Search:";
             //
+            // buttonRequestBook
+            //
+            this.buttonRequestBook.Enabled = false;
+            this.buttonRequestBook.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRequestBook.Location = new System.Drawing.Point(400, 8);
+            this.buttonRequestBook.Name = "buttonRequestBook";
+            this.buttonRequestBook.Size = new System.Drawing.Size(120, 27);
+            this.buttonRequestBook.TabIndex = 2;
+            this.buttonRequestBook.Text = "Request Book";
+            this.buttonRequestBook.UseVisualStyleBackColor = true;
+            this.buttonRequestBook.Click += new System.EventHandler(this.buttonRequestBook_Click);
+            //
             // dataGridView1
             //
             this.dataGridView1.AllowUserToAddRows = false;
@@ -67,6 +81,7 @@ namespace Library_Management_System_project
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(734, 521);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             //
             // BorrowerCatalog
             //
@@ -88,6 +103,7 @@ namespace Library_Management_System_project
         private System.Windows.Forms.Panel panelSearch;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Label labelSearch;
+        private System.Windows.Forms.Button buttonRequestBook;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
