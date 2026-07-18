@@ -25,6 +25,7 @@
       <Column Name="Return_Date" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Date_Update" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Insert_Date" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Return_Requested_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.BookRequests" Member="BookRequests">

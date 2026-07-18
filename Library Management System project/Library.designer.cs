@@ -320,7 +320,9 @@ namespace Library_Management_System_project
 		private string _Date_Update;
 		
 		private string _Insert_Date;
-		
+
+		private System.Nullable<System.DateTime> _Return_Requested_Date;
+
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -351,8 +353,10 @@ namespace Library_Management_System_project
     partial void OnDate_UpdateChanged();
     partial void OnInsert_DateChanging(string value);
     partial void OnInsert_DateChanged();
+    partial void OnReturn_Requested_DateChanging(System.Nullable<System.DateTime> value);
+    partial void OnReturn_Requested_DateChanged();
     #endregion
-		
+
 		public IssuesBook()
 		{
 			OnCreated();
@@ -617,7 +621,27 @@ namespace Library_Management_System_project
 				}
 			}
 		}
-		
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_Requested_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Return_Requested_Date
+		{
+			get
+			{
+				return this._Return_Requested_Date;
+			}
+			set
+			{
+				if ((this._Return_Requested_Date != value))
+				{
+					this.OnReturn_Requested_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Return_Requested_Date = value;
+					this.SendPropertyChanged("Return_Requested_Date");
+					this.OnReturn_Requested_DateChanged();
+				}
+			}
+		}
+
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;

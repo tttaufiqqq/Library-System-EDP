@@ -56,8 +56,36 @@ namespace Library_Management_System_project.Services
 
                 issue.Return_Status = "Returned";
                 issue.Date_Update = DateTime.Now.ToString();
+
+                var book = db.Bookks.SingleOrDefault(b => b.Book_Title == issue.Book_Title);
+                if (book != null)
+                {
+                    book.Book_Status = "Available";
+                    book.Date_Update = DateTime.Today;
+                }
+
                 db.SubmitChanges();
             });
+
+        // Borrower self-reports a return from "My Loans"; Staff verifies the
+        // physical book via GetPendingReturnRequests() and finalizes with
+        // ReturnBook(). See docs/borrower-self-request.md's rationale for why
+        // this is a column on the existing issue row, not a new table.
+        public void RequestReturn(string issueId) =>
+            WithContext(db =>
+            {
+                var issue = db.IssuesBooks.SingleOrDefault(i =>
+                    i.IssueID == issueId && i.Return_Status == "Not Returned");
+                if (issue == null || issue.Return_Requested_Date != null) return;
+
+                issue.Return_Requested_Date = DateTime.Now;
+                db.SubmitChanges();
+            });
+
+        public List<IssuesBook> GetPendingReturnRequests() =>
+            WithContext(db => db.IssuesBooks
+                .Where(i => i.Return_Status == "Not Returned" && i.Return_Requested_Date != null)
+                .ToList());
 
         public List<IssuesBook> GetActiveIssues() =>
             WithContext(db => db.IssuesBooks.Where(i => i.Return_Status != "Returned").ToList());

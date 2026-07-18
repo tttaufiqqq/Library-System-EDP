@@ -21,6 +21,12 @@ namespace Library_Management_System_project.Services
         public List<BookRequest> GetPendingRequests() =>
             WithContext(db => db.BookRequests.Where(r => r.Status == "Pending").ToList());
 
+        public List<BookRequest> GetRequestsByEmail(string email) =>
+            WithContext(db => db.BookRequests
+                .Where(r => r.Email == email)
+                .OrderByDescending(r => r.RequestID)
+                .ToList());
+
         public (bool Approved, string Message) Approve(int requestId, string staffUsername)
         {
             BookRequest request;
