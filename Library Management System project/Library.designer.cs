@@ -39,6 +39,9 @@ namespace Library_Management_System_project
     partial void InsertBookk(Bookk instance);
     partial void UpdateBookk(Bookk instance);
     partial void DeleteBookk(Bookk instance);
+    partial void InsertBookRequest(BookRequest instance);
+    partial void UpdateBookRequest(BookRequest instance);
+    partial void DeleteBookRequest(BookRequest instance);
     #endregion
 		
 		public LibraryDataContext() : 
@@ -92,6 +95,14 @@ namespace Library_Management_System_project
 			get
 			{
 				return this.GetTable<Bookk>();
+			}
+		}
+
+		public System.Data.Linq.Table<BookRequest> BookRequests
+		{
+			get
+			{
+				return this.GetTable<BookRequest>();
 			}
 		}
 	}
@@ -628,6 +639,332 @@ namespace Library_Management_System_project
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BookRequests")]
+	public partial class BookRequest : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+		private int _RequestID;
+
+		private string _Email;
+
+		private string _Full_Name;
+
+		private string _Contact;
+
+		private int _BookID;
+
+		private string _Book_Title;
+
+		private string _Author;
+
+		private System.Nullable<System.DateTime> _Requested_Date;
+
+		private System.Nullable<System.DateTime> _Return_Date;
+
+		private string _Status;
+
+		private System.Nullable<System.DateTime> _Decided_Date;
+
+		private string _Decided_By;
+
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnRequestIDChanging(int value);
+    partial void OnRequestIDChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnFull_NameChanging(string value);
+    partial void OnFull_NameChanged();
+    partial void OnContactChanging(string value);
+    partial void OnContactChanged();
+    partial void OnBookIDChanging(int value);
+    partial void OnBookIDChanged();
+    partial void OnBook_TitleChanging(string value);
+    partial void OnBook_TitleChanged();
+    partial void OnAuthorChanging(string value);
+    partial void OnAuthorChanged();
+    partial void OnRequested_DateChanging(System.Nullable<System.DateTime> value);
+    partial void OnRequested_DateChanged();
+    partial void OnReturn_DateChanging(System.Nullable<System.DateTime> value);
+    partial void OnReturn_DateChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnDecided_DateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDecided_DateChanged();
+    partial void OnDecided_ByChanging(string value);
+    partial void OnDecided_ByChanged();
+    #endregion
+
+		public BookRequest()
+		{
+			OnCreated();
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RequestID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int RequestID
+		{
+			get
+			{
+				return this._RequestID;
+			}
+			set
+			{
+				if ((this._RequestID != value))
+				{
+					this.OnRequestIDChanging(value);
+					this.SendPropertyChanging();
+					this._RequestID = value;
+					this.SendPropertyChanged("RequestID");
+					this.OnRequestIDChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(MAX)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Full_Name", DbType="VarChar(MAX)")]
+		public string Full_Name
+		{
+			get
+			{
+				return this._Full_Name;
+			}
+			set
+			{
+				if ((this._Full_Name != value))
+				{
+					this.OnFull_NameChanging(value);
+					this.SendPropertyChanging();
+					this._Full_Name = value;
+					this.SendPropertyChanged("Full_Name");
+					this.OnFull_NameChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contact", DbType="VarChar(MAX)")]
+		public string Contact
+		{
+			get
+			{
+				return this._Contact;
+			}
+			set
+			{
+				if ((this._Contact != value))
+				{
+					this.OnContactChanging(value);
+					this.SendPropertyChanging();
+					this._Contact = value;
+					this.SendPropertyChanged("Contact");
+					this.OnContactChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BookID", DbType="Int NOT NULL")]
+		public int BookID
+		{
+			get
+			{
+				return this._BookID;
+			}
+			set
+			{
+				if ((this._BookID != value))
+				{
+					this.OnBookIDChanging(value);
+					this.SendPropertyChanging();
+					this._BookID = value;
+					this.SendPropertyChanged("BookID");
+					this.OnBookIDChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_Title", DbType="VarChar(MAX)")]
+		public string Book_Title
+		{
+			get
+			{
+				return this._Book_Title;
+			}
+			set
+			{
+				if ((this._Book_Title != value))
+				{
+					this.OnBook_TitleChanging(value);
+					this.SendPropertyChanging();
+					this._Book_Title = value;
+					this.SendPropertyChanged("Book_Title");
+					this.OnBook_TitleChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Author", DbType="VarChar(MAX)")]
+		public string Author
+		{
+			get
+			{
+				return this._Author;
+			}
+			set
+			{
+				if ((this._Author != value))
+				{
+					this.OnAuthorChanging(value);
+					this.SendPropertyChanging();
+					this._Author = value;
+					this.SendPropertyChanged("Author");
+					this.OnAuthorChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Requested_Date", DbType="Date")]
+		public System.Nullable<System.DateTime> Requested_Date
+		{
+			get
+			{
+				return this._Requested_Date;
+			}
+			set
+			{
+				if ((this._Requested_Date != value))
+				{
+					this.OnRequested_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Requested_Date = value;
+					this.SendPropertyChanged("Requested_Date");
+					this.OnRequested_DateChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Return_Date", DbType="Date")]
+		public System.Nullable<System.DateTime> Return_Date
+		{
+			get
+			{
+				return this._Return_Date;
+			}
+			set
+			{
+				if ((this._Return_Date != value))
+				{
+					this.OnReturn_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Return_Date = value;
+					this.SendPropertyChanged("Return_Date");
+					this.OnReturn_DateChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Decided_Date", DbType="Date")]
+		public System.Nullable<System.DateTime> Decided_Date
+		{
+			get
+			{
+				return this._Decided_Date;
+			}
+			set
+			{
+				if ((this._Decided_Date != value))
+				{
+					this.OnDecided_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Decided_Date = value;
+					this.SendPropertyChanged("Decided_Date");
+					this.OnDecided_DateChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Decided_By", DbType="VarChar(MAX)")]
+		public string Decided_By
+		{
+			get
+			{
+				return this._Decided_By;
+			}
+			set
+			{
+				if ((this._Decided_By != value))
+				{
+					this.OnDecided_ByChanging(value);
+					this.SendPropertyChanging();
+					this._Decided_By = value;
+					this.SendPropertyChanged("Decided_By");
+					this.OnDecided_ByChanged();
+				}
+			}
+		}
+
+		public event PropertyChangingEventHandler PropertyChanging;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Books")]
 	public partial class Bookk : INotifyPropertyChanging, INotifyPropertyChanged
 	{

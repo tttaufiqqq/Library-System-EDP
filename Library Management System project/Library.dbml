@@ -27,6 +27,22 @@
       <Column Name="Insert_Date" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.BookRequests" Member="BookRequests">
+    <Type Name="BookRequest">
+      <Column Name="RequestID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Full_Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Contact" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="BookID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Book_Title" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Author" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Requested_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Return_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Decided_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Decided_By" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Books" Member="Bookks">
     <Type Name="Bookk">
       <Column Name="BookID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
