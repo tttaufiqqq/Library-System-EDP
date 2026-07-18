@@ -92,15 +92,17 @@
             // 
             // bookIssue_author
             // 
+            this.bookIssue_author.Enabled = false;
             this.bookIssue_author.FormattingEnabled = true;
             this.bookIssue_author.Location = new System.Drawing.Point(266, 36);
             this.bookIssue_author.Margin = new System.Windows.Forms.Padding(2);
             this.bookIssue_author.Name = "bookIssue_author";
             this.bookIssue_author.Size = new System.Drawing.Size(153, 21);
             this.bookIssue_author.TabIndex = 25;
-            // 
+            //
             // bookIssue_bookTitle
-            // 
+            //
+            this.bookIssue_bookTitle.Enabled = false;
             this.bookIssue_bookTitle.FormattingEnabled = true;
             this.bookIssue_bookTitle.Items.AddRange(new object[] { "" });
             this.bookIssue_bookTitle.Location = new System.Drawing.Point(266, 5);
@@ -142,14 +144,16 @@
             //
             // bookIssue_returnDate
             // 
+            this.bookIssue_returnDate.Enabled = false;
             this.bookIssue_returnDate.Location = new System.Drawing.Point(268, 108);
             this.bookIssue_returnDate.Margin = new System.Windows.Forms.Padding(2);
             this.bookIssue_returnDate.Name = "bookIssue_returnDate";
             this.bookIssue_returnDate.Size = new System.Drawing.Size(151, 20);
             this.bookIssue_returnDate.TabIndex = 16;
-            // 
+            //
             // bookIssue_issueDate
-            // 
+            //
+            this.bookIssue_issueDate.Enabled = false;
             this.bookIssue_issueDate.Location = new System.Drawing.Point(268, 73);
             this.bookIssue_issueDate.Margin = new System.Windows.Forms.Padding(2);
             this.bookIssue_issueDate.Name = "bookIssue_issueDate";
@@ -203,6 +207,7 @@
             // bookIssue_email
             // 
             this.bookIssue_email.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bookIssue_email.ReadOnly = true;
             this.bookIssue_email.Location = new System.Drawing.Point(62, 107);
             this.bookIssue_email.Margin = new System.Windows.Forms.Padding(2);
             this.bookIssue_email.Name = "bookIssue_email";
@@ -225,6 +230,7 @@
             // bookIssue_contact
             // 
             this.bookIssue_contact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bookIssue_contact.ReadOnly = true;
             this.bookIssue_contact.Location = new System.Drawing.Point(62, 72);
             this.bookIssue_contact.Margin = new System.Windows.Forms.Padding(2);
             this.bookIssue_contact.Name = "bookIssue_contact";
@@ -247,6 +253,7 @@
             // bookIssue_name
             // 
             this.bookIssue_name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bookIssue_name.ReadOnly = true;
             this.bookIssue_name.Location = new System.Drawing.Point(62, 36);
             this.bookIssue_name.Margin = new System.Windows.Forms.Padding(2);
             this.bookIssue_name.Name = "bookIssue_name";
@@ -269,6 +276,7 @@
             // bookIssue_id
             // 
             this.bookIssue_id.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bookIssue_id.ReadOnly = true;
             this.bookIssue_id.Location = new System.Drawing.Point(62, 5);
             this.bookIssue_id.Margin = new System.Windows.Forms.Padding(2);
             this.bookIssue_id.Name = "bookIssue_id";

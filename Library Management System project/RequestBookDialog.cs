@@ -14,6 +14,7 @@ namespace Library_Management_System_project
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             Text = "Request Book";
 
+            DateTimePickerStyleHelper.Apply(dateTimePickerReturn);
             labelBookTitleValue.Text = bookTitle;
             labelAuthorValue.Text = author;
             dateTimePickerReturn.Value = DateTime.Today.AddDays(14);

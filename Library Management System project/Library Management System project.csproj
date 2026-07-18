@@ -309,6 +309,7 @@
     <Compile Include="Helpers\GridStyleHelper.cs" />
     <Compile Include="Helpers\ComboBoxStyleHelper.cs" />
     <Compile Include="Helpers\FormResizeHelper.cs" />
+    <Compile Include="Helpers\DateTimePickerStyleHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterForm.cs">

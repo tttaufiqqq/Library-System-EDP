@@ -17,6 +17,8 @@ namespace Library_Management_System_project
             ComboBoxStyleHelper.Apply(bookIssue_status);
             ComboBoxStyleHelper.Apply(bookIssue_author);
             ComboBoxStyleHelper.Apply(bookIssue_bookTitle);
+            DateTimePickerStyleHelper.Apply(bookIssue_issueDate);
+            DateTimePickerStyleHelper.Apply(bookIssue_returnDate);
             ArrowKeyNavigationHelper.Enable(this);
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             displayBookIssueData();

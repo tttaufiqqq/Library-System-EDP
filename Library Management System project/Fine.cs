@@ -46,6 +46,16 @@ namespace Library_Management_System_project
                     .Where(i => FineCalculator.ComputeFine(i) > 0)
                     .ToList();
 
+                if (_overdueIssues.Count == 0)
+                {
+                    comboBoxIssueId.DataSource = null;
+                    comboBoxIssueId.Items.Clear();
+                    comboBoxIssueId.Enabled = false;
+                    labelDays.Text = "No overdue fines at this time.";
+                    labelDisplay.Text = "";
+                    return;
+                }
+
                 var display = _overdueIssues
                     .Select(i => new
                     {
@@ -54,6 +64,7 @@ namespace Library_Management_System_project
                     })
                     .ToList();
 
+                comboBoxIssueId.Enabled = true;
                 comboBoxIssueId.DataSource = display;
                 comboBoxIssueId.DisplayMember = "Display";
                 comboBoxIssueId.ValueMember = "IssueID";
