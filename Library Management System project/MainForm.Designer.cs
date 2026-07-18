@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonBookRequests = new System.Windows.Forms.Button();
             this.buttonFine = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonLogOut = new System.Windows.Forms.Button();
@@ -44,6 +45,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.bookRequests1 = new Library_Management_System_project.BookRequestsPanel();
             this.fine1 = new Library_Management_System_project.Fine();
             this.dashboard1 = new Library_Management_System_project.Dashboard();
             this.addBooks1 = new Library_Management_System_project.AddBooks();
@@ -102,6 +104,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.SteelBlue;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.buttonBookRequests);
             this.panel2.Controls.Add(this.buttonFine);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.buttonLogOut);
@@ -136,7 +139,24 @@
             this.toolTip1.SetToolTip(this.buttonFine, "Fine borrowers who return the books late");
             this.buttonFine.UseVisualStyleBackColor = true;
             this.buttonFine.Click += new System.EventHandler(this.buttonFine_Click);
-            // 
+            //
+            // buttonBookRequests
+            //
+            this.buttonBookRequests.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
+            this.buttonBookRequests.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.buttonBookRequests.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBookRequests.ForeColor = System.Drawing.Color.White;
+            this.buttonBookRequests.Location = new System.Drawing.Point(18, 341);
+            this.buttonBookRequests.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonBookRequests.Name = "buttonBookRequests";
+            this.buttonBookRequests.Size = new System.Drawing.Size(124, 26);
+            this.buttonBookRequests.TabIndex = 6;
+            this.buttonBookRequests.Text = "BOOK REQUESTS";
+            this.buttonBookRequests.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.buttonBookRequests, "Approve or reject borrower book requests");
+            this.buttonBookRequests.UseVisualStyleBackColor = true;
+            this.buttonBookRequests.Click += new System.EventHandler(this.buttonBookRequests_Click);
+            //
             // label4
             // 
             this.label4.AutoSize = true;
@@ -268,7 +288,8 @@
             this.pictureBox1.TabStop = false;
             // 
             // panel3
-            // 
+            //
+            this.panel3.Controls.Add(this.bookRequests1);
             this.panel3.Controls.Add(this.fine1);
             this.panel3.Controls.Add(this.dashboard1);
             this.panel3.Controls.Add(this.addBooks1);
@@ -290,7 +311,16 @@
             this.fine1.Size = new System.Drawing.Size(660, 456);
             this.fine1.TabIndex = 4;
             this.fine1.Load += new System.EventHandler(this.fine1_Load);
-            // 
+            //
+            // bookRequests1
+            //
+            this.bookRequests1.BackColor = System.Drawing.Color.SteelBlue;
+            this.bookRequests1.Location = new System.Drawing.Point(0, 0);
+            this.bookRequests1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bookRequests1.Name = "bookRequests1";
+            this.bookRequests1.Size = new System.Drawing.Size(660, 459);
+            this.bookRequests1.TabIndex = 5;
+            //
             // dashboard1
             // 
             this.dashboard1.BackColor = System.Drawing.Color.SteelBlue;
@@ -388,8 +418,10 @@
         protected AddBooks addBooks1;
         private IssuedBooks issuedBooks1;
         protected System.Windows.Forms.Button buttonFine;
-     
+        protected System.Windows.Forms.Button buttonBookRequests;
+
         private Fine fine1;
+        private BookRequestsPanel bookRequests1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label labelUser;
     }

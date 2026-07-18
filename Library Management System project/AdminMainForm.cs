@@ -13,6 +13,7 @@ namespace Library_Management_System_project
             buttonIssueBooks.Visible = false;
             buttonReturnBooks.Visible = false;
             buttonFine.Visible = false;
+            buttonBookRequests.Visible = false;
 
             // Admin owns catalog-delete authority (Staff can only add/edit).
             addBooks1.SetCanDelete(true);

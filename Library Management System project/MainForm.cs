@@ -17,6 +17,7 @@ namespace Library_Management_System_project
         public void SetUserLabel(string username)
         {
             labelUser.Text = $"{username}!";
+            bookRequests1.SetStaffUsername(username);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -83,6 +84,12 @@ namespace Library_Management_System_project
         private void buttonFine_Click(object sender, EventArgs e)
         {
             ShowPanel(fine1);
+        }
+
+        private void buttonBookRequests_Click(object sender, EventArgs e)
+        {
+            ShowPanel(bookRequests1);
+            bookRequests1.RefreshData();
         }
 
         private void fine1_Load(object sender, EventArgs e)
