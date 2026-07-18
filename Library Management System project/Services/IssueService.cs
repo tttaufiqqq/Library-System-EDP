@@ -7,6 +7,8 @@ namespace Library_Management_System_project.Services
 {
     public class IssueService : DataService
     {
+        public string GenerateIssueId() => "ISS" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
+
         public void IssueBook(IssuesBook issue) =>
             WithContext(db =>
             {

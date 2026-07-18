@@ -74,6 +74,17 @@ namespace Library_Management_System_project.Services
                 db.SubmitChanges();
             });
 
+        public void SetBookStatus(int bookId, string status) =>
+            WithContext(db =>
+            {
+                var book = db.Bookks.SingleOrDefault(b => b.BookID == bookId);
+                if (book == null) return;
+
+                book.Book_Status = status;
+                book.Date_Update = DateTime.Today;
+                db.SubmitChanges();
+            });
+
         public void SoftDeleteBook(int bookId) =>
             WithContext(db =>
             {
