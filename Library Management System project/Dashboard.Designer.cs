@@ -56,6 +56,11 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.chartsPanel = new System.Windows.Forms.Panel();
+            this.chartBooksByStatus = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartUsersByRole = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartIssuesOverTime = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartTopBorrowed = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panelUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.panelReturned.SuspendLayout();
@@ -70,6 +75,11 @@
             this.statusStrip1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.chartsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartBooksByStatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartUsersByRole)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartIssuesOverTime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartTopBorrowed)).BeginInit();
             this.SuspendLayout();
             // 
             // panelUsers
@@ -380,13 +390,83 @@
             this.label2.Size = new System.Drawing.Size(145, 35);
             this.label2.TabIndex = 2;
             this.label2.Text = "Dashboard";
-            // 
+            //
+            // chartsPanel
+            //
+            this.chartsPanel.BackColor = System.Drawing.Color.SteelBlue;
+            this.chartsPanel.Controls.Add(this.chartBooksByStatus);
+            this.chartsPanel.Controls.Add(this.chartUsersByRole);
+            this.chartsPanel.Controls.Add(this.chartIssuesOverTime);
+            this.chartsPanel.Controls.Add(this.chartTopBorrowed);
+            this.chartsPanel.Location = new System.Drawing.Point(0, 52);
+            this.chartsPanel.Name = "chartsPanel";
+            this.chartsPanel.Size = new System.Drawing.Size(640, 513);
+            this.chartsPanel.TabIndex = 9;
+            this.chartsPanel.Visible = false;
+            //
+            // chartBooksByStatus
+            //
+            this.chartBooksByStatus.ChartAreas.Add(new System.Windows.Forms.DataVisualization.Charting.ChartArea("Area1"));
+            this.chartBooksByStatus.Location = new System.Drawing.Point(5, 5);
+            this.chartBooksByStatus.Name = "chartBooksByStatus";
+            this.chartBooksByStatus.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Series1")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie
+            });
+            this.chartBooksByStatus.Size = new System.Drawing.Size(310, 245);
+            this.chartBooksByStatus.TabIndex = 0;
+            this.chartBooksByStatus.Text = "Books by Status";
+            this.chartBooksByStatus.Titles.Add("Books by Status");
+            //
+            // chartUsersByRole
+            //
+            this.chartUsersByRole.ChartAreas.Add(new System.Windows.Forms.DataVisualization.Charting.ChartArea("Area1"));
+            this.chartUsersByRole.Location = new System.Drawing.Point(325, 5);
+            this.chartUsersByRole.Name = "chartUsersByRole";
+            this.chartUsersByRole.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Series1")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut
+            });
+            this.chartUsersByRole.Size = new System.Drawing.Size(310, 245);
+            this.chartUsersByRole.TabIndex = 1;
+            this.chartUsersByRole.Text = "Users by Role";
+            this.chartUsersByRole.Titles.Add("Users by Role");
+            //
+            // chartIssuesOverTime
+            //
+            this.chartIssuesOverTime.ChartAreas.Add(new System.Windows.Forms.DataVisualization.Charting.ChartArea("Area1"));
+            this.chartIssuesOverTime.Location = new System.Drawing.Point(5, 260);
+            this.chartIssuesOverTime.Name = "chartIssuesOverTime";
+            this.chartIssuesOverTime.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Series1")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column
+            });
+            this.chartIssuesOverTime.Size = new System.Drawing.Size(310, 245);
+            this.chartIssuesOverTime.TabIndex = 2;
+            this.chartIssuesOverTime.Text = "Issues over Time";
+            this.chartIssuesOverTime.Titles.Add("Issues over Time");
+            //
+            // chartTopBorrowed
+            //
+            this.chartTopBorrowed.ChartAreas.Add(new System.Windows.Forms.DataVisualization.Charting.ChartArea("Area1"));
+            this.chartTopBorrowed.Location = new System.Drawing.Point(325, 260);
+            this.chartTopBorrowed.Name = "chartTopBorrowed";
+            this.chartTopBorrowed.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series("Series1")
+            {
+                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar
+            });
+            this.chartTopBorrowed.Size = new System.Drawing.Size(310, 245);
+            this.chartTopBorrowed.TabIndex = 3;
+            this.chartTopBorrowed.Text = "Top Borrowed Books";
+            this.chartTopBorrowed.Titles.Add("Top Borrowed Books");
+            //
             // Dashboard
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.Controls.Add(this.flowLayoutPanel3);
+            this.Controls.Add(this.chartsPanel);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Dashboard";
@@ -412,6 +492,11 @@
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartBooksByStatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartUsersByRole)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartIssuesOverTime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartTopBorrowed)).EndInit();
+            this.chartsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -444,5 +529,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Panel chartsPanel;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartBooksByStatus;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartUsersByRole;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartIssuesOverTime;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartTopBorrowed;
     }
 }

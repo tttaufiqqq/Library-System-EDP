@@ -13,6 +13,12 @@ namespace Library_Management_System_project
             buttonIssueBooks.Visible = false;
             buttonReturnBooks.Visible = false;
             buttonFine.Visible = false;
+
+            // Admin owns catalog-delete authority (Staff can only add/edit).
+            addBooks1.SetCanDelete(true);
+
+            // Analytics charts are Admin-only (see docs/role-permissions-and-dashboards.md).
+            dashboard1.SetChartsVisible(true);
         }
 
         private void buttonManageUsers_Click(object sender, EventArgs e)

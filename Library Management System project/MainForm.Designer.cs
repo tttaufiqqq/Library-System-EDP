@@ -384,7 +384,7 @@
         protected System.Windows.Forms.Label label4;
         protected System.Windows.Forms.Panel panel3;
         private ReturnBooks returnBooks1;
-        private Dashboard dashboard1;
+        protected Dashboard dashboard1;
         protected AddBooks addBooks1;
         private IssuedBooks issuedBooks1;
         protected System.Windows.Forms.Button buttonFine;

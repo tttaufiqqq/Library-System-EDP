@@ -40,6 +40,7 @@ namespace Library_Management_System_project
                 DisplayIssued();
                 DisplayReturned();
                 DisplayUsers();
+                if (chartsPanel.Visible) PopulateCharts();
             }
             catch (Exception ex)
             {

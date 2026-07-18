@@ -38,6 +38,8 @@ namespace Library_Management_System_project
             DisplayBooks();
         }
 
+        public void SetCanDelete(bool canDelete) => buttonDelete.Visible = canDelete;
+
         private void DisplayBooks()
         {
             try

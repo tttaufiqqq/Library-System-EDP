@@ -11,6 +11,7 @@ namespace Library_Management_System_project
             InitializeComponent();
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             FormDragHelper.EnableDrag(panel1, this);
+            addBooks1.SetCanDelete(false);
         }
 
         public void SetUserLabel(string username)
