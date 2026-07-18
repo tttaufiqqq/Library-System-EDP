@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
 
@@ -29,7 +30,9 @@ namespace Library_Management_System_project
         {
             try
             {
-                dataGridView1.DataSource = _userService.GetRegisteredUsers();
+                var users = _userService.GetRegisteredUsers();
+                dataGridView1.DataSource = users;
+                EmptyStateHelper.Toggle(dataGridView1, users.Count == 0, "No registered users found.", Color.Black);
             }
             catch (Exception ex)
             {

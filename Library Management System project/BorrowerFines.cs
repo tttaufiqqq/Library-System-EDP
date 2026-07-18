@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -32,6 +33,7 @@ namespace Library_Management_System_project
                     }).ToList();
 
                 dataGridView1.DataSource = fines;
+                EmptyStateHelper.Toggle(dataGridView1, fines.Count == 0, "You have no fines.", Color.White);
             }
             catch (Exception ex)
             {

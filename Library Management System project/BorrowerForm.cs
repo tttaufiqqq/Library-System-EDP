@@ -38,6 +38,7 @@ namespace Library_Management_System_project
                     }).ToList();
 
                 dataGridView1.DataSource = loans;
+                EmptyStateHelper.Toggle(dataGridView1, loans.Count == 0, "You have no borrowed books yet.", Color.Black);
             }
             catch (Exception ex)
             {

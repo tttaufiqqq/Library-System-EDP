@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
 
@@ -47,9 +48,11 @@ namespace Library_Management_System_project
         {
             try
             {
+                var issues = _issueService.GetIssueDisplayData();
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = _issueService.GetIssueDisplayData();
+                dataGridView1.DataSource = issues;
                 dataGridView1.Refresh();
+                EmptyStateHelper.Toggle(dataGridView1, issues.Count == 0, "No issued books found.", Color.Black);
             }
             catch (Exception ex)
             {

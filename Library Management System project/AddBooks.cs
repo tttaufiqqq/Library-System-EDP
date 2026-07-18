@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -57,6 +58,7 @@ namespace Library_Management_System_project
                 }
 
                 dataGridView1.DataSource = books;
+                EmptyStateHelper.Toggle(dataGridView1, books.Count == 0, "No books found.", Color.Black);
             }
             catch (Exception ex)
             {

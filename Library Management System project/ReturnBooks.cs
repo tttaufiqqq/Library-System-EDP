@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
@@ -47,6 +48,7 @@ namespace Library_Management_System_project
                     }).ToList();
 
                 dataGridView1.DataSource = listData;
+                EmptyStateHelper.Toggle(dataGridView1, listData.Count == 0, "No books currently issued.", Color.Black);
             }
             catch (Exception ex)
             {

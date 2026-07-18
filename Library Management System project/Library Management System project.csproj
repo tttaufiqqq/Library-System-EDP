@@ -264,6 +264,7 @@
     <Compile Include="Helpers\ArrowKeyNavigationHelper.cs" />
     <Compile Include="Helpers\FormDragHelper.cs" />
     <Compile Include="Helpers\InputValidator.cs" />
+    <Compile Include="Helpers\EmptyStateHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterForm.cs">
