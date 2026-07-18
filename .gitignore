@@ -11,5 +11,6 @@ packages/
 *.ldf
 CLAUDE.md
 handoff.md
+continue.md
 EDP_Project_Requirements.md
 installer/Output/
