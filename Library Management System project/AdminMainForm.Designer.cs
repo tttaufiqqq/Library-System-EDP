@@ -43,7 +43,7 @@ namespace Library_Management_System_project
             this.buttonManageUsers.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
             this.buttonManageUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonManageUsers.ForeColor = System.Drawing.Color.White;
-            this.buttonManageUsers.Location = new System.Drawing.Point(8, 347);
+            this.buttonManageUsers.Location = new System.Drawing.Point(8, 238);
             this.buttonManageUsers.Name = "buttonManageUsers";
             this.buttonManageUsers.Size = new System.Drawing.Size(145, 28);
             this.buttonManageUsers.TabIndex = 7;
@@ -51,7 +51,13 @@ namespace Library_Management_System_project
             this.buttonManageUsers.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonManageUsers.UseVisualStyleBackColor = true;
             this.buttonManageUsers.Click += new System.EventHandler(this.buttonManageUsers_Click);
-            // 
+            //
+            // buttonLogOut / label4 (repositioned: Admin sidebar has no
+            // Issue/Return/Fine buttons, so these move up to close the gap)
+            //
+            this.buttonLogOut.Location = new System.Drawing.Point(6, 270);
+            this.label4.Location = new System.Drawing.Point(44, 280);
+            //
             // manageUsers1
             // 
             this.manageUsers1.BackColor = System.Drawing.Color.SteelBlue;

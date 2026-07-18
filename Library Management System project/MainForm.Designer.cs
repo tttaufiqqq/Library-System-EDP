@@ -218,7 +218,7 @@
             this.buttonAddBooks.Name = "buttonAddBooks";
             this.buttonAddBooks.Size = new System.Drawing.Size(124, 27);
             this.buttonAddBooks.TabIndex = 2;
-            this.buttonAddBooks.Text = "ADD BOOKS";
+            this.buttonAddBooks.Text = "BOOK CATALOG";
             this.buttonAddBooks.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.buttonAddBooks, "Add new books to the system");
             this.buttonAddBooks.UseVisualStyleBackColor = true;
@@ -378,16 +378,16 @@
         private System.Windows.Forms.Button buttonAddBooks;
         private System.Windows.Forms.Button buttonDashboard;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button buttonReturnBooks;
-        private System.Windows.Forms.Button buttonIssueBooks;
-        private System.Windows.Forms.Button buttonLogOut;
-        private System.Windows.Forms.Label label4;
+        protected System.Windows.Forms.Button buttonReturnBooks;
+        protected System.Windows.Forms.Button buttonIssueBooks;
+        protected System.Windows.Forms.Button buttonLogOut;
+        protected System.Windows.Forms.Label label4;
         protected System.Windows.Forms.Panel panel3;
         private ReturnBooks returnBooks1;
         private Dashboard dashboard1;
-        private AddBooks addBooks1;
+        protected AddBooks addBooks1;
         private IssuedBooks issuedBooks1;
-        private System.Windows.Forms.Button buttonFine;
+        protected System.Windows.Forms.Button buttonFine;
      
         private Fine fine1;
         private System.Windows.Forms.ToolTip toolTip1;
