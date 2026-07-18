@@ -26,11 +26,13 @@ namespace Library_Management_System_project
             this.buttonMyLoans = new System.Windows.Forms.Button();
             this.buttonBrowseCatalog = new System.Windows.Forms.Button();
             this.buttonMyFines = new System.Windows.Forms.Button();
+            this.buttonMyRequests = new System.Windows.Forms.Button();
             this.buttonLogOut = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.borrowerCatalog1 = new Library_Management_System_project.BorrowerCatalog();
             this.borrowerFines1 = new Library_Management_System_project.BorrowerFines();
+            this.borrowerRequests1 = new Library_Management_System_project.BorrowerRequests();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -84,6 +86,7 @@ namespace Library_Management_System_project
             this.panel2.Controls.Add(this.buttonMyLoans);
             this.panel2.Controls.Add(this.buttonBrowseCatalog);
             this.panel2.Controls.Add(this.buttonMyFines);
+            this.panel2.Controls.Add(this.buttonMyRequests);
             this.panel2.Controls.Add(this.buttonLogOut);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 35);
@@ -149,13 +152,29 @@ namespace Library_Management_System_project
             this.buttonMyFines.UseVisualStyleBackColor = true;
             this.buttonMyFines.Click += new System.EventHandler(this.buttonMyFines_Click);
             //
+            // buttonMyRequests
+            //
+            this.buttonMyRequests.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
+            this.buttonMyRequests.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.buttonMyRequests.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMyRequests.ForeColor = System.Drawing.Color.White;
+            this.buttonMyRequests.Location = new System.Drawing.Point(18, 270);
+            this.buttonMyRequests.Name = "buttonMyRequests";
+            this.buttonMyRequests.Size = new System.Drawing.Size(124, 28);
+            this.buttonMyRequests.TabIndex = 5;
+            this.buttonMyRequests.Text = "MY REQUESTS";
+            this.buttonMyRequests.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolTip1.SetToolTip(this.buttonMyRequests, "View the status of your book requests");
+            this.buttonMyRequests.UseVisualStyleBackColor = true;
+            this.buttonMyRequests.Click += new System.EventHandler(this.buttonMyRequests_Click);
+            //
             // buttonLogOut
             //
             this.buttonLogOut.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
             this.buttonLogOut.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
             this.buttonLogOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLogOut.ForeColor = System.Drawing.Color.White;
-            this.buttonLogOut.Location = new System.Drawing.Point(18, 270);
+            this.buttonLogOut.Location = new System.Drawing.Point(18, 302);
             this.buttonLogOut.Name = "buttonLogOut";
             this.buttonLogOut.Size = new System.Drawing.Size(124, 28);
             this.buttonLogOut.TabIndex = 4;
@@ -166,6 +185,7 @@ namespace Library_Management_System_project
             //
             // panel3
             //
+            this.panel3.Controls.Add(this.borrowerRequests1);
             this.panel3.Controls.Add(this.borrowerFines1);
             this.panel3.Controls.Add(this.borrowerCatalog1);
             this.panel3.Controls.Add(this.dataGridView1);
@@ -186,6 +206,7 @@ namespace Library_Management_System_project
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(734, 565);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             //
             // borrowerCatalog1
             //
@@ -206,6 +227,16 @@ namespace Library_Management_System_project
             this.borrowerFines1.Size = new System.Drawing.Size(734, 565);
             this.borrowerFines1.TabIndex = 2;
             this.borrowerFines1.Visible = false;
+            //
+            // borrowerRequests1
+            //
+            this.borrowerRequests1.BackColor = System.Drawing.Color.SteelBlue;
+            this.borrowerRequests1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.borrowerRequests1.Location = new System.Drawing.Point(0, 0);
+            this.borrowerRequests1.Name = "borrowerRequests1";
+            this.borrowerRequests1.Size = new System.Drawing.Size(734, 565);
+            this.borrowerRequests1.TabIndex = 3;
+            this.borrowerRequests1.Visible = false;
             //
             // toolTip1
             //
@@ -243,11 +274,13 @@ namespace Library_Management_System_project
         private System.Windows.Forms.Button buttonMyLoans;
         private System.Windows.Forms.Button buttonBrowseCatalog;
         private System.Windows.Forms.Button buttonMyFines;
+        private System.Windows.Forms.Button buttonMyRequests;
         private System.Windows.Forms.Button buttonLogOut;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dataGridView1;
         private BorrowerCatalog borrowerCatalog1;
         private BorrowerFines borrowerFines1;
+        private BorrowerRequests borrowerRequests1;
         private System.Windows.Forms.ToolTip toolTip1;
     }
 }

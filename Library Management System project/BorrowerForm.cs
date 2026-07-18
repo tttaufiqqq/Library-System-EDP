@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,6 +11,7 @@ namespace Library_Management_System_project
     {
         private readonly IssueService _issueService = new IssueService();
         private readonly string _email;
+        private List<IssuesBook> _loans = new List<IssuesBook>();
 
         public BorrowerForm(User user)
         {
@@ -27,9 +29,11 @@ namespace Library_Management_System_project
         {
             try
             {
-                var loans = _issueService.GetIssuesByEmail(_email)
+                _loans = _issueService.GetIssuesByEmail(_email);
+                var display = _loans
                     .Select(i => new
                     {
+                        i.IssueID,
                         i.Book_Title,
                         i.Author,
                         i.Issue_Date,
@@ -38,12 +42,28 @@ namespace Library_Management_System_project
                         Fine = FineCalculator.ComputeFine(i)
                     }).ToList();
 
-                dataGridView1.DataSource = loans;
-                EmptyStateHelper.Toggle(dataGridView1, loans.Count == 0, "You have no borrowed books yet.", Color.Black);
+                dataGridView1.DataSource = display;
+                EmptyStateHelper.Toggle(dataGridView1, display.Count == 0, "You have no borrowed books yet.", Color.Black);
+                if (dataGridView1.Columns["IssueID"] != null) dataGridView1.Columns["IssueID"].Visible = false;
             }
             catch (Exception ex)
             {
                 ErrorPresenter.Show("Error loading your loans", ex);
+            }
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            string issueId = dataGridView1.Rows[e.RowIndex].Cells["IssueID"].Value?.ToString();
+            var issue = _loans.FirstOrDefault(i => i.IssueID == issueId);
+            if (issue == null) return;
+
+            using (var dialog = new LoanDetailsDialog(issue))
+            {
+                dialog.ShowDialog();
+                if (dialog.RequestSubmitted) DisplayLoans();
             }
         }
 
@@ -95,6 +115,12 @@ namespace Library_Management_System_project
         {
             ShowPanel(borrowerFines1);
             borrowerFines1.LoadFines(_email);
+        }
+
+        private void buttonMyRequests_Click(object sender, EventArgs e)
+        {
+            ShowPanel(borrowerRequests1);
+            borrowerRequests1.LoadRequests(_email);
         }
     }
 }

@@ -269,6 +269,24 @@
     <Compile Include="RequestDetailsDialog.Designer.cs">
       <DependentUpon>RequestDetailsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="BorrowerRequests.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BorrowerRequests.Designer.cs">
+      <DependentUpon>BorrowerRequests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReturnConfirmDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReturnConfirmDialog.Designer.cs">
+      <DependentUpon>ReturnConfirmDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoanDetailsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoanDetailsDialog.Designer.cs">
+      <DependentUpon>LoanDetailsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="BookRequestsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -351,6 +369,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RequestDetailsDialog.resx">
       <DependentUpon>RequestDetailsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BorrowerRequests.resx">
+      <DependentUpon>BorrowerRequests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReturnConfirmDialog.resx">
+      <DependentUpon>ReturnConfirmDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoanDetailsDialog.resx">
+      <DependentUpon>LoanDetailsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BookRequestsPanel.resx">
       <DependentUpon>BookRequestsPanel.cs</DependentUpon>
