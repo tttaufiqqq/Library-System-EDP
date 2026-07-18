@@ -34,7 +34,7 @@ namespace Library_Management_System_project
                         i.Issue_Date,
                         i.Return_Date,
                         i.Return_Status,
-                        Fine = ComputeFine(i)
+                        Fine = FineCalculator.ComputeFine(i)
                     }).ToList();
 
                 dataGridView1.DataSource = loans;
@@ -43,15 +43,6 @@ namespace Library_Management_System_project
             {
                 ErrorPresenter.Show("Error loading your loans", ex);
             }
-        }
-
-        private static decimal ComputeFine(IssuesBook issue)
-        {
-            if (issue.Return_Status == "Returned") return 0m;
-            if (!DateTime.TryParse(issue.Return_Date, out DateTime dueDate)) return 0m;
-
-            int overdueDays = (DateTime.Today - dueDate).Days;
-            return overdueDays > 0 ? FineCalculator.Calculate(overdueDays) : 0m;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -77,6 +68,31 @@ namespace Library_Management_System_project
                 new LoginForm().Show();
                 this.Close();
             }
+        }
+
+        private void ShowPanel(Control panel)
+        {
+            foreach (Control c in panel3.Controls)
+                c.Visible = false;
+            panel.Visible = true;
+        }
+
+        private void buttonMyLoans_Click(object sender, EventArgs e)
+        {
+            ShowPanel(dataGridView1);
+            DisplayLoans();
+        }
+
+        private void buttonBrowseCatalog_Click(object sender, EventArgs e)
+        {
+            ShowPanel(borrowerCatalog1);
+            borrowerCatalog1.RefreshData();
+        }
+
+        private void buttonMyFines_Click(object sender, EventArgs e)
+        {
+            ShowPanel(borrowerFines1);
+            borrowerFines1.LoadFines(_email);
         }
     }
 }

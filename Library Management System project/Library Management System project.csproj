@@ -246,6 +246,18 @@
     <Compile Include="BorrowerForm.Designer.cs">
       <DependentUpon>BorrowerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BorrowerCatalog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BorrowerCatalog.Designer.cs">
+      <DependentUpon>BorrowerCatalog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BorrowerFines.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BorrowerFines.Designer.cs">
+      <DependentUpon>BorrowerFines.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\AppLogger.cs" />
     <Compile Include="Helpers\ErrorPresenter.cs" />
@@ -303,6 +315,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BorrowerForm.resx">
       <DependentUpon>BorrowerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BorrowerCatalog.resx">
+      <DependentUpon>BorrowerCatalog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BorrowerFines.resx">
+      <DependentUpon>BorrowerFines.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReturnBooks.resx">
       <DependentUpon>ReturnBooks.cs</DependentUpon>
