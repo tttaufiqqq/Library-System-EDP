@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Windows.Forms;
 
 namespace Library_Management_System_project
@@ -11,6 +12,11 @@ namespace Library_Management_System_project
         [STAThread]
         static void Main()
         {
+            // .NET Framework 4.7.2 can default to a TLS version the ToyyibPay
+            // sandbox rejects outright, well before any app-level error handling
+            // sees it - so this is set before anything else runs.
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += (sender, e) => ErrorPresenter.Show("Unexpected error", e.Exception);
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>

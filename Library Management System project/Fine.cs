@@ -1,175 +1,63 @@
 using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Library_Management_System_project.Services;
 
 namespace Library_Management_System_project
 {
+    // Read-only fines report for staff. Payment is borrower-only (see
+    // BorrowerFines.cs / BorrowerFines.Payment.cs) - this screen has no card
+    // fields, no cash option, and no Pay button, on purpose.
     public partial class Fine : UserControl
     {
-        private readonly IssueService _issueService = new IssueService();
-        private List<IssuesBook> _overdueIssues = new List<IssuesBook>();
+        private readonly FineService _fineService = new FineService();
 
         public Fine()
         {
             InitializeComponent();
-            ComboBoxStyleHelper.Apply(comboBox1);
-            ComboBoxStyleHelper.Apply(comboBoxIssueId);
-            ArrowKeyNavigationHelper.Enable(this);
         }
 
         private void fine_Load(object sender, EventArgs e)
         {
-            comboBox1.SelectedIndex = 0;
-            buttonPay.Enabled = false;
-            LoadOverdueIssues();
-
-            maskedTextBox1.TextChanged += CheckFormCompletion;
-            maskedTextBox2.TextChanged += CheckFormCompletion;
-            maskedTextBox3.TextChanged += CheckFormCompletion;
-            comboBox1.SelectedIndexChanged += CheckFormCompletion;
-            checkBoxAgree.CheckedChanged += CheckFormCompletion;
+            GridStyleHelper.Apply(dataGridViewFines);
         }
 
-        public void RefreshData()
-        {
-            if (InvokeRequired) { Invoke((MethodInvoker)RefreshData); return; }
-            LoadOverdueIssues();
-        }
+        public void RefreshData() => LoadReport();
 
-        private void LoadOverdueIssues()
+        private void LoadReport()
         {
             try
             {
-                _overdueIssues = _issueService.GetActiveIssues()
-                    .Where(i => FineCalculator.ComputeFine(i) > 0)
-                    .ToList();
-
-                if (_overdueIssues.Count == 0)
-                {
-                    comboBoxIssueId.DataSource = null;
-                    comboBoxIssueId.Items.Clear();
-                    comboBoxIssueId.Enabled = false;
-                    labelDays.Text = "No overdue fines at this time.";
-                    labelDisplay.Text = "";
-                    return;
-                }
-
-                var display = _overdueIssues
-                    .Select(i => new
+                LoadingOverlay.Show(this);
+                var fines = _fineService.GetReport()
+                    .Select(f => new
                     {
-                        i.IssueID,
-                        Display = $"{i.IssueID} - {i.Book_Title} (RM {FineCalculator.ComputeFine(i):F2})"
-                    })
-                    .ToList();
+                        Borrower = f.Full_Name,
+                        f.Book_Title,
+                        f.Overdue_Days,
+                        f.Amount,
+                        f.Status,
+                        f.Assessed_Date,
+                        f.Paid_Date
+                    }).ToList();
 
-                comboBoxIssueId.Enabled = true;
-                comboBoxIssueId.DataSource = display;
-                comboBoxIssueId.DisplayMember = "Display";
-                comboBoxIssueId.ValueMember = "IssueID";
-                comboBoxIssueId.SelectedIndex = -1;
-                labelDays.Text = "";
-                labelDisplay.Text = "";
+                dataGridViewFines.DataSource = fines;
+                EmptyStateHelper.Toggle(dataGridViewFines, fines.Count == 0, "No fines recorded.", Color.Black);
+
+                decimal total = fines.Where(f => f.Status == "Unpaid").Sum(f => f.Amount);
+                labelTotalOutstanding.Text = $"Total outstanding: RM {total:F2}";
             }
             catch (Exception ex)
             {
-                ErrorPresenter.Show("Error loading overdue fines", ex);
+                ErrorPresenter.Show("Error loading fines report", ex);
             }
-        }
-
-        private void comboBoxIssueId_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var issue = _overdueIssues.FirstOrDefault(i => i.IssueID == comboBoxIssueId.SelectedValue as string);
-
-            if (issue == null)
+            finally
             {
-                labelDays.Text = "";
-                labelDisplay.Text = "";
-            }
-            else
-            {
-                DateHelper.TryParse(issue.Return_Date, out DateTime dueDate);
-                int overdueDays = (DateTime.Today - dueDate).Days;
-                decimal fine = FineCalculator.ComputeFine(issue);
-
-                labelDays.Text = $"{overdueDays} day(s) - {issue.Full_Name}";
-                labelDisplay.Text = $"Total Fine: RM {fine:F2}";
-            }
-
-            CheckFormCompletion(sender, e);
-        }
-
-        private void CheckFormCompletion(object sender, EventArgs e)
-        {
-            buttonPay.Enabled =
-                comboBoxIssueId.SelectedIndex != -1 &&
-                !string.IsNullOrWhiteSpace(maskedTextBox1.Text) &&
-                !string.IsNullOrWhiteSpace(maskedTextBox2.Text) &&
-                !string.IsNullOrWhiteSpace(maskedTextBox3.Text) &&
-                comboBox1.SelectedIndex != 0 &&
-                checkBoxAgree.Checked;
-        }
-
-        public void ClearFields()
-        {
-            comboBoxIssueId.SelectedIndex = -1;
-            labelDays.Text = "";
-            labelDisplay.Text = "";
-            radioButtonCard.Checked = false;
-            radioButtonCash.Checked = false;
-            maskedTextBox1.Text = "";
-            comboBox1.Text = "";
-            maskedTextBox2.Text = "";
-            maskedTextBox3.Text = "";
-            checkBoxAgree.Checked = false;
-        }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            ClearFields();
-        }
-
-        private void radioButtonCard_CheckedChanged(object sender, EventArgs e)
-        {
-            grpCardDetails.Enabled = true;
-            CheckFormCompletion(sender, e);
-        }
-
-        private void radioButtonCash_CheckedChanged(object sender, EventArgs e)
-        {
-            grpCardDetails.Enabled = false;
-            CheckFormCompletion(sender, e);
-        }
-
-        private void buttonPay_Click(object sender, EventArgs e)
-        {
-            if (radioButtonCash.Checked)
-            {
-                MessageBox.Show("Please make the payment at the counter",
-                    "Cash", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ClearFields();
-            }
-            else if (radioButtonCard.Checked)
-            {
-                if (string.IsNullOrWhiteSpace(maskedTextBox1.Text))
-                {
-                    MessageBox.Show("Card Details is required.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                MessageBox.Show("Your payment is successful.",
-                    "Payment Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ClearFields();
+                LoadingOverlay.Hide(this);
             }
         }
 
-        private void buttonCalculate_Click(object sender, EventArgs e)
-        {
-            LoadOverdueIssues();
-        }
-
-        private void groupBoxCard_Enter(object sender, EventArgs e) { }
-        private void label1_Click(object sender, EventArgs e) { }
+        private void buttonCalculate_Click(object sender, EventArgs e) => LoadReport();
     }
 }

@@ -6,9 +6,15 @@ using Library_Management_System_project.Services;
 
 namespace Library_Management_System_project
 {
+    // Shows only FINALIZED fines (dbo.Fines rows), which only exist once a
+    // book has been returned late - see FineService.FinalizeOnReturn. A book that is
+    // currently overdue but still out shows its accruing estimate on
+    // "My Loans" instead (BorrowerForm.DisplayLoans), not here: a fine only
+    // becomes payable, and only appears on this screen, after return.
     public partial class BorrowerFines : UserControl
     {
-        private readonly IssueService _issueService = new IssueService();
+        private readonly FineService _fineService = new FineService();
+        private string _email;
 
         public BorrowerFines()
         {
@@ -20,22 +26,29 @@ namespace Library_Management_System_project
         {
             if (InvokeRequired) { Invoke((MethodInvoker)(() => LoadFines(email))); return; }
 
+            _email = email;
+
             try
             {
                 LoadingOverlay.Show(this);
-                var fines = _issueService.GetIssuesByEmail(email)
-                    .Select(i => new
+                var fines = _fineService.GetByEmail(email)
+                    .OrderByDescending(f => f.Assessed_Date)
+                    .Select(f => new
                     {
-                        i.Book_Title,
-                        i.Author,
-                        i.Issue_Date,
-                        DueDate = i.Return_Date,
-                        i.Return_Status,
-                        Fine = FineCalculator.ComputeFine(i)
+                        f.FineID,
+                        f.Book_Title,
+                        f.Overdue_Days,
+                        f.Amount,
+                        f.Status,
+                        f.Assessed_Date,
+                        f.Paid_Date
                     }).ToList();
 
                 dataGridView1.DataSource = fines;
+                if (dataGridView1.Columns["FineID"] != null) dataGridView1.Columns["FineID"].Visible = false;
                 EmptyStateHelper.Toggle(dataGridView1, fines.Count == 0, "You have no fines.", Color.White);
+
+                UpdateTotal();
             }
             catch (Exception ex)
             {
@@ -47,25 +60,25 @@ namespace Library_Management_System_project
             }
         }
 
-        private void buttonPay_Click(object sender, EventArgs e)
+        private void UpdateTotal()
         {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Select a loan first.", "No Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            labelTotal.Text = _email == null
+                ? "Total unpaid: RM 0.00"
+                : $"Total unpaid: RM {_fineService.GetOutstandingTotal(_email):F2}";
+        }
 
-            decimal fine = (decimal)dataGridView1.CurrentRow.Cells["Fine"].Value;
-            if (fine <= 0)
-            {
-                MessageBox.Show("No fine is due for this loan.", "No Fine",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            string status = dataGridView1.CurrentRow != null
+                ? dataGridView1.CurrentRow.Cells["Status"].Value as string
+                : null;
+            buttonPay.Enabled = status == "Unpaid";
+        }
 
-            MessageBox.Show("Your payment is successful.", "Payment Success",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private int? SelectedFineId()
+        {
+            if (dataGridView1.CurrentRow == null) return null;
+            return dataGridView1.CurrentRow.Cells["FineID"].Value as int?;
         }
     }
 }

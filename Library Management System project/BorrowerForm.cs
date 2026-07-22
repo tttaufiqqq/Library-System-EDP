@@ -10,6 +10,7 @@ namespace Library_Management_System_project
     public partial class BorrowerForm : Form
     {
         private readonly IssueService _issueService = new IssueService();
+        private readonly FineService _fineService = new FineService();
         private readonly string _email;
         private List<IssuesBook> _loans = new List<IssuesBook>();
 
@@ -34,6 +35,7 @@ namespace Library_Management_System_project
             {
                 LoadingOverlay.Show(this);
                 _loans = _issueService.GetIssuesByEmail(_email);
+                var fines = _fineService.GetByEmail(_email).ToDictionary(f => f.IssueID, f => f.Amount);
                 var display = _loans
                     .Select(i => new
                     {
@@ -43,7 +45,12 @@ namespace Library_Management_System_project
                         i.Issue_Date,
                         i.Return_Date,
                         i.Return_Status,
-                        Fine = FineCalculator.ComputeFine(i)
+                        // Not returned: live accruing estimate. Returned: the
+                        // amount finalized in the ledger, so this grid never
+                        // shows a different number than "My Fines" does.
+                        Fine = i.Return_Status == "Returned"
+                            ? (fines.TryGetValue(i.IssueID, out decimal amount) ? amount : 0m)
+                            : FineCalculator.ComputeAccruing(i)
                     }).ToList();
 
                 dataGridView1.DataSource = display;

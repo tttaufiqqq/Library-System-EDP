@@ -14,3 +14,7 @@ handoff.md
 continue.md
 EDP_Project_Requirements.md
 installer/Output/
+
+# Contains live SQL Server / MinIO / ToyyibPay credentials. Copy
+# App.config.example to App.config and fill in real values locally.
+Library Management System project/App.config

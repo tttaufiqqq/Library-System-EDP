@@ -134,9 +134,9 @@
             this.buttonFine.Name = "buttonFine";
             this.buttonFine.Size = new System.Drawing.Size(124, 26);
             this.buttonFine.TabIndex = 5;
-            this.buttonFine.Text = "PAYMENT";
+            this.buttonFine.Text = "FINES";
             this.buttonFine.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.buttonFine, "Fine borrowers who return the books late");
+            this.toolTip1.SetToolTip(this.buttonFine, "View overdue and paid fines (read-only)");
             this.buttonFine.UseVisualStyleBackColor = true;
             this.buttonFine.Click += new System.EventHandler(this.buttonFine_Click);
             //

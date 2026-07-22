@@ -48,13 +48,19 @@ namespace Library_Management_System_project.Services
                 return true;
             });
 
-        public void ReturnBook(string issueId) =>
+        // Finalize runs after this context closes (not inside WithContext) so
+        // FineService opens its own short-lived context rather than nesting
+        // one inside another - Return_Status/Actual_Return_Date are already
+        // committed by the time it reads them.
+        public void ReturnBook(string issueId)
+        {
             WithContext(db =>
             {
                 var issue = db.IssuesBooks.SingleOrDefault(i => i.IssueID == issueId);
                 if (issue == null) return;
 
                 issue.Return_Status = "Returned";
+                issue.Actual_Return_Date = DateTime.Now;
                 issue.Date_Update = DateHelper.Format(DateTime.Now);
 
                 var book = db.Bookks.SingleOrDefault(b => b.Book_Title == issue.Book_Title);
@@ -66,6 +72,9 @@ namespace Library_Management_System_project.Services
 
                 db.SubmitChanges();
             });
+
+            new FineService().FinalizeOnReturn(issueId);
+        }
 
         // Borrower self-reports a return from "My Loans"; Staff verifies the
         // physical book via GetPendingReturnRequests() and finalizes with

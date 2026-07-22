@@ -141,6 +141,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
@@ -190,6 +191,12 @@
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\FineCalculator.cs" />
+    <Compile Include="Services\FineService.cs" />
+    <Compile Include="Services\FinePaymentService.cs" />
+    <Compile Include="Services\IPaymentGateway.cs" />
+    <Compile Include="Services\PaymentStatus.cs" />
+    <Compile Include="Services\BillRequest.cs" />
+    <Compile Include="Services\ToyyibPayService.cs" />
     <Compile Include="Services\ImageStorageService.cs" />
     <Compile Include="Services\IImageStorageService.cs" />
     <Compile Include="Services\DashboardService.cs" />
@@ -296,8 +303,17 @@
     <Compile Include="BorrowerFines.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="BorrowerFines.Payment.cs">
+      <DependentUpon>BorrowerFines.cs</DependentUpon>
+    </Compile>
     <Compile Include="BorrowerFines.Designer.cs">
       <DependentUpon>BorrowerFines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentWaitDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaymentWaitDialog.Designer.cs">
+      <DependentUpon>PaymentWaitDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\AppLogger.cs" />
@@ -393,6 +409,9 @@
     <EmbeddedResource Include="BorrowerFines.resx">
       <DependentUpon>BorrowerFines.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PaymentWaitDialog.resx">
+      <DependentUpon>PaymentWaitDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReturnBooks.resx">
       <DependentUpon>ReturnBooks.cs</DependentUpon>
     </EmbeddedResource>
@@ -408,6 +427,7 @@
     <None Include="Migrations\001_add_user_role.sql" />
     <None Include="Migrations\002_add_book_requests.sql" />
     <None Include="Migrations\003_add_return_requested_date.sql" />
+    <None Include="Migrations\004_add_fines_and_payments.sql" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -420,6 +440,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="App.config.example" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\library.png" />

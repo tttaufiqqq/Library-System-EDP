@@ -42,6 +42,12 @@ namespace Library_Management_System_project
     partial void InsertBookRequest(BookRequest instance);
     partial void UpdateBookRequest(BookRequest instance);
     partial void DeleteBookRequest(BookRequest instance);
+    partial void InsertFineRecord(FineRecord instance);
+    partial void UpdateFineRecord(FineRecord instance);
+    partial void DeleteFineRecord(FineRecord instance);
+    partial void InsertFinePaymentRecord(FinePaymentRecord instance);
+    partial void UpdateFinePaymentRecord(FinePaymentRecord instance);
+    partial void DeleteFinePaymentRecord(FinePaymentRecord instance);
     #endregion
 		
 		public LibraryDataContext() : 
@@ -103,6 +109,22 @@ namespace Library_Management_System_project
 			get
 			{
 				return this.GetTable<BookRequest>();
+			}
+		}
+
+		public System.Data.Linq.Table<FineRecord> Fines
+		{
+			get
+			{
+				return this.GetTable<FineRecord>();
+			}
+		}
+
+		public System.Data.Linq.Table<FinePaymentRecord> FinePayments
+		{
+			get
+			{
+				return this.GetTable<FinePaymentRecord>();
 			}
 		}
 	}
@@ -323,6 +345,8 @@ namespace Library_Management_System_project
 
 		private System.Nullable<System.DateTime> _Return_Requested_Date;
 
+		private System.Nullable<System.DateTime> _Actual_Return_Date;
+
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -355,6 +379,8 @@ namespace Library_Management_System_project
     partial void OnInsert_DateChanged();
     partial void OnReturn_Requested_DateChanging(System.Nullable<System.DateTime> value);
     partial void OnReturn_Requested_DateChanged();
+    partial void OnActual_Return_DateChanging(System.Nullable<System.DateTime> value);
+    partial void OnActual_Return_DateChanged();
     #endregion
 
 		public IssuesBook()
@@ -642,10 +668,30 @@ namespace Library_Management_System_project
 			}
 		}
 
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Actual_Return_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Actual_Return_Date
+		{
+			get
+			{
+				return this._Actual_Return_Date;
+			}
+			set
+			{
+				if ((this._Actual_Return_Date != value))
+				{
+					this.OnActual_Return_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Actual_Return_Date = value;
+					this.SendPropertyChanged("Actual_Return_Date");
+					this.OnActual_Return_DateChanged();
+				}
+			}
+		}
+
 		public event PropertyChangingEventHandler PropertyChanging;
-		
+
 		public event PropertyChangedEventHandler PropertyChanged;
-		
+
 		protected virtual void SendPropertyChanging()
 		{
 			if ((this.PropertyChanging != null))
@@ -653,7 +699,7 @@ namespace Library_Management_System_project
 				this.PropertyChanging(this, emptyChangingEventArgs);
 			}
 		}
-		
+
 		protected virtual void SendPropertyChanged(String propertyName)
 		{
 			if ((this.PropertyChanged != null))
@@ -662,7 +708,7 @@ namespace Library_Management_System_project
 			}
 		}
 	}
-	
+
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BookRequests")]
 	public partial class BookRequest : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1234,6 +1280,538 @@ namespace Library_Management_System_project
 			}
 		}
 		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Fines")]
+	public partial class FineRecord : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+		private int _FineID;
+
+		private string _IssueID;
+
+		private string _Email;
+
+		private string _Full_Name;
+
+		private string _Book_Title;
+
+		private int _Overdue_Days;
+
+		private decimal _Amount;
+
+		private System.DateTime _Assessed_Date;
+
+		private string _Status;
+
+		private System.Nullable<System.DateTime> _Paid_Date;
+
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnFineIDChanging(int value);
+    partial void OnFineIDChanged();
+    partial void OnIssueIDChanging(string value);
+    partial void OnIssueIDChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnFull_NameChanging(string value);
+    partial void OnFull_NameChanged();
+    partial void OnBook_TitleChanging(string value);
+    partial void OnBook_TitleChanged();
+    partial void OnOverdue_DaysChanging(int value);
+    partial void OnOverdue_DaysChanged();
+    partial void OnAmountChanging(decimal value);
+    partial void OnAmountChanged();
+    partial void OnAssessed_DateChanging(System.DateTime value);
+    partial void OnAssessed_DateChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnPaid_DateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPaid_DateChanged();
+    #endregion
+
+		public FineRecord()
+		{
+			OnCreated();
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FineID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int FineID
+		{
+			get
+			{
+				return this._FineID;
+			}
+			set
+			{
+				if ((this._FineID != value))
+				{
+					this.OnFineIDChanging(value);
+					this.SendPropertyChanging();
+					this._FineID = value;
+					this.SendPropertyChanged("FineID");
+					this.OnFineIDChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IssueID", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string IssueID
+		{
+			get
+			{
+				return this._IssueID;
+			}
+			set
+			{
+				if ((this._IssueID != value))
+				{
+					this.OnIssueIDChanging(value);
+					this.SendPropertyChanging();
+					this._IssueID = value;
+					this.SendPropertyChanged("IssueID");
+					this.OnIssueIDChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(MAX)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Full_Name", DbType="VarChar(MAX)")]
+		public string Full_Name
+		{
+			get
+			{
+				return this._Full_Name;
+			}
+			set
+			{
+				if ((this._Full_Name != value))
+				{
+					this.OnFull_NameChanging(value);
+					this.SendPropertyChanging();
+					this._Full_Name = value;
+					this.SendPropertyChanged("Full_Name");
+					this.OnFull_NameChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_Title", DbType="VarChar(MAX)")]
+		public string Book_Title
+		{
+			get
+			{
+				return this._Book_Title;
+			}
+			set
+			{
+				if ((this._Book_Title != value))
+				{
+					this.OnBook_TitleChanging(value);
+					this.SendPropertyChanging();
+					this._Book_Title = value;
+					this.SendPropertyChanged("Book_Title");
+					this.OnBook_TitleChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Overdue_Days", DbType="Int NOT NULL")]
+		public int Overdue_Days
+		{
+			get
+			{
+				return this._Overdue_Days;
+			}
+			set
+			{
+				if ((this._Overdue_Days != value))
+				{
+					this.OnOverdue_DaysChanging(value);
+					this.SendPropertyChanging();
+					this._Overdue_Days = value;
+					this.SendPropertyChanged("Overdue_Days");
+					this.OnOverdue_DaysChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(10,2) NOT NULL")]
+		public decimal Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Assessed_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Assessed_Date
+		{
+			get
+			{
+				return this._Assessed_Date;
+			}
+			set
+			{
+				if ((this._Assessed_Date != value))
+				{
+					this.OnAssessed_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Assessed_Date = value;
+					this.SendPropertyChanged("Assessed_Date");
+					this.OnAssessed_DateChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Paid_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Paid_Date
+		{
+			get
+			{
+				return this._Paid_Date;
+			}
+			set
+			{
+				if ((this._Paid_Date != value))
+				{
+					this.OnPaid_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Paid_Date = value;
+					this.SendPropertyChanged("Paid_Date");
+					this.OnPaid_DateChanged();
+				}
+			}
+		}
+
+		public event PropertyChangingEventHandler PropertyChanging;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FinePayments")]
+	public partial class FinePaymentRecord : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+		private int _PaymentID;
+
+		private int _FineID;
+
+		private string _Bill_Code;
+
+		private string _Reference_No;
+
+		private decimal _Amount;
+
+		private string _Channel;
+
+		private string _Status;
+
+		private System.DateTime _Created_Date;
+
+		private System.Nullable<System.DateTime> _Completed_Date;
+
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPaymentIDChanging(int value);
+    partial void OnPaymentIDChanged();
+    partial void OnFineIDChanging(int value);
+    partial void OnFineIDChanged();
+    partial void OnBill_CodeChanging(string value);
+    partial void OnBill_CodeChanged();
+    partial void OnReference_NoChanging(string value);
+    partial void OnReference_NoChanged();
+    partial void OnAmountChanging(decimal value);
+    partial void OnAmountChanged();
+    partial void OnChannelChanging(string value);
+    partial void OnChannelChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnCreated_DateChanging(System.DateTime value);
+    partial void OnCreated_DateChanged();
+    partial void OnCompleted_DateChanging(System.Nullable<System.DateTime> value);
+    partial void OnCompleted_DateChanged();
+    #endregion
+
+		public FinePaymentRecord()
+		{
+			OnCreated();
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int PaymentID
+		{
+			get
+			{
+				return this._PaymentID;
+			}
+			set
+			{
+				if ((this._PaymentID != value))
+				{
+					this.OnPaymentIDChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentID = value;
+					this.SendPropertyChanged("PaymentID");
+					this.OnPaymentIDChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FineID", DbType="Int NOT NULL")]
+		public int FineID
+		{
+			get
+			{
+				return this._FineID;
+			}
+			set
+			{
+				if ((this._FineID != value))
+				{
+					this.OnFineIDChanging(value);
+					this.SendPropertyChanging();
+					this._FineID = value;
+					this.SendPropertyChanged("FineID");
+					this.OnFineIDChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bill_Code", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string Bill_Code
+		{
+			get
+			{
+				return this._Bill_Code;
+			}
+			set
+			{
+				if ((this._Bill_Code != value))
+				{
+					this.OnBill_CodeChanging(value);
+					this.SendPropertyChanging();
+					this._Bill_Code = value;
+					this.SendPropertyChanged("Bill_Code");
+					this.OnBill_CodeChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reference_No", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string Reference_No
+		{
+			get
+			{
+				return this._Reference_No;
+			}
+			set
+			{
+				if ((this._Reference_No != value))
+				{
+					this.OnReference_NoChanging(value);
+					this.SendPropertyChanging();
+					this._Reference_No = value;
+					this.SendPropertyChanged("Reference_No");
+					this.OnReference_NoChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(10,2) NOT NULL")]
+		public decimal Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Channel", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Channel
+		{
+			get
+			{
+				return this._Channel;
+			}
+			set
+			{
+				if ((this._Channel != value))
+				{
+					this.OnChannelChanging(value);
+					this.SendPropertyChanging();
+					this._Channel = value;
+					this.SendPropertyChanged("Channel");
+					this.OnChannelChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Created_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Created_Date
+		{
+			get
+			{
+				return this._Created_Date;
+			}
+			set
+			{
+				if ((this._Created_Date != value))
+				{
+					this.OnCreated_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Created_Date = value;
+					this.SendPropertyChanged("Created_Date");
+					this.OnCreated_DateChanged();
+				}
+			}
+		}
+
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Completed_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Completed_Date
+		{
+			get
+			{
+				return this._Completed_Date;
+			}
+			set
+			{
+				if ((this._Completed_Date != value))
+				{
+					this.OnCompleted_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Completed_Date = value;
+					this.SendPropertyChanged("Completed_Date");
+					this.OnCompleted_DateChanged();
+				}
+			}
+		}
+
+		public event PropertyChangingEventHandler PropertyChanging;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+
 		protected virtual void SendPropertyChanged(String propertyName)
 		{
 			if ((this.PropertyChanged != null))

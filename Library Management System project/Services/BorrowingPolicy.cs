@@ -22,11 +22,10 @@ namespace Library_Management_System_project.Services
                 if (hasActiveLoan || hasPendingRequest)
                     return (false, "You already have an active loan or pending request for this book.");
 
-                decimal unpaidFines = db.IssuesBooks
-                    .Where(i => i.Email == email)
-                    .ToList()
-                    .Sum(i => FineCalculator.ComputeFine(i));
-                if (unpaidFines > 0)
+                // Reads the ledger, not ComputeAccruing: a fine is only ever
+                // written (and only ever cleared) via FineService, so this is
+                // the one signal that actually changes when a fine is paid.
+                if (new FineService().HasUnpaid(email))
                     return (false, "You have unpaid fines. Please clear them before requesting another book.");
 
                 int activeLoans = db.IssuesBooks.Count(i => i.Email == email && i.Return_Status == "Not Returned");

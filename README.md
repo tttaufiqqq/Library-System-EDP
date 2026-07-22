@@ -60,15 +60,15 @@ role) — there is no service-layer permission enforcement.
 | Approve / reject borrow requests | – | Y | – |
 | View issued books (read-only) | – | Y | – |
 | Verify & confirm a reported return | – | Y | – |
-| Collect / waive fines (mock, at the counter) | – | Y | – |
+| View fines report (read-only) | – | Y | – |
 | Manage users (change role, delete) | Y | – | – |
 | View own loans, request a return | – | – | Y |
 | View own book-request status | – | – | Y |
-| View / pay own fines (mock) | – | – | Y |
+| View / pay own fines (ToyyibPay FPX sandbox) | – | – | Y |
 
 `AdminMainForm` is **not** a superset of `MainForm` — Admin is
 management-focused (catalog authority + user management + analytics) and
-does not do front-desk work (issue/return/fine collection).
+does not do front-desk work (issue/return/fine reporting).
 
 ## Features
 
@@ -111,10 +111,27 @@ approval flow above, not typed in directly.
   `ReturnConfirmDialog` to confirm via `IssueService.ReturnBook`, which
   marks the loan Returned **and** flips the book back to Available.
 
-**Fines** — `FineCalculator` computes overdue fines (RM 5/day) from
-`IssuesBooks.Return_Date`; the Staff `Fine` panel and Borrower `BorrowerFines`
-view both display it. Payment is currently a UI mock (no `Fines` table or
-persisted transactions).
+**Fines and payment** (see `docs/fine-and-payment.md`)
+- `FineCalculator.ComputeAccruing` shows a live, non-payable estimate
+  (RM 5/day, capped at RM 50) on "My Loans" while a book is still overdue and
+  not yet returned.
+- The fine is only ever finalized **once**, in `FineService.FinalizeOnReturn` — hooked
+  into `IssueService.ReturnBook` at the moment a book is confirmed returned —
+  and written to the `dbo.Fines` ledger with the amount frozen at that point.
+- Borrower `BorrowerFines` lists finalized ledger fines and pays via
+  **ToyyibPay sandbox FPX online banking** (`ToyyibPayService`,
+  `dev.toyyibpay.com`) — no card entry anywhere in the app. Each payment
+  attempt is its own `dbo.FinePayments` row; `PaymentWaitDialog` polls the
+  gateway on a `Timer` until it confirms success, failure, or times out.
+  `FinePaymentService.Settle` is idempotent and only ever reads the amount
+  owed from the ledger, never from the UI.
+- Staff `Fine` panel is a **read-only** report (`FineService.GetReport`) —
+  borrower, book, days overdue, amount, status. There is no card form, no
+  cash option, and no Pay button on the staff side; payment is
+  borrower-initiated only.
+- `BorrowingPolicy` blocks new requests on `dbo.Fines.Status == 'Unpaid'`,
+  not on a live recomputation — so paying a fine is what actually lifts the
+  block.
 
 **Dashboard** — KPI tiles (available/issued/returned books, registered
 users) for Admin and Staff; Admin additionally sees four analytics charts
@@ -141,6 +158,9 @@ version prompts the user to download and run the Inno Setup installer. See
 - **NuGet:** Autoupdater.NET.Official 1.9.2, Minio 6.0.4,
   Microsoft.Web.WebView2 1.0.2592.51, EntityFramework 6.4.4 (referenced,
   unused — vestigial)
+- **Payment gateway:** ToyyibPay sandbox (`dev.toyyibpay.com`), FPX online
+  banking only — no card entry anywhere in the app
+  (`Services/ToyyibPayService.cs`)
 - **Installer:** Inno Setup (`installer/LibrarySystem.iss`)
 
 ## Self-hosted infrastructure
@@ -178,11 +198,15 @@ the application code that talks to it.
    - `003_add_return_requested_date.sql` — adds
      `IssuesBooks.Return_Requested_Date` for the borrower-initiated return
      flow.
+   - `004_add_fines_and_payments.sql` — adds `IssuesBooks.Actual_Return_Date`,
+     `dbo.Fines` (the finalized fine ledger), and `dbo.FinePayments` (one row
+     per ToyyibPay payment attempt).
 
 ## Configuration
 
-`App.config` holds the real connection string and MinIO settings directly.
-Two things need real values:
+`App.config` is **gitignored** (it holds live credentials) — copy
+`App.config.example` to `App.config` and fill in real values. Four things
+need real values:
 
 **Connection string:**
 
@@ -206,6 +230,22 @@ Two things need real values:
 
 Use a scoped access key limited to a single bucket (`GetObject`/`PutObject`/
 `DeleteObject`/`ListBucket` only) rather than the MinIO root credentials.
+
+**ToyyibPay sandbox settings** (`<appSettings>`) — see
+`docs/fine-and-payment.md` for how to obtain a sandbox Category Code and User
+Secret Key at `dev.toyyibpay.com`. Never point `ToyyibPayBaseUrl` at the
+production host:
+
+```xml
+<add key="ToyyibPayBaseUrl" value="https://dev.toyyibpay.com" />
+<add key="ToyyibPayCategoryCode" value="YOUR_SANDBOX_CATEGORY_CODE" />
+<add key="ToyyibPaySecretKey" value="YOUR_SANDBOX_SECRET_KEY" />
+```
+
+> **Note:** the SQL Server and MinIO credentials that shipped in this repo's
+> git history before `App.config` was gitignored should be treated as
+> compromised and rotated — removing a file from tracking does not remove it
+> from prior commits.
 
 ## Running
 
@@ -245,19 +285,21 @@ layer delegating to the one below it instead of reaching past it:
 ┌───────────────────────────────▼────────────────────────────────┐
 │  Services Layer  (Services/)                                   │
 │  UserService, BookService, IssueService, RequestService          │
-│    : DataService (abstract)                                     │
+│  FineService, FinePaymentService : DataService (abstract)       │
 │  BorrowingPolicy, FineCalculator, DashboardService (stateless)  │
 │                                                                │
-│  BookService depends on IImageStorageService                   │
-│  (interface) rather than a concrete storage class.              │
-└───────────────────────────────┬────────────────────────────────┘
-           │ WithContext(...)               │ UploadImage/DownloadImage
-┌──────────▼──────────────┐      ┌──────────▼─────────────────┐
-│  LibraryDataContext      │      │  ImageStorageService        │
-│  (LINQ-to-SQL)           │      │  : IImageStorageService     │
-│  Users, Bookks,          │      │  (MinIO client)             │
-│  IssuesBooks, BookRequests│      │                             │
-└──────────────────────────┘      └─────────────────────────────┘
+│  BookService depends on IImageStorageService; FinePaymentService │
+│  depends on IPaymentGateway — both interfaces, not concrete      │
+│  provider classes.                                               │
+└──────────┬──────────────────────────┬───────────────────────────┘
+           │ WithContext(...)         │ UploadImage/DownloadImage │ CreateBill/GetBillStatus
+┌──────────▼──────────────┐      ┌────▼────────────────┐    ┌─────▼──────────────────┐
+│  LibraryDataContext      │      │  ImageStorageService │    │  ToyyibPayService       │
+│  (LINQ-to-SQL)           │      │  : IImageStorageService│  │  : IPaymentGateway      │
+│  Users, Bookks,          │      │  (MinIO client)      │    │  (ToyyibPay sandbox,    │
+│  IssuesBooks, BookRequests,│    │                      │    │   FPX online banking)   │
+│  Fines, FinePayments      │      └──────────────────────┘    └────────────────────────┘
+└──────────────────────────┘
 ```
 
 `IssueBooksRepository` sits alongside `IssueService` for one read path
@@ -286,6 +328,14 @@ via the parameterless constructor, but swappable via
 `new BookService(customImageStorage)`. `BookService` has no compile-time
 knowledge that the storage backend is MinIO.
 
+### IPaymentGateway — the interface FinePaymentService depends on
+
+Same pattern: `FinePaymentService` depends on `IPaymentGateway`, defaulted to
+`ToyyibPayService` via its parameterless constructor but swappable via
+`new FinePaymentService(customGateway)`. Neither `FinePaymentService` nor the
+`PaymentWaitDialog` that drives it has compile-time knowledge that the
+gateway is ToyyibPay specifically.
+
 ### Project Structure
 
 ```
@@ -296,7 +346,13 @@ knowledge that the storage backend is MinIO.
 │   ├── IssueService.cs          # Issue/return operations + return-request queue
 │   ├── RequestService.cs        # Borrower self-request lifecycle (create/approve/reject)
 │   ├── BorrowingPolicy.cs       # Guardrails checked before a self-request is created
-│   ├── FineCalculator.cs        # Overdue fine calculation (RM 5/day)
+│   ├── FineCalculator.cs        # Live overdue estimate (RM 5/day, capped RM 50) - display only
+│   ├── FineService.cs           # Fine ledger: finalize on return, query, staff report
+│   ├── FinePaymentService.cs    # Payment attempts against the ledger; idempotent settle
+│   ├── IPaymentGateway.cs       # Interface: CreateBill/GetBillStatus/BillUrl contract
+│   ├── ToyyibPayService.cs      # : IPaymentGateway — ToyyibPay sandbox (FPX only)
+│   ├── PaymentStatus.cs         # Unknown/Pending/Success/Failed - fails closed
+│   ├── BillRequest.cs           # DTO passed into CreateBill
 │   ├── DashboardService.cs      # Aggregated KPI + chart data for Dashboard
 │   ├── IImageStorageService.cs  # Interface: UploadImage/DownloadImage contract
 │   └── ImageStorageService.cs   # : IImageStorageService — MinIO client
@@ -308,11 +364,12 @@ knowledge that the storage backend is MinIO.
 │   ├── EmptyStateHelper.cs      # "No data" placeholder over empty grids
 │   ├── ArrowKeyNavigationHelper.cs # Arrow-key focus navigation between controls
 │   └── FormDragHelper.cs        # Drag-to-move for borderless forms
-├── Migrations/                  # Hand-applied SQL migrations (001-003), see Database Setup
+├── Migrations/                  # Hand-applied SQL migrations (001-004), see Database Setup
 ├── docs/
 │   ├── role-based-multi-user-forms.md   # Admin/Staff/Borrower roles, original design
 │   ├── role-permissions-and-dashboards.md # De-superset Admin, dashboards, catalog delete split
 │   ├── borrower-self-request.md         # Self-request/approval flow design
+│   ├── fine-and-payment.md              # Fine ledger + ToyyibPay FPX payment flow design
 │   └── auto-update/                     # Auto-update system design + release workflow
 ├── installer/
 │   └── LibrarySystem.iss        # Inno Setup installer script
@@ -320,7 +377,8 @@ knowledge that the storage backend is MinIO.
 ├── IssueBooksRepository.cs      # Issue grid-row query (LINQ-to-SQL)
 ├── Library.dbml                 # LINQ-to-SQL data model
 ├── Library.designer.cs          # Auto-generated data context + entities
-├── App.config                   # Connection string + MinIO settings (CHANGE_ME placeholders)
+├── App.config                   # Real credentials (gitignored) - copy from App.config.example
+├── App.config.example           # Connection string + MinIO + ToyyibPay settings (CHANGE_ME placeholders)
 ├── Program.cs                   # Entry point; global unhandled-exception handling
 ├── StartUpScreen.cs             # Splash screen (Timer-driven progress bar, auto-update check)
 ├── LoginForm.cs / RegisterForm.cs        # Auth forms
@@ -331,9 +389,10 @@ knowledge that the storage backend is MinIO.
 ├── ReturnBooks.cs                # Staff: pending-return-request queue
 ├── BookRequestsPanel.cs          # Staff: pending book-request queue
 ├── ManageUsers.cs                # Admin: user role/delete management
-├── Fine.cs                       # Staff: fine collection panel (mock payment)
+├── Fine.cs                       # Staff: read-only fines report (no payment controls)
 ├── BorrowerCatalog.cs            # Borrower: read-only catalog browse + request
-├── BorrowerFines.cs              # Borrower: own fines view (mock pay)
+├── BorrowerFines.cs / .Payment.cs # Borrower: own fines view + ToyyibPay FPX payment
+├── PaymentWaitDialog.cs           # Modal: polls the gateway on a Timer until paid/failed/timeout
 ├── BorrowerRequests.cs           # Borrower: own book-request status
 ├── BookDetailsDialog.cs          # Modal: book cover/details + Borrow button
 ├── RequestBookDialog.cs          # Modal: contact + return date entry
