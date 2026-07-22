@@ -41,7 +41,7 @@ namespace Library_Management_System_project
             //
             this.labelHint.AutoSize = false;
             this.labelHint.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHint.ForeColor = System.Drawing.Color.DimGray;
+            this.labelHint.ForeColor = System.Drawing.Color.White;
             this.labelHint.Location = new System.Drawing.Point(190, 27);
             this.labelHint.Name = "labelHint";
             this.labelHint.Size = new System.Drawing.Size(530, 18);

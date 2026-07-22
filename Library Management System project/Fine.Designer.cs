@@ -86,6 +86,7 @@ namespace Library_Management_System_project
             this.dataGridViewFines.RowTemplate.Height = 24;
             this.dataGridViewFines.Size = new System.Drawing.Size(849, 476);
             this.dataGridViewFines.TabIndex = 1;
+            this.dataGridViewFines.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFines_CellClick);
             //
             // Fine
             //

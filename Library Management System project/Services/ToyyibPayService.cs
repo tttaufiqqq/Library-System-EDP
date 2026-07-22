@@ -108,6 +108,15 @@ namespace Library_Management_System_project.Services
                 if (!response.IsSuccessStatusCode) return PaymentStatus.Unknown;
 
                 string body = Task.Run(() => response.Content.ReadAsStringAsync()).GetAwaiter().GetResult();
+
+                // Before any transaction attempt exists on a bill, ToyyibPay
+                // replies with the plain-text "No data found!" instead of a
+                // JSON array - the borrower simply hasn't opened/paid the
+                // bill page yet. This is the ordinary "still waiting" state,
+                // not a malformed response, so it must not be treated as an
+                // exception-worthy failure on every single poll tick.
+                if (!body.TrimStart().StartsWith("[")) return PaymentStatus.Pending;
+
                 var results = _json.Deserialize<List<Dictionary<string, object>>>(body);
                 string rawStatus = GetField(results?.FirstOrDefault(), "billpaymentStatus");
 

@@ -176,6 +176,12 @@
     <Compile Include="Fine.Designer.cs">
       <DependentUpon>Fine.cs</DependentUpon>
     </Compile>
+    <Compile Include="FineDetailsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FineDetailsDialog.Designer.cs">
+      <DependentUpon>FineDetailsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="IssueGridRow.cs" />
     <Compile Include="IssueBooksRepository.cs" />
     <Compile Include="Library.designer.cs">
@@ -352,6 +358,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Fine.resx">
       <DependentUpon>Fine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FineDetailsDialog.resx">
+      <DependentUpon>FineDetailsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StartUpScreen.resx">
       <DependentUpon>StartUpScreen.cs</DependentUpon>
