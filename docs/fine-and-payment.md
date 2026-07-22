@@ -64,6 +64,14 @@ ToyyibPay's `billpaymentStatus` (from `getBillTransactions`):
 | `"3"` | `Failed` | Stop polling, `FinePaymentService.MarkFailed`, close `DialogResult.Abort` |
 | anything else / exception | `Unknown` | Keep polling (fail closed) |
 
+`getBillTransactions` does not always return JSON: before a borrower has
+opened/attempted the bill page at all, it replies with the plain-text body
+`No data found!` instead of a JSON array. `GetBillStatus` checks for a
+leading `[` before attempting to parse, and treats anything else as
+`Pending` directly — this is the ordinary "still waiting" state, not a
+malformed response, so it must not be logged as an exception on every single
+poll tick before the borrower has even opened the browser.
+
 ## Fine lifecycle
 
 ```
@@ -140,6 +148,19 @@ BorrowingPolicy.Check (reads dbo.Fines.Status=='Unpaid') now passes
 once every fine is settled.
 ```
 
+## Staff fine details modal
+
+Clicking a row in the staff Fines report (`Fine.cs`) opens `FineDetailsDialog`
+— a read-only view of that one fine (book, borrower + email, days overdue,
+amount, status color-coded Unpaid/Paid, assessed date, paid date). It has no
+action buttons: staff can inspect a fine but cannot pay, waive, or edit it
+from here, consistent with payment being borrower-only. The grid's `FineID`
+column is bound but hidden (`Columns["FineID"].Visible = false`) purely so
+`dataGridViewFines_CellClick` can resolve the clicked row back to the
+in-memory `List<FineRecord>` kept alongside the display projection - the
+same hidden-ID-column pattern `BorrowerForm.dataGridView1_CellClick` already
+uses for opening `LoanDetailsDialog`.
+
 ## Data model
 
 `Migrations/004_add_fines_and_payments.sql` adds:
@@ -215,7 +236,7 @@ copy the User Secret Key from your profile settings into
 | 2 | Fine domain logic: cap, finalize-on-return, policy | `Services/FineCalculator.cs`, `Services/FineService.cs` (new), `Services/IssueService.cs`, `Services/BorrowingPolicy.cs` |
 | 3 | ToyyibPay sandbox gateway client | `Services/IPaymentGateway.cs`, `Services/PaymentStatus.cs`, `Services/BillRequest.cs`, `Services/ToyyibPayService.cs` (all new), `Program.cs` (TLS 1.2) |
 | 4 | Borrower payment flow | `Services/FinePaymentService.cs` (new), `PaymentWaitDialog.cs/.Designer.cs` (new), `BorrowerFines.cs`, `BorrowerFines.Payment.cs` (new) |
-| 5 | Staff read-only fines report | `Fine.cs`, `Fine.Designer.cs`, `MainForm.Designer.cs` (nav relabel) |
+| 5 | Staff read-only fines report + details modal | `Fine.cs`, `Fine.Designer.cs`, `MainForm.Designer.cs` (nav relabel), `FineDetailsDialog.cs/.Designer.cs` (new) |
 | 6 | Config + secret hygiene | `App.config`, `App.config.example` (new), `.gitignore` |
 | 7 | Docs + verification | this file, manual end-to-end pass |
 
@@ -241,3 +262,9 @@ change have no `Actual_Return_Date` and no ledger row — those historical late
 returns are unrecoverable, since the data needed to reconstruct them
 (when the book actually came back) was never captured. The ledger only
 accumulates from the first return confirmed after this migration is applied.
+
+**Status:** applied to the live homelab `Library` database. Note that the
+app's own `library_app` login is intentionally `db_datareader`/
+`db_datawriter` only (no DDL) — this and any future migration must be run
+with a login that has schema-modification rights, not the app's own
+connection string.

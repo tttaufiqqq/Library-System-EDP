@@ -11,19 +11,32 @@ catalog-delete authority from catalog-edit, gives Admin an analytics
 dashboard with charts, and gives Borrowers a read-only catalog browser and a
 "my fines" view.
 
-This file documents the **target design**. Implementation proceeds in six
-phases (see Phases below); check the plan file for live checklist state:
+This file documents the **target design** at the time this phase was built.
+Implementation proceeds in six phases (see Phases below); check the plan
+file for live checklist state:
 `C:\Users\taufi\.claude\plans\c-users-taufi-documents-dev-plan-format-memoized-unicorn.md`
+
+> **Fine/payment superseded (2026-07-22):** points 2 and 4 below, and the
+> "Fine persistence" item under Out of scope, describe the fine/payment
+> design as it stood when this phase shipped (mock pay, Staff-side
+> collection). That has since been fully replaced — payment is now
+> borrower-only via ToyyibPay FPX sandbox, backed by a real `dbo.Fines`/
+> `dbo.FinePayments` ledger, with a read-only staff report. See
+> [fine-and-payment.md](fine-and-payment.md) for the current design; the
+> rest of this file (Admin/Staff/Borrower split, catalog delete, dashboards)
+> is still accurate.
 
 ## Role decisions (confirmed with user)
 
 1. **Admin is management-focused, not a Staff superset.** Admin drops
    Issue Books / Return Books / Fine collection entirely.
 2. **Borrower gains two new views**: read-only catalog browse, and a "my
-   fines" view (view + pay, pay is currently a mock — see Out of scope).
+   fines" view (view + pay, pay was a mock at the time — since replaced,
+   see the note above).
 3. **Catalog CRUD is split**: Staff can add/edit; only Admin can delete
    (soft delete via `Bookk.Date_Delete`).
-4. **Fine collection/waiving is Staff-only.** Admin does not touch fines.
+4. **Fine collection/waiving is Staff-only.** *(Superseded — payment is now
+   borrower-only; Staff has a read-only report instead. See note above.)*
 
 ## Role capability matrix
 
@@ -266,12 +279,12 @@ that don't touch the write paths Staff/Admin own.
 
 ## Out of scope
 
-- **Fine persistence.** `Fine.cs` is a UI mock — `buttonPay_Click` shows a
-  success `MessageBox` but writes nothing to the database; there is no
-  fines table or `FineService`. The Borrower "My Fines" pay action and
-  Staff's existing Payment panel both remain mock behavior. Real fine
-  persistence (a `Fines` table, waive/collect audit trail) is a separate
-  future task.
+- **Fine persistence.** *(Superseded — this was built. `dbo.Fines` and
+  `dbo.FinePayments` now exist, `Fine.cs` is a read-only report, and payment
+  goes through `FinePaymentService`/`ToyyibPayService`. See
+  [fine-and-payment.md](fine-and-payment.md).)* At the time this phase
+  shipped, `Fine.cs` was a UI mock — `buttonPay_Click` showed a success
+  `MessageBox` but wrote nothing to the database.
 - **Server-side permission enforcement.** All gating in this change is
   UI-level (hide/show buttons per role), matching the app's existing threat
   model (no service-layer role checks anywhere in `Services/*.cs` today).

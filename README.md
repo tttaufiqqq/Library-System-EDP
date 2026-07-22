@@ -128,7 +128,8 @@ approval flow above, not typed in directly.
 - Staff `Fine` panel is a **read-only** report (`FineService.GetReport`) —
   borrower, book, days overdue, amount, status. There is no card form, no
   cash option, and no Pay button on the staff side; payment is
-  borrower-initiated only.
+  borrower-initiated only. Clicking a row opens `FineDetailsDialog`, a
+  read-only detail view of that one fine.
 - `BorrowingPolicy` blocks new requests on `dbo.Fines.Status == 'Unpaid'`,
   not on a live recomputation — so paying a fine is what actually lifts the
   block.
@@ -390,6 +391,7 @@ gateway is ToyyibPay specifically.
 ├── BookRequestsPanel.cs          # Staff: pending book-request queue
 ├── ManageUsers.cs                # Admin: user role/delete management
 ├── Fine.cs                       # Staff: read-only fines report (no payment controls)
+├── FineDetailsDialog.cs          # Modal: read-only detail view of one fine (staff)
 ├── BorrowerCatalog.cs            # Borrower: read-only catalog browse + request
 ├── BorrowerFines.cs / .Payment.cs # Borrower: own fines view + ToyyibPay FPX payment
 ├── PaymentWaitDialog.cs           # Modal: polls the gateway on a Timer until paid/failed/timeout

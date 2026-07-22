@@ -10,7 +10,7 @@ login, instead of every account getting the same `MainForm` with full access.
 | Role | Account origin | Form after login |
 |------|-----------------|-------------------|
 | Admin | Manually promoted by an existing Admin (Manage Users panel) | `AdminMainForm` — everything Staff has, plus Manage Users |
-| Staff | Existing accounts (pre-migration), or promoted by an Admin | `MainForm` — Dashboard, Add Books, Issue Books, Return Books, Payment (unchanged) |
+| Staff | Existing accounts (pre-migration), or promoted by an Admin | `MainForm` — Dashboard, Add Books, Issue Books, Return Books, Fines (read-only report — see [fine-and-payment.md](fine-and-payment.md); staff no longer collects payment) |
 | Borrower | Public self-registration via `RegisterForm` | `BorrowerForm` — view own loans and fines only |
 
 `dbo.Users` gets a new `role NVARCHAR(20) NOT NULL DEFAULT 'Staff'` column.

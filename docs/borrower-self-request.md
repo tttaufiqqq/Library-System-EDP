@@ -184,8 +184,9 @@ Checked in order at request time:
 2. No duplicate: no active `IssuesBooks` row (`Return_Status == "Not
    Returned"`, same Email+Book_Title) and no `Pending` `BookRequests` row
    (same Email+BookID).
-3. No unpaid fines: sum of `FineCalculator.ComputeFine` over the borrower's
-   active issues must be zero.
+3. No unpaid fines: `FineService.HasUnpaid(email)` must be false (reads the
+   `dbo.Fines` ledger - see `docs/fine-and-payment.md` for why this replaced
+   the original live-recomputed check).
 4. Concurrent cap: `(active loans + pending requests)` for the borrower must
    be under `MaxConcurrentLoans` (const = 5).
 
